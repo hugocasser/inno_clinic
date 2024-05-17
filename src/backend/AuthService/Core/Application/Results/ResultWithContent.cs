@@ -6,11 +6,11 @@ using JsonConverter = Newtonsoft.Json.JsonConverter;
 
 namespace Application.Results;
 
-public class Result<T> : IResult
+public class ResultWithContent<T> : IResult
 {
     public bool IsSuccess { get; set; }
     public Error? Error { get; set; }
-    private T? ResultData { get; set; }
+    internal T? ResultData { get; set; }
     
     public string GetResultMessage()
     {
@@ -27,18 +27,23 @@ public class Result<T> : IResult
 
         return json;
     }
-    
-    public static Result<T> Success(T resultData)
+
+    public int? GetStatusCode()
     {
-        return new Result<T>(resultData: resultData);
-    }
-    
-    public static Result<T> Failure(Error error)
-    {
-        return new Result<T>(error: error);
+        return !IsSuccess ? Error.Code : 200;
     }
 
-    private Result(Error? error = default, T? resultData = default)
+    public static ResultWithContent<T> Success(T resultData)
+    {
+        return new ResultWithContent<T>(resultData: resultData);
+    }
+    
+    public static ResultWithContent<T> Failure(Error error)
+    {
+        return new ResultWithContent<T>(error: error);
+    }
+
+    private ResultWithContent(Error? error = default, T? resultData = default)
     {
         if (error is not null)
         {

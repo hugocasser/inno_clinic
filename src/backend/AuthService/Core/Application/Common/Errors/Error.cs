@@ -7,27 +7,39 @@ public class Error
 
     public static Error NotFound(string message = "Not Found")
     {
-        return new Error(404, message);
+        return new Error(404);
     }
 
-    public static Error BadRequest(string message = "Bad Request")
+    public static Error BadRequest()
     {
-        return new Error(400, message);
+        return new Error(400);
     }
 
-    public static Error InternalServerError(string message = "Internal Server Error")
+    public static Error InternalServerError()
     {
-        return new Error(500, message);
+        return new Error(500);
     }
 
-    public static Error Unauthorized(string message = "Unauthorized")
+    public static Error Unauthorized()
     {
-        return new Error(401, message);
+        return new Error(401);
+    }
+    
+    public Error WithMessage(string message)
+    {
+        Message = message;
+
+        return this;
     }
 
     private Error(int code, string message)
     {
         Code = code;
         Message = message;
+    }
+
+    private Error(int code)
+    {
+        Code = code;
     }
 }
