@@ -1,3 +1,6 @@
+using System.Text;
+using FluentValidation.Results;
+
 namespace Application.Common.Errors;
 
 public class Error
@@ -29,6 +32,20 @@ public class Error
     {
         Message = message;
 
+        return this;
+    }
+
+    public Error WithMessage(IEnumerable<ValidationFailure> validationFailures)
+    {
+        var builder = new StringBuilder();
+
+        foreach (var validationFailure in validationFailures)
+        {
+            builder.Append(validationFailure.ErrorMessage + "\n");
+        }
+        
+        Message = builder.ToString();
+        
         return this;
     }
 
