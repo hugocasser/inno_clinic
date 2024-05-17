@@ -30,11 +30,6 @@ public class AccessTokensService(IOptions<AccessTokenOptions> options, UserManag
             new Claim(JwtRegisteredClaimNames.Iat, EpochTime.GetIntDate(DateTime.Now).ToString(CultureInfo.InvariantCulture), ClaimValueTypes.Integer64)
         };
         
-        if (userRoles is null)
-        {
-            return string.Empty;
-        }
-        
         claims.AddRange(userRoles.Select(role => new Claim("role:", role)));
         var securityToken = new JwtSecurityToken(
             claims: claims,
