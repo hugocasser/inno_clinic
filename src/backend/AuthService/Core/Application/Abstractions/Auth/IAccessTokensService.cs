@@ -4,6 +4,6 @@ namespace Application.Abstractions.Auth;
 
 public interface IAccessTokensService
 {
-    public Task<string> CreateAccessToken(User user);
-    public Task<string> UpdateAccessToken(RefreshToken refreshToken);
+    public string CreateAccessToken(User user, IList<string> userRoles, CancellationToken cancellationToken);
+    public Task<IList<string>> GetRolesAsync(User user);
 }

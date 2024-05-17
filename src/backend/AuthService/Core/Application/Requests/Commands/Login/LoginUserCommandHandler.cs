@@ -24,9 +24,15 @@ public class LoginUserCommandHandler(
             return checkUserPasswordResult;
         }
 
-        var refreshToken = await refreshTokensService.CreateUserRefreshTokenAsync(success.ResultData);
-        var accessToken = await accessTokensService.CreateAccessToken(success.ResultData);
-                
+        var refreshToken = await refreshTokensService.CreateUserRefreshTokenAsync(success.ResultData, cancellationToken);
+        var userRoles = await accessTokensService.GetRolesAsync(success.ResultData);
+        var accessToken = accessTokensService.CreateAccessToken(success.ResultData,userRoles, cancellationToken);
+
+        if (string.IsNullOrEmpty(accessToken))
+        {
+            return ResultWithoutContent.Failure(Error.Unauthorized().WithMessage(ErrorMessages.UserNotHaveSuitableRole));
+        }
+        
         return ResultWithContent<AuthTokenViewDto>
             .Success(AuthTokenViewDto.FromModel(success.ResultData, accessToken, refreshToken));
     }
