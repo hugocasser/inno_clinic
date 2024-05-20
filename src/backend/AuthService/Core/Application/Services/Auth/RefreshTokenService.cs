@@ -51,7 +51,7 @@ public class RefreshTokenService(ICacheService cacheService,
             return ResultWithoutContent.Failure(Error.Forbidden().WithMessage(ErrorMessages.AccessDenied));
         }
         
-        await refreshTokensRepository.RemoveTokenAsync(refreshToken, cancellationToken);
+        await refreshTokensRepository.RemoveTokenAsync(refreshToken);
         await refreshTokensRepository.SaveChangesAsync(cancellationToken);
         
         await cacheService.RemoveAsync(refreshToken.UserId.ToString(), cancellationToken);
@@ -85,7 +85,7 @@ public class RefreshTokenService(ICacheService cacheService,
 
         if (refreshToken.ExpiryTime < currentTime)
         {
-            await refreshTokensRepository.RemoveTokenAsync(refreshToken, cancellationToken);
+            await refreshTokensRepository.RemoveTokenAsync(refreshToken);
             
             return null;
         }

@@ -6,6 +6,6 @@ public interface IRefreshTokensRepository
 {
     public Task CreateTokenAsync(RefreshToken token, CancellationToken cancellationToken);
     public Task<RefreshToken?> GetUserRefreshTokenAsync(Guid userId, CancellationToken cancellationToken);
-    public Task RemoveTokenAsync(RefreshToken token, CancellationToken cancellationToken);
+    public Task RemoveTokenAsync(RefreshToken token);
     public Task SaveChangesAsync(CancellationToken cancellationToken);
 }

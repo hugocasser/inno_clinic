@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Application.Services.Auth;
 
-public class UsersService(UserManager<User> userManager, IEmailSenderService emailSenderService) : IUserService
+public class UsersService(UserManager<User> userManager, IConfirmMessageSenderService confirmMessageSender) : IUserService
 {
     public async Task<IResult> RegisterUser(string email, string password, Roles role, CancellationToken cancellationToken)
     {
@@ -37,8 +37,8 @@ public class UsersService(UserManager<User> userManager, IEmailSenderService ema
         {
             return addToRoleResult;
         }
-        
-        await emailSenderService.SendConfirmationEmailAsync(email, cancellationToken);
+
+        await confirmMessageSender.SendEmailConfirmMessageAsync(user, cancellationToken);
         
         return ResultWithoutContent.Success();
     }
