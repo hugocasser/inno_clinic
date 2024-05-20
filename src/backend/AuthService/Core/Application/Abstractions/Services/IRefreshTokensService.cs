@@ -6,6 +6,7 @@ namespace Application.Abstractions.Services;
 public interface IRefreshTokensService
 {
     public Task<RefreshToken> CreateUserRefreshTokenAsync(User user, CancellationToken cancellationToken);
-    public Task<IResult> ValidateRefreshTokenAsync(string userId, string refreshToken, CancellationToken cancellationToken);
+    public Task<IResult> ValidateRefreshTokenAsync(string? userId, string refreshToken, CancellationToken cancellationToken);
+    public Task<IResult> RevokeRefreshTokenAsync(string? userId, CancellationToken cancellationToken);
 }
 
