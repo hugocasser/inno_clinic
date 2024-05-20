@@ -16,7 +16,7 @@ public class RefreshTokensRepository(AuthDbContext context) : IRefreshTokensRepo
         return await context.RefreshTokens.FirstOrDefaultAsync(x => x.UserId == userId, cancellationToken);
     }
 
-    public Task RemoveTokenAsync(RefreshToken token, CancellationToken cancellationToken)
+    public Task RemoveTokenAsync(RefreshToken token)
     {
         context.RefreshTokens.Remove(token);
         

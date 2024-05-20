@@ -22,6 +22,7 @@ public class AccessTokensService(IOptions<AccessTokenOptions> options, UserManag
         {
             return string.Empty;
         }
+        
         var claims = new List<Claim>()
         {
             new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
