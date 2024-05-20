@@ -1,0 +1,59 @@
+
+services:
+  elastic:
+    container_name: elastic
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.7.1
+    ports:
+      - "9200:9200"
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    environment:
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+    networks:
+      - elastic
+    depends_on:
+      - db-auth
+  kibana:
+    container_name: kibana
+    image: docker.elastic.co/kibana/kibana:8.7.1
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elastic
+    environment:
+      - ELASTICSEARCH_URL=http://elastic:9200
+    networks:
+      - elastic
+  db-auth:
+    container_name: db-auth
+    extends:
+      file: docker-compose.auth.yaml
+      service: db-ms
+    ports:
+      - "1433:1433"
+  auth:
+    container_name: auth
+    extends:
+      file: docker-compose.auth.yaml
+      service: auth
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.type == auth
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "4000:4000"
+      - "4001:4001"
+    depends_on:
+      - db-auth
+networks:
+  elastic:
+    driver: bridge
+  identity:
+    driver: bridge
+volumes:
+  elasticsearch-data:

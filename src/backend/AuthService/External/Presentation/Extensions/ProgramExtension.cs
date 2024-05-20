@@ -1,4 +1,5 @@
 using Application;
+using Application.Abstractions.Services;
 using FluentValidation.AspNetCore;
 using Infrastructure;
 using Infrastructure.Persistence;
@@ -27,7 +28,7 @@ public static class ProgramExtension
             .Build();
         
         builder.Services
-            .AddApplication()
+            .AddApplication(builder.Configuration)
             .AddInfrastructure(builder.Configuration, environment)
             .AddIdentity(builder.Configuration)
             .AddLogging()
@@ -73,6 +74,9 @@ public static class ProgramExtension
         { 
             var context = scope.ServiceProvider.GetRequiredService<AuthDbContext>();
             await context.Database.MigrateAsync();
+
+            var seeder = scope.ServiceProvider.GetRequiredService<IDataSeederService>();
+            await seeder.SeedRecordsAsync();
         }
         catch (Exception ex)
         {

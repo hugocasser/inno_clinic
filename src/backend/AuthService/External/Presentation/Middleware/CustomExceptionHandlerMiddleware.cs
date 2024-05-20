@@ -1,3 +1,5 @@
+using System.Net;
+
 namespace Presentation.Middleware;
 
 public class CustomExceptionHandlerMiddleware(RequestDelegate next)
@@ -19,7 +21,7 @@ public class CustomExceptionHandlerMiddleware(RequestDelegate next)
         var result = "Error occurred during request processing" + '\n' + exception.Message;
         
         context.Response.ContentType = "application/json";
-            
+        context.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
         return context.Response.WriteAsync(result);
     }
 }

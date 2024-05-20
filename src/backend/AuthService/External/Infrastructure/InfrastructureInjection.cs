@@ -1,7 +1,9 @@
 using Application.Abstractions.Repositories;
+using Application.Abstractions.Services;
 using Infrastructure.Options;
 using Infrastructure.Persistence;
 using Infrastructure.Persistence.Repositories;
+using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,7 +16,9 @@ public static class InfrastructureInjection
     {
         return services
             .AddDbContext(configuration, environment)
-            .AddRepositories();
+            .AddRepositories()
+            .AddOptions()
+            .AddDataSeeder();
     }
 
     private static IServiceCollection AddRepositories(this IServiceCollection services)
@@ -54,6 +58,25 @@ public static class InfrastructureInjection
                 }
             });
 
+        return services;
+    }
+    
+    private static IServiceCollection AddOptions(this IServiceCollection services)
+    {
+        services
+            .AddOptions<ReceptionistSeedOptions>()
+            .BindConfiguration(nameof(ReceptionistSeedOptions))
+            .ValidateOnStart()
+            .ValidateDataAnnotations();
+        
+        return services;
+    }
+    
+    private static IServiceCollection AddDataSeeder(this IServiceCollection services)
+    {
+        services
+            .AddScoped<IDataSeederService, DataSeederService>();
+        
         return services;
     }
 }

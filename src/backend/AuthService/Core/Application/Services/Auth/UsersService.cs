@@ -20,7 +20,8 @@ public class UsersService(UserManager<User> userManager, IConfirmMessageSenderSe
         var user = new User()
         {
             Id = Guid.NewGuid(),
-            Email = email
+            Email = email,
+            UserName = email.Split('@')[0]
         };
         
         var creationResult = await userManager.CreateAsync(user, password);

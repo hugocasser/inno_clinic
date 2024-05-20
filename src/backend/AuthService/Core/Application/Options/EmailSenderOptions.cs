@@ -9,7 +9,6 @@ public class EmailSenderOptions
     public string Sender { get; set; }
     
     [Required(AllowEmptyStrings = false, ErrorMessage = "Smtp server url is required")]
-    [Url(ErrorMessage = "Smtp server url is not valid")]
     public string SmtpServer { get; set; }
     
     [Required(AllowEmptyStrings = false, ErrorMessage = "Port is required")]

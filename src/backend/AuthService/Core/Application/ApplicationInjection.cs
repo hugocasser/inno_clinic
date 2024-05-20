@@ -11,23 +11,26 @@ using Application.Services.Cache;
 using Application.Services.Email;
 using FluentValidation;
 using MediatR;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using StackExchange.Redis;
+using MicrosoftOptions = Microsoft.Extensions.Options.Options;
 
 namespace Application;
 
 public static class ApplicationInjection
 {
-    public static IServiceCollection AddApplication(this IServiceCollection services)
+    public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration)
     {
         return services
-            .AddServices()
+            .AddServices(configuration)
             .AddPipelineBehaviors()
             .AddValidators()
             .AddOptions()
             .AddRequestHandlers();
     }
 
-    private static IServiceCollection AddServices(this IServiceCollection services)
+    private static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
     {
         return services
             .AddScoped<IUserService, UsersService>()
@@ -35,7 +38,11 @@ public static class ApplicationInjection
             .AddScoped<IEmailSenderService, EmailSenderService>()
             .AddScoped<IRefreshTokensService, RefreshTokenService>()
             .AddScoped<IHttpContextAccessorExtension, HttpContextAccessorExtension>()
-            .AddScoped<ICacheService, CacheService>();
+            .AddScoped<ICacheService, CacheService>()
+            .AddScoped<IConfirmMessageSenderService, ConfirmMessageSenderService>()
+            .AddScoped<ISmtpClientService, SmtpClientService>()
+            .AddScoped<ICacheService, CacheService>()
+            .AddRedisCache(configuration);
     }
 
     private static IServiceCollection AddPipelineBehaviors(this IServiceCollection services)
@@ -55,16 +62,55 @@ public static class ApplicationInjection
 
     private static IServiceCollection AddOptions(this IServiceCollection services)
     {
+        // services
+        //     .AddGenericOptions<AccessTokenOptions>()
+        //     .AddGenericOptions<EmailSenderOptions>()
+        //     .AddGenericOptions<RedisOptions>();
+        
         services
-            .AddGenericOptions<AccessTokenOptions>()
-            .AddGenericOptions<EmailSenderOptions>()
-            .AddGenericOptions<RedisOptions>();
+            .AddOptions<AccessTokenOptions>()
+            .BindConfiguration(nameof(AccessTokenOptions))
+            .ValidateOnStart()
+            .ValidateDataAnnotations();
+        
+        services
+            .AddOptions<EmailSenderOptions>()
+            .BindConfiguration(nameof(EmailSenderOptions))
+            .ValidateOnStart()
+            .ValidateDataAnnotations();
+        
+        services
+            .AddOptions<RedisOptions>()
+            .BindConfiguration(nameof(RedisOptions))
+            .ValidateOnStart()
+            .ValidateDataAnnotations();
         
         return services;
     }
     private static IServiceCollection AddRequestHandlers(this IServiceCollection services)
     {
         services.AddMediatR(configuration => configuration.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
+        
+        return services;
+    }
+    
+    private static IServiceCollection AddRedisCache(this IServiceCollection services, IConfiguration configuration)
+    {
+        var redisOptions = new RedisOptions();
+        var redisConnectionString = Environment.GetEnvironmentVariable("RedisConnectionString");
+        if (redisConnectionString != null)
+        {
+            redisOptions.RefreshTokenConnectionString = redisConnectionString;
+        }
+        else
+        {
+            configuration.GetSection(nameof(RedisOptions)).Bind(redisOptions);
+            services.AddSingleton(MicrosoftOptions.Create(redisOptions));
+        }
+        
+        services.AddSingleton<IConnectionMultiplexer, ConnectionMultiplexer>(provider => 
+            provider.GetService<ConnectionMultiplexer>() 
+            ?? ConnectionMultiplexer.Connect(redisOptions.RefreshTokenConnectionString));
         
         return services;
     }
