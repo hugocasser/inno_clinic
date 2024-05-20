@@ -9,6 +9,6 @@ public class RegisterDoctorCommandHandler(IUserService userService) : IRequestHa
 {
     public Task<IResult> Handle(RegisterDoctorCommand request, CancellationToken cancellationToken)
     {
-        return userService.RegisterUser(request.Email, request.Password, Roles.Doctor);
+        return userService.RegisterUser(request.Email, request.Password, Roles.Doctor, cancellationToken);
     }
 }

@@ -1,12 +1,13 @@
 using System.Text;
 using Application.Abstractions.Results;
-using Application.Common.Errors;
-using Application.Results;
+using Application.OperationResult.Errors;
+using Application.OperationResult.Results;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Application.Common;
 
-public class Utilities
+public static class Utilities
 {
     private const string Chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     
@@ -34,5 +35,15 @@ public class Utilities
         }
         
         return result.ToString();
+    }
+    
+    public static IServiceCollection AddGenericOptions<T>(this IServiceCollection services) where T : class
+    {
+        services.AddOptions<T>()
+            .BindConfiguration(nameof(T))
+            .ValidateOnStart()
+            .ValidateDataAnnotations();
+        
+        return services;
     }
 }
