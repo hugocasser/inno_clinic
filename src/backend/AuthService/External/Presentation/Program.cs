@@ -1,6 +1,15 @@
-var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
+using Presentation.Extensions;
 
-app.MapGet("/", () => "Hello World!");
+namespace Presentation;
 
-app.Run();
+public class Program
+{
+    public static async Task Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args).ConfigureBuilder();
+        
+        var app = builder.Build().ConfigureApplication();
+        
+        await app.RunApplicationAsync();
+    }
+}
