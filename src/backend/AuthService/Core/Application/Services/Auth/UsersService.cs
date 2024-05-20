@@ -1,8 +1,8 @@
 using Application.Abstractions.Auth;
 using Application.Abstractions.Results;
 using Application.Common;
-using Application.Common.Errors;
-using Application.Results;
+using Application.OperationResult.Errors;
+using Application.OperationResult.Results;
 using Domain.Models;
 using Microsoft.AspNetCore.Identity;
 

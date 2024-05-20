@@ -1,10 +1,8 @@
-using System.Text.Json.Serialization;
 using Application.Abstractions.Results;
-using Application.Common.Errors;
+using Application.OperationResult.Errors;
 using Newtonsoft.Json;
-using JsonConverter = Newtonsoft.Json.JsonConverter;
 
-namespace Application.Results;
+namespace Application.OperationResult.Results;
 
 public class ResultWithContent<T> : IResult
 {

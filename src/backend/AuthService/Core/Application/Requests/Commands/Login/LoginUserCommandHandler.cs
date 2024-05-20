@@ -1,9 +1,9 @@
 using Application.Abstractions.Auth;
 using Application.Abstractions.Results;
 using Application.Abstractions.Services;
-using Application.Common.Errors;
 using Application.Dtos.Views;
-using Application.Results;
+using Application.OperationResult.Errors;
+using Application.OperationResult.Results;
 using Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Identity;

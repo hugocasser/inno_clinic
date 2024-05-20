@@ -1,7 +1,7 @@
 using Application.Abstractions.Results;
-using Application.Common.Errors;
+using Application.OperationResult.Errors;
 
-namespace Application.Results;
+namespace Application.OperationResult.Results;
 
 public class ResultWithoutContent : IResult
 {
