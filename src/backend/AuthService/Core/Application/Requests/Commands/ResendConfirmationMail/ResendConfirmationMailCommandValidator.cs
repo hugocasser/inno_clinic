@@ -7,8 +7,8 @@ public class ResendConfirmationMailCommandValidator :  AbstractValidator<ResendC
 {
     public ResendConfirmationMailCommandValidator()
     {
-        RuleFor(x => x.Email).Password();
+        RuleFor(x => x.Email).Email();
         
-        RuleFor(x => x.Password).Email();
+        RuleFor(x => x.Password).Password();
     }
 }
