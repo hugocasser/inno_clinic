@@ -22,7 +22,7 @@ public class ConfirmMailCommandHandler(UserManager<User> usersManager)
 
         var result = await usersManager.ConfirmEmailAsync(user, request.Code);
 
-        if (!Utilities.AggregateIdentityResult(result).IsSuccess)
+        if (!result.Succeeded)
         {
             return ResultWithoutContent.Failure(Error.BadRequest().WithMessage(ErrorMessages.InvalidConfirmToken));
         }

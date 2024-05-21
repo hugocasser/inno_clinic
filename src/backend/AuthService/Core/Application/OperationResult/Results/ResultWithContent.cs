@@ -8,7 +8,7 @@ public class ResultWithContent<T> : IResult
 {
     public bool IsSuccess { get; set; }
     public Error? Error { get; set; }
-    internal T? ResultData { get; set; }
+    public T? ResultData { get; set; }
     
     public string GetResultMessage()
     {

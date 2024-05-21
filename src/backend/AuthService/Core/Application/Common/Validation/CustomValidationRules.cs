@@ -8,7 +8,6 @@ public static class CustomValidationRules
     {
         return ruleBuilder
             .NotEmpty().WithMessage("Email address is required")
-            .NotNull().WithMessage("Email address is required")
             .EmailAddress().WithMessage("Invalid email address");
     }
 
@@ -16,7 +15,6 @@ public static class CustomValidationRules
     {
         return ruleBuilder
             .NotEmpty().WithMessage("Password is required")
-            .NotNull().WithMessage("Password is required")
             .MinimumLength(8).WithMessage("Password must be between 8 and 32 characters long")
             .MaximumLength(32).WithMessage("Password must be between 8 and 32 characters long")
             .Matches(@"[A-Z]+").WithMessage("Password must contain at least one uppercase letter.")

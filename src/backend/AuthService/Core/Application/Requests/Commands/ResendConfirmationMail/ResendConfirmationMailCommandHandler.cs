@@ -8,22 +8,25 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Application.Requests.Commands.ResendConfirmationMail;
 
-public class ResendConfirmationMailCommandHandler(UserManager<User> usersManager, IConfirmMessageSenderService confirmMessageSender) : IRequestHandler<ResendConfirmationMailCommand, IResult>
+public class ResendConfirmationMailCommandHandler(UserManager<User> usersManager,
+    IConfirmMessageSenderService confirmMessageSender,
+    IUserService userService) : IRequestHandler<ResendConfirmationMailCommand, IResult>
 {
     public async Task<IResult> Handle(ResendConfirmationMailCommand request, CancellationToken cancellationToken)
     {
-        var user = await usersManager.FindByEmailAsync(request.Email);
-        if (user is null || !await usersManager.CheckPasswordAsync(user, request.Password))
+        var result = await userService.CheckUserPassword(request.Email, request.Password);
+        
+        if (result is not ResultWithContent<User> success)
         {
-            return ResultWithoutContent.Failure(Error.Unauthorized().WithMessage(ErrorMessages.InvalidEmailOrPassword));
+            return result;
         }
         
-        if (user.EmailConfirmed)
+        if (success.ResultData.EmailConfirmed)
         {
             return ResultWithoutContent.Failure(Error.BadRequest().WithMessage(ErrorMessages.EmailAlreadyConfirmed));
         }
         
-        await confirmMessageSender.SendEmailConfirmMessageAsync(user, cancellationToken);
+        await confirmMessageSender.SendEmailConfirmMessageAsync(success.ResultData, cancellationToken);
         
         return ResultWithoutContent.Success();
     }

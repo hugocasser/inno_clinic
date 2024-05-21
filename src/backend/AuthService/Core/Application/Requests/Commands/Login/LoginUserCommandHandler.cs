@@ -13,18 +13,18 @@ namespace Application.Requests.Commands.Login;
 public class LoginUserCommandHandler(
     UserManager<User> userManager,
     IRefreshTokensService refreshTokensService,
-    IAccessTokensService accessTokensService) : IRequestHandler<LoginUserCommand, IResult>
+    IAccessTokensService accessTokensService,
+    IUserService userService) : IRequestHandler<LoginUserCommand, IResult>
 {
     public async Task<IResult> Handle(LoginUserCommand request, CancellationToken cancellationToken)
     {
-        var checkUserPasswordResult = await CheckUserPassword(request);
+        var checkUserPasswordResult = await userService.CheckUserPassword(request.Email, request.Password);
 
         if (checkUserPasswordResult is not ResultWithContent<User> success)
         {
             return checkUserPasswordResult;
         }
-
-        var refreshToken = await refreshTokensService.CreateUserRefreshTokenAsync(success.ResultData, cancellationToken);
+        
         var userRoles = await accessTokensService.GetRolesAsync(success.ResultData);
         var accessToken = accessTokensService.CreateAccessToken(success.ResultData,userRoles, cancellationToken);
 
@@ -33,26 +33,9 @@ public class LoginUserCommandHandler(
             return ResultWithoutContent.Failure(Error.Unauthorized().WithMessage(ErrorMessages.UserNotHaveSuitableRole));
         }
         
+        var refreshToken = await refreshTokensService.CreateUserRefreshTokenAsync(success.ResultData, cancellationToken);
+        
         return ResultWithContent<AuthTokenViewDto>
             .Success(AuthTokenViewDto.FromModel(success.ResultData, accessToken, refreshToken));
-    }
-
-    private async Task<IResult> CheckUserPassword(LoginUserCommand request)
-    {
-        var user = await userManager.FindByEmailAsync(request.Email);
-
-        if (user == null)
-        {
-            return ResultWithoutContent.Failure(Error.Unauthorized().WithMessage(ErrorMessages.InvalidEmailOrPassword));
-        }
-
-        var passwordCheckResult = await userManager.CheckPasswordAsync(user, request.Password);
-
-        if (!passwordCheckResult)
-        {
-            return ResultWithoutContent.Failure(Error.Unauthorized().WithMessage(ErrorMessages.InvalidEmailOrPassword));
-        }
-
-        return ResultWithContent<User>.Success(user);
     }
 }
