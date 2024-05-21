@@ -33,7 +33,6 @@ public static class ProgramExtension
             .AddIdentity(builder.Configuration)
             .AddLogging()
             .AddSwagger()
-            .AddFluentValidationAutoValidation()
             .AddCors(options => options.ConfigureAllowAllCors())
             .AddEndpointsApiExplorer()
             .AddControllers();
