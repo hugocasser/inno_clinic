@@ -21,7 +21,7 @@ public static class Utilities
         var errors = result.Errors.Aggregate(string.Empty,
             (current, error) => current + (error.Description + "\n"));
         
-        return ResultWithoutContent.Failure(Error.BadRequest().WithMessage(errors));
+        return ResultWithoutContent.Failure(Error.Unauthorized().WithMessage(errors));
     }
 
     public static string GenerateRandomString(int length)

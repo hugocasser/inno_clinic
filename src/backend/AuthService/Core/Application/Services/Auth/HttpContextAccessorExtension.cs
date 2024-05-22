@@ -7,9 +7,8 @@ public class HttpContextAccessorExtension : HttpContextAccessor, IHttpContextAcc
 {
     public string GetUserId()
     {
-        if (HttpContext.User.Identities.First().Claims.FirstOrDefault()?.Value is null ||
-            HttpContext.User.Identities.First().Claims.FirstOrDefault()?.Value == string.Empty
-            || IsContextNull())
+        if (IsContextNull() || HttpContext.User.Identities.First().Claims.FirstOrDefault()?.Value is null ||
+            HttpContext.User.Identities.First().Claims.FirstOrDefault()?.Value == string.Empty)
         {
             return Guid.Empty.ToString();
         }

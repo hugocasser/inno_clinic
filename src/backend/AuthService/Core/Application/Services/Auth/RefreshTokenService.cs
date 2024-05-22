@@ -48,7 +48,7 @@ public class RefreshTokenService(ICacheService cacheService,
 
         if (refreshToken.UserId.ToString() != userId)
         {
-            return ResultWithoutContent.Failure(Error.Forbidden().WithMessage(ErrorMessages.AccessDenied));
+            return ResultWithoutContent.Failure(Error.Unauthorized().WithMessage(ErrorMessages.AccessDenied));
         }
         
         await refreshTokensRepository.RemoveTokenAsync(refreshToken);
@@ -61,9 +61,17 @@ public class RefreshTokenService(ICacheService cacheService,
 
     private async Task<RefreshToken?> GetUserRefreshTokenAsync(Guid userId, CancellationToken cancellationToken)
     {
-        var refreshToken = JsonSerializer.Deserialize<RefreshToken>( await cacheService.GetAsync(userId.ToString(), cancellationToken) ?? string.Empty);
+        var refreshSerializedToken = await cacheService.GetAsync(userId.ToString(), cancellationToken);
+        
+        var refreshToken = new RefreshToken();
+        
+        if (!string.IsNullOrEmpty(refreshSerializedToken))
+        {
+            refreshToken = JsonSerializer.Deserialize<RefreshToken>(refreshSerializedToken);
+        }
         
         var currentTime = DateTime.Now;
+        
         if (refreshToken is not null)
         {
             if (refreshToken.ExpiryTime < currentTime)
