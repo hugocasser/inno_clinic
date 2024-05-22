@@ -1,0 +1,21 @@
+services: 
+    auth:
+        image: auth
+        environment:
+          - ASPNETCORE_ENVIRONMENT=Container
+        networks:
+          - identity
+          - elasticsearch
+    db-auth:
+      container_name: db-ms
+      image: "mcr.microsoft.com/mssql/server:2022-latest"
+      environment:
+        SA_PASSWORD: "Identity_Development_2024"
+        ACCEPT_EULA: "Y"
+      networks:
+        - identity
+    redis:
+        image: redis
+        networks:
+          - identity
+    
