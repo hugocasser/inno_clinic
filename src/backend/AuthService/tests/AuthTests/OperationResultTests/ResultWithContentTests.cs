@@ -5,6 +5,7 @@ using FluentAssertions;
 
 namespace AuthTests.OperationResultTests;
 
+[Collection("UnitTest")]
 public class ResultWithContentTests
 {
     [Fact]

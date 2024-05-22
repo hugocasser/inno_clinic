@@ -1,35 +1,23 @@
-using Application.Abstractions.Auth;
-using Application.Abstractions.Services;
 using Application.Dtos.Views;
-using Application.OperationResult.Errors;
-using Application.OperationResult.Results;
 using Application.Requests.Commands.Login;
-using Domain.Models;
-using FluentAssertions;
-using Microsoft.AspNetCore.Identity;
-using Moq;
 
 namespace AuthTests.CommandHandlersTests;
 
-public class LoginUserTests
+[Collection("UnitTest")]
+public class LoginUserTests : UnitTestFixtures
 {
-    private readonly Mock<UserManager<User>> _userManagerMock = new (Mock.Of<IUserStore<User>>(), null, null, null, null, null, null, null, null);
-    private readonly Mock<IRefreshTokensService> _refreshTokensServiceMock = new();
-    private readonly Mock<IAccessTokensService> _accessTokensServiceMock = new();
-    private readonly Mock<IUserService> _userServiceMock = new();
-    
     [Fact]
     public async Task LoginUserTest_WhenUserNotFound_ShouldReturnUnauthorized()
     {
         // Arrange
         
-        _userServiceMock
+        UserServiceMock
             .Setup(service => service.CheckUserPassword(It.IsAny<string>(), It.IsAny<string>()))
             .ReturnsAsync(ResultWithoutContent.Failure(Error.Unauthorized().WithMessage(ErrorMessages.InvalidEmailOrPassword)));
         
         var loginUserCommand = new LoginUserCommand("email@mail.com", "password123-R");
-        var handler = new LoginUserCommandHandler(_userManagerMock.Object,
-            _refreshTokensServiceMock.Object, _accessTokensServiceMock.Object, _userServiceMock.Object);
+        var handler = new LoginUserCommandHandler(UserManagerMock.Object,
+            RefreshTokensServiceMock.Object, AccessTokensServiceMock.Object, UserServiceMock.Object);
         
         // Act
         var result = await handler.Handle(loginUserCommand, CancellationToken.None);
@@ -45,20 +33,20 @@ public class LoginUserTests
         // Arrange
         var user = TestUtils.FakeUser();
         
-        _userManagerMock
+        UserManagerMock
             .Setup(manager => manager.FindByEmailAsync(It.IsAny<string>()))
             .ReturnsAsync(user);
         
-        _userManagerMock.Setup(manager =>
+        UserManagerMock.Setup(manager =>
             manager.CheckPasswordAsync(It.IsAny<User>(), It.IsAny<string>()))
             .ReturnsAsync(true);
         
-        _refreshTokensServiceMock
+        RefreshTokensServiceMock
             .Setup(service => service
                 .CreateUserRefreshTokenAsync(It.IsAny<User>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new RefreshToken());
         
-        _accessTokensServiceMock
+        AccessTokensServiceMock
             .Setup(service => service
                 .GetRolesAsync(It.IsAny<User>()))
             .ReturnsAsync(new List<string>()
@@ -67,19 +55,19 @@ public class LoginUserTests
                 "admin"
             });
         
-        _accessTokensServiceMock
+        AccessTokensServiceMock
             .Setup(service => service
                 .CreateAccessToken(It.IsAny<User>(), It.IsAny<List<string>>()))
             .Returns("token");
         
-        _userServiceMock
+        UserServiceMock
             .Setup(service => service
                 .CheckUserPassword(It.IsAny<string>(), It.IsAny<string>()))
             .ReturnsAsync(ResultWithContent<User>.Success(user));
         
         var loginUserCommand = new LoginUserCommand("email@mail.com", "password123-R");
-        var handler = new LoginUserCommandHandler(_userManagerMock.Object,
-            _refreshTokensServiceMock.Object, _accessTokensServiceMock.Object, _userServiceMock.Object);
+        var handler = new LoginUserCommandHandler(UserManagerMock.Object,
+            RefreshTokensServiceMock.Object, AccessTokensServiceMock.Object, UserServiceMock.Object);
         
         // Act
         var result = await handler.Handle(loginUserCommand, CancellationToken.None);
@@ -94,14 +82,14 @@ public class LoginUserTests
     public async Task LoginUserTest_WhenPasswordIsIncorrect_ShouldReturnUnauthorized()
     {
         // Arrange
-        _userServiceMock
+        UserServiceMock
             .Setup(service => service
                 .CheckUserPassword(It.IsAny<string>(), It.IsAny<string>()))
             .ReturnsAsync(ResultWithoutContent.Failure(Error.Unauthorized().WithMessage(ErrorMessages.InvalidEmailOrPassword)));
         
         var loginUserCommand = new LoginUserCommand("email@mail.com", "password123-R");
-        var handler = new LoginUserCommandHandler(_userManagerMock.Object,
-            _refreshTokensServiceMock.Object, _accessTokensServiceMock.Object, _userServiceMock.Object);
+        var handler = new LoginUserCommandHandler(UserManagerMock.Object,
+            RefreshTokensServiceMock.Object, AccessTokensServiceMock.Object, UserServiceMock.Object);
         // Act
         var result = await handler.Handle(loginUserCommand, CancellationToken.None);
         
@@ -115,19 +103,19 @@ public class LoginUserTests
     public async Task LoginUserTest_WhenUserDoNotHaveRoles_ShouldReturnUnauthorized()
     {
         // Arrange
-        _userServiceMock
+        UserServiceMock
             .Setup(service => service
                 .CheckUserPassword(It.IsAny<string>(), It.IsAny<string>()))
             .ReturnsAsync(ResultWithContent<User>.Success(TestUtils.FakeUser()));
         
-        _accessTokensServiceMock
+        AccessTokensServiceMock
             .Setup(service => service
                 .GetRolesAsync(It.IsAny<User>()))
             .ReturnsAsync(new List<string>());
         
         var loginUserCommand = new LoginUserCommand("email@mail.com", "password123-R");
-        var handler = new LoginUserCommandHandler(_userManagerMock.Object,
-            _refreshTokensServiceMock.Object, _accessTokensServiceMock.Object, _userServiceMock.Object);
+        var handler = new LoginUserCommandHandler(UserManagerMock.Object,
+            RefreshTokensServiceMock.Object, AccessTokensServiceMock.Object, UserServiceMock.Object);
         // Act
         var result = await handler.Handle(loginUserCommand, CancellationToken.None);
         

@@ -1,9 +1,9 @@
 using Application.OperationResult.Errors;
 using Application.OperationResult.Results;
-using FluentAssertions;
 
 namespace AuthTests.OperationResultTests;
 
+[Collection("UnitTest")]
 public class ResultWithoutContentTests
 {
     [Fact]

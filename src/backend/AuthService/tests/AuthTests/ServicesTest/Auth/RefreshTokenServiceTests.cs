@@ -1,23 +1,13 @@
-using Application.Abstractions.Cache;
-using Application.Abstractions.Repositories;
-using Application.Abstractions.Services;
-using Application.Services.Auth;
-using Domain.Models;
-using FluentAssertions;
-using Moq;
 using Newtonsoft.Json;
 
 namespace AuthTests.ServicesTest.Auth;
 
-public class RefreshTokenServiceTests
+[Collection("UnitTest")]
+public class RefreshTokenServiceTests : UnitTestFixtures
 {
-    private readonly Mock<ICacheService> _cacheService = new();
-    private readonly Mock<IRefreshTokensRepository> _refreshTokensRepository = new();
-    private readonly IRefreshTokensService _refreshTokenService;
-    
     public RefreshTokenServiceTests()
     {
-         _refreshTokenService = new RefreshTokenService(_cacheService.Object, _refreshTokensRepository.Object);
+         RefreshTokenService = new RefreshTokenService(CacheService.Object, RefreshTokensRepository.Object);
     }
 
     [Fact]
@@ -30,7 +20,7 @@ public class RefreshTokenServiceTests
         };
 
         // Act
-        var refreshToken = await _refreshTokenService.CreateUserRefreshTokenAsync(user, CancellationToken.None);
+        var refreshToken = await RefreshTokenService.CreateUserRefreshTokenAsync(user, CancellationToken.None);
 
         // Assert
         refreshToken.Should().NotBeNull();
@@ -47,7 +37,7 @@ public class RefreshTokenServiceTests
 
         var refreshToken = "refreshToken";
 
-        _cacheService
+        CacheService
             .Setup(x => x.GetAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(JsonConvert.SerializeObject(new RefreshToken
             {
@@ -58,7 +48,7 @@ public class RefreshTokenServiceTests
 
         // Act
         var result =
-            await _refreshTokenService.ValidateRefreshTokenAsync(user.Id.ToString(), refreshToken,
+            await RefreshTokenService.ValidateRefreshTokenAsync(user.Id.ToString(), refreshToken,
                 CancellationToken.None);
     }
 
@@ -73,7 +63,7 @@ public class RefreshTokenServiceTests
         
         var refreshToken = "refreshToken";
         
-        _cacheService
+        CacheService
             .Setup(x => x.GetAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(JsonConvert.SerializeObject(new RefreshToken
             {
@@ -84,7 +74,7 @@ public class RefreshTokenServiceTests
         
         // Act
         var result =
-            await _refreshTokenService.ValidateRefreshTokenAsync(user.Id.ToString(), refreshToken,
+            await RefreshTokenService.ValidateRefreshTokenAsync(user.Id.ToString(), refreshToken,
                 CancellationToken.None);
         
         // Assert
@@ -103,7 +93,7 @@ public class RefreshTokenServiceTests
         };
         var refreshToken = "refreshToken";
         
-        _cacheService
+        CacheService
             .Setup(x => x.GetAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(JsonConvert.SerializeObject(new RefreshToken
             {
@@ -113,7 +103,7 @@ public class RefreshTokenServiceTests
             }));
         
         // Act
-        var result = await _refreshTokenService.RevokeRefreshTokenAsync(user.Id.ToString(), CancellationToken.None);
+        var result = await RefreshTokenService.RevokeRefreshTokenAsync(user.Id.ToString(), CancellationToken.None);
         
         // Assert
         result.IsSuccess.Should().BeTrue();
@@ -128,16 +118,16 @@ public class RefreshTokenServiceTests
             Id = Guid.NewGuid(),
         };
         
-        _cacheService
+        CacheService
             .Setup(x => x.GetAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(string.Empty);
         
-        _refreshTokensRepository
+        RefreshTokensRepository
             .Setup(x => x.GetUserRefreshTokenAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(null as RefreshToken);
         
         // Act
-        var result = await _refreshTokenService.RevokeRefreshTokenAsync(user.Id.ToString(), CancellationToken.None);
+        var result = await RefreshTokenService.RevokeRefreshTokenAsync(user.Id.ToString(), CancellationToken.None);
         
         // Assert
         result.IsSuccess.Should().BeTrue();
@@ -152,7 +142,7 @@ public class RefreshTokenServiceTests
             Id = Guid.NewGuid(),
         };
 
-        _cacheService
+        CacheService
             .Setup(x => x.GetAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(JsonConvert.SerializeObject(new RefreshToken
             {
@@ -162,7 +152,7 @@ public class RefreshTokenServiceTests
             }));
 
         // Act
-        var result = await _refreshTokenService.RevokeRefreshTokenAsync(user.Id.ToString(), CancellationToken.None);
+        var result = await RefreshTokenService.RevokeRefreshTokenAsync(user.Id.ToString(), CancellationToken.None);
         
         // Assert
         result.IsSuccess.Should().BeTrue();
@@ -177,7 +167,7 @@ public class RefreshTokenServiceTests
             Id = Guid.NewGuid(),
         };
 
-        _cacheService
+        CacheService
             .Setup(x => x.GetAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(JsonConvert.SerializeObject(new RefreshToken
             {
@@ -187,7 +177,7 @@ public class RefreshTokenServiceTests
             }));
 
         // Act
-        var result = await _refreshTokenService.RevokeRefreshTokenAsync(user.Id.ToString(), CancellationToken.None);
+        var result = await RefreshTokenService.RevokeRefreshTokenAsync(user.Id.ToString(), CancellationToken.None);
 
         // Assert
         result.IsSuccess.Should().BeTrue();
@@ -211,12 +201,12 @@ public class RefreshTokenServiceTests
             ExpiryTime = DateTime.UtcNow.AddMonths(2)
         };
         
-        _cacheService
+        CacheService
             .Setup(x => x.GetAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(JsonConvert.SerializeObject(refreshToken));
         
         // Act
-        var result = await _refreshTokenService.RevokeRefreshTokenAsync(user.Id.ToString(), CancellationToken.None);
+        var result = await RefreshTokenService.RevokeRefreshTokenAsync(user.Id.ToString(), CancellationToken.None);
         
         // Assert
         result.IsSuccess.Should().BeFalse();

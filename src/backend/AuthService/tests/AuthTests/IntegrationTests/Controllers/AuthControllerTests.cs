@@ -1,17 +1,11 @@
 using System.Net.Http.Json;
 using Application.Abstractions.Repositories;
-using Application.Abstractions.Services;
 using Application.Options;
 using Application.Requests.Commands.ConfirmMail;
 using Application.Requests.Commands.Login;
-using Application.Requests.Commands.RefreshToken;
 using Application.Requests.Commands.RegisterPatient;
 using Application.Requests.Commands.SingOut;
-using Application.Services.Auth;
 using AuthTests.IntegrationTests.Fixtures;
-using Bogus;
-using Domain.Models;
-using FluentAssertions;
 using Infrastructure.Options;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;

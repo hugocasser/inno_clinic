@@ -1,35 +1,32 @@
-using Application.Requests.Commands.RefreshToken;
-using FluentAssertions;
-
 namespace AuthTests.ValidationTests;
 
-public class RefreshTokenValidatorTests
+[Collection("UnitTest")]
+public class RefreshTokenValidatorTests : UnitTestFixtures
 {
-    [Fact]
-    public void RefreshTokenValidatorTest_ShouldPassValidation()
+    [Theory]
+    [InlineData("refreshToken")]
+    [InlineData("refreshToken123")]
+    [InlineData("refreshToken()")]
+    [InlineData("refreshToken?")]
+    [InlineData("refreshToken-")]
+    [InlineData("refreshToken_")]
+    public void RefreshTokenValidatorTest_ShouldPassValidation(string refreshToken)
     {
-        // Arrange
-        var validator = new RefreshTokenCommandValidator();
-        
-        var command = new RefreshTokenCommand("refreshToken");
-        
         // Act
-        var result = validator.Validate(command);
+        var result = RefreshTokenCommandValidator.Validate(CreateRefreshTokenCommand(refreshToken));
         
         // Assert
         result.IsValid.Should().BeTrue();
     }
     
-    [Fact]
-    public void RefreshTokenValidatorTest_ShouldFailValidation_WhenRefreshTokenIsInvalid()
+    [Theory]
+    [InlineData("")]
+    [InlineData(null)]
+    [InlineData("  ")]
+    public void RefreshTokenValidatorTest_ShouldFailValidation_WhenRefreshTokenIsInvalid(string refreshToken)
     {
-        // Arrange
-        var validator = new RefreshTokenCommandValidator();
-        
-        var command = new RefreshTokenCommand(string.Empty);
-        
         // Act
-        var result = validator.Validate(command);
+        var result = RefreshTokenCommandValidator.Validate(CreateRefreshTokenCommand(refreshToken));
         
         // Assert
         result.IsValid.Should().BeFalse();

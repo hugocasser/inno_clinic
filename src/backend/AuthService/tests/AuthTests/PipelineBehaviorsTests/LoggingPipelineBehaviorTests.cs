@@ -1,17 +1,14 @@
 using Application.PipelineBehaviors;
 using Application.Requests.Commands.Login;
 using MediatR;
-using Microsoft.Extensions.Logging;
-using Moq;
 using static Moq.It;
 using IResult = Application.Abstractions.Results.IResult;
 
 namespace AuthTests.PipelineBehaviorsTests;
 
-public class LoggingPipelineBehaviorTests
+[Collection("UnitTest")]
+public class LoggingPipelineBehaviorTests : UnitTestFixtures
 {
-    
-    private readonly Mock<ILogger<LoggingPipelineBehavior<LoginUserCommand, IResult>>> _logger = new();
     
     [Fact]
     public async Task LoggingPipelineBehavior_ShouldInvokeNextPipeline_WhenDelegateIsValid()
@@ -38,7 +35,7 @@ public class LoggingPipelineBehaviorTests
         LoginUserCommand command,
         RequestHandlerDelegate<IResult> next = default)
     {
-        var pipeline = new LoggingPipelineBehavior<LoginUserCommand, IResult>(_logger.Object);
+        var pipeline = new LoggingPipelineBehavior<LoginUserCommand, IResult>(Logger.Object);
         
         return pipeline.Handle(command, next , CancellationToken.None);
     }

@@ -1,32 +1,24 @@
-using Application.Abstractions.Auth;
-using Application.Abstractions.Email;
 using Application.Dtos;
 using Application.Options;
-using Application.Services.Auth;
-using Domain.Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Options;
-using Moq;
+
 
 namespace AuthTests.ServicesTest.Auth;
 
-public class ConfirmMessageSenderServiceTests
+[Collection("UnitTest")]
+public class ConfirmMessageSenderServiceTests : UnitTestFixtures
+
 {
-    private readonly Mock<IEmailSenderService> _mockEmailSenderService = new();
-    private readonly Mock<IOptions<EmailSenderOptions>> _mockOptions = new();
-    private readonly Mock<UserManager<User>> _mockUserManager = new(Mock.Of<IUserStore<User>>(), null, null, null, null, null, null, null, null);
-    private readonly IConfirmMessageSenderService _confirmMessageSenderService;
     public ConfirmMessageSenderServiceTests()
     {
         var emailSenderOptions = new EmailSenderOptions()
         {
             ConfirmUrl = "http://localhost:8080/confirm/",
         };
-        _mockOptions
+        MockEmailOptions
             .Setup(options => options.Value)
             .Returns(emailSenderOptions);
         
-        _confirmMessageSenderService = new ConfirmMessageSenderService(_mockEmailSenderService.Object, _mockOptions.Object, _mockUserManager.Object);
+        ConfirmMessageSenderService = new ConfirmMessageSenderService(MockEmailSenderService.Object, MockEmailOptions.Object, UserManagerMock.Object);
     }
 
 
@@ -36,18 +28,18 @@ public class ConfirmMessageSenderServiceTests
         // Arrange
         var user = TestUtils.FakeUser();
         
-        _mockUserManager
+        UserManagerMock
             .Setup(manager => manager.FindByIdAsync(It.IsAny<string>()))
             .ReturnsAsync(user);
 
-        _mockUserManager
+        UserManagerMock
             .Setup(manager => manager.GenerateEmailConfirmationTokenAsync(It.IsAny<User>()))
             .ReturnsAsync("token");
         
         // Act
-        await _confirmMessageSenderService.SendEmailConfirmMessageAsync(user, CancellationToken.None);
+        await ConfirmMessageSenderService.SendEmailConfirmMessageAsync(user, CancellationToken.None);
         
         // Assert
-        _mockEmailSenderService.Verify(service => service.SendEmailAsync(It.IsAny<EmailMessage>(), It.IsAny<CancellationToken>()), Times.Once);
+        MockEmailSenderService.Verify(service => service.SendEmailAsync(It.IsAny<EmailMessage>(), It.IsAny<CancellationToken>()), Times.Once);
     }
 }

@@ -1,66 +1,35 @@
-using Application.Requests.Commands.ResendConfirmationMail;
-using FluentAssertions;
-
 namespace AuthTests.ValidationTests;
 
-public class ResendConfirmationMailValidatorTests
+[Collection("UnitTest")]
+public class ResendConfirmationMailValidatorTests : UnitTestFixtures
 {
-    [Fact]
-    public void ResendConfirmationMailValidatorTest_ShouldPassValidation()
+    [Theory]
+    [InlineData("email@mail.com", "password123-R")]
+    [InlineData("email@mail.com", "password?123R")]
+    [InlineData("email@mail.com", "password()T123")]
+    public void RegisterDoctorValidatorTest_ShouldPassValidation(string email, string password)
     {
-        // Arrange
-        var validator = new ResendConfirmationMailCommandValidator();
-        
-        var command = new ResendConfirmationMailCommand("email@mail.com", "password123-R");
-        
         // Act
-        var result = validator.Validate(command);
+        var result = ResendConfirmationMailCommandValidator
+            .Validate(CreateResendConfirmationMailCommand(email, password));
         
         // Assert
         result.IsValid.Should().BeTrue();
     }
-
-    [Fact]
-    public void ResendConfirmationMailValidatorTest_ShouldFailValidation_WhenEmailIsInvalid()
-    {
-        // Arrange
-        var validator = new ResendConfirmationMailCommandValidator();
-
-        var command = new ResendConfirmationMailCommand(string.Empty, "password123-R");
-
-        // Act
-        var result = validator.Validate(command);
-
-        // Assert
-        result.IsValid.Should().BeFalse();
-
-    }
     
-    [Fact]
-    public void ResendConfirmationMailValidatorTest_ShouldFailValidation_WhenPasswordIsInvalid()
+    [Theory]
+    [InlineData("", "password123-R")]
+    [InlineData(null, "password123-R")]
+    [InlineData("  ", "password123-R")]
+    [InlineData("email@mail.com", "")]
+    [InlineData("email@mail.com", null)]
+    [InlineData("email@mail.com", "  ")]
+    [InlineData("emailmail.com", "password123")]
+    public void RegisterDoctorValidatorTest_ShouldFailValidation_WhenPasswordOrEmailIsInvalid(string email, string password)
     {
-        // Arrange
-        var validator = new ResendConfirmationMailCommandValidator();
-        
-        var command = new ResendConfirmationMailCommand("email@mail.com", string.Empty);
-        
         // Act
-        var result = validator.Validate(command);
-        
-        // Assert
-        result.IsValid.Should().BeFalse();
-    }
-    
-    [Fact]
-    public void ResendConfirmationMailValidatorTest_ShouldFailValidation_WhenEmailAndPasswordAreInvalid()
-    {
-        // Arrange
-        var validator = new ResendConfirmationMailCommandValidator();
-        
-        var command = new ResendConfirmationMailCommand("", string.Empty);
-        
-        // Act
-        var result = validator.Validate(command);
+        var result = ResendConfirmationMailCommandValidator
+            .Validate(CreateResendConfirmationMailCommand(email, password));
         
         // Assert
         result.IsValid.Should().BeFalse();

@@ -1,15 +1,11 @@
-using Application.OperationResult.Errors;
 using Application.Requests.Commands.ConfirmMail;
-using Domain.Models;
-using FluentAssertions;
 using Microsoft.AspNetCore.Identity;
-using Moq;
 
 namespace AuthTests.CommandHandlersTests;
 
-public class ConfirmMailTests
+[Collection("UnitTest")]
+public class ConfirmMailTests : UnitTestFixtures
 {
-    private readonly Mock<UserManager<User>> _userManagerMock =  new (Mock.Of<IUserStore<User>>(), null, null, null, null, null, null, null, null);
     
     [Fact]
     public async Task ConfirmMailTest_WhenAllCorrect_ShouldReturnNoContent()
@@ -17,14 +13,14 @@ public class ConfirmMailTests
         // Arrange
         var user = TestUtils.FakeUser();
         
-        _userManagerMock.Setup(manager => manager.FindByIdAsync(It.IsAny<string>())).ReturnsAsync(user);
+        UserManagerMock.Setup(manager => manager.FindByIdAsync(It.IsAny<string>())).ReturnsAsync(user);
 
-        _userManagerMock.Setup(manager => manager
+        UserManagerMock.Setup(manager => manager
             .ConfirmEmailAsync(It.IsAny<User>(), It.IsAny<string>()))
             .ReturnsAsync(IdentityResult.Success);
         
         var confirmMailCommand = new ConfirmMailCommand(user.Id, "code");
-        var handler = new ConfirmMailCommandHandler(_userManagerMock.Object);
+        var handler = new ConfirmMailCommandHandler(UserManagerMock.Object);
         // Act
         var result = await handler.Handle(confirmMailCommand, CancellationToken.None);
         
@@ -38,8 +34,8 @@ public class ConfirmMailTests
     {
         // Arrange
         var confirmMailCommand = new ConfirmMailCommand(Guid.NewGuid(), "code");
-        _userManagerMock.Setup(manager => manager.FindByIdAsync(It.IsAny<string>())).ReturnsAsync(null as User);
-        var handler = new ConfirmMailCommandHandler(_userManagerMock.Object);
+        UserManagerMock.Setup(manager => manager.FindByIdAsync(It.IsAny<string>())).ReturnsAsync(null as User);
+        var handler = new ConfirmMailCommandHandler(UserManagerMock.Object);
         
         // Act
         var result = await handler.Handle(confirmMailCommand, CancellationToken.None);
@@ -56,8 +52,8 @@ public class ConfirmMailTests
         // Arrange
         var user = TestUtils.FakeUser();
 
-        _userManagerMock.Setup(manager => manager.FindByIdAsync(It.IsAny<string>())).ReturnsAsync(user);
-        _userManagerMock.Setup(manager => manager.ConfirmEmailAsync(It.IsAny<User>(), It.IsAny<string>()))
+        UserManagerMock.Setup(manager => manager.FindByIdAsync(It.IsAny<string>())).ReturnsAsync(user);
+        UserManagerMock.Setup(manager => manager.ConfirmEmailAsync(It.IsAny<User>(), It.IsAny<string>()))
             .ReturnsAsync(IdentityResult.Failed(new IdentityError
             {
                 Code = "code",
@@ -65,7 +61,7 @@ public class ConfirmMailTests
             }));
         
         var confirmMailCommand = new ConfirmMailCommand(user.Id, "code");
-        var handler = new ConfirmMailCommandHandler(_userManagerMock.Object);
+        var handler = new ConfirmMailCommandHandler(UserManagerMock.Object);
         
         // Act
         var result = await handler.Handle(confirmMailCommand, CancellationToken.None);

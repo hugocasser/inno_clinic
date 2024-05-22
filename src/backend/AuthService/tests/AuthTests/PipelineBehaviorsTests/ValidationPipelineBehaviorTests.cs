@@ -1,6 +1,7 @@
 using Application.Abstractions.Results;
 using Application.PipelineBehaviors;
 using Application.Requests.Commands.Login;
+using AuthTests.Fixtures;
 using FluentAssertions;
 using FluentValidation;
 using MediatR;
@@ -8,18 +9,15 @@ using Moq;
 
 namespace AuthTests.PipelineBehaviorsTests;
 
-public class ValidationPipelineBehaviorTests
+[Collection("UnitTest")]
+public class ValidationPipelineBehaviorTests : UnitTestFixtures
 {
-    private readonly IEnumerable<IValidator<LoginUserCommand>> _validators = new List<IValidator<LoginUserCommand>>() 
-    { 
-        new LoginUserCommandValidator()
-    };
     
     [Fact]
     public async Task ValidationPipelineBehavior_ShouldReturnsResultWithBadRequest_WhenValidationFails()
     {
         // Arrange
-        var pipeline = new ValidationPipelineBehavior<LoginUserCommand, IResult>(_validators);
+        var pipeline = new ValidationPipelineBehavior<LoginUserCommand, IResult>(Validators);
         
         // Act
         var result = await pipeline.Handle(
@@ -38,7 +36,7 @@ public class ValidationPipelineBehaviorTests
 
         // Act
         var act = await GenerateValidationPipelineBehaviorBoilerplate(new LoginUserCommand("email@mail.com", "password123-R"),
-            _validators,
+            Validators,
             () => mockedPipeline.Object.Handle(It.IsAny<LoginUserCommand>(),
                 It.IsAny<RequestHandlerDelegate<IResult>>(), It.IsAny<CancellationToken>()));
 

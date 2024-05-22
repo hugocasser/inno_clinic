@@ -1,66 +1,34 @@
-using Application.Requests.Commands.Login;
-using Bogus;
-using FluentAssertions;
-
 namespace AuthTests.ValidationTests;
 
-public class LoginValidatorTests
+[Collection("UnitTest")]
+public class LoginValidatorTests : UnitTestFixtures
 {
-    [Fact]
-    public void LoginValidatorTests_ShouldPassValidation()
+    [Theory]
+    [InlineData("email@mail.com", "password123-R")]
+    [InlineData("email@mail.com", "password?123R")]
+    [InlineData("email@mail.com", "password()T123")]
+    public void LoginValidatorTests_ShouldPassValidation(string email, string password)
     {
-        // Arrange
-        var validator = new LoginUserCommandValidator();
-
-        var command = new LoginUserCommand("email@mail.com", "password123-R");
-        
         // Act
-        var result = validator.Validate(command);
+        var result = LoginUserCommandValidator.Validate(CreateLoginUserCommand(email, password));
         
         // Assert
         result.IsValid.Should().BeTrue();
     }
     
-    [Fact]
-    public void LoginValidatorTests_ShouldFailValidation_WhenPasswordIsInvalid_AndEmailIsInvalid()
-    {
-        // Arrange
-        var validator = new LoginUserCommandValidator();
-        
-        var command = new LoginUserCommand("", "password123-R");
-        
-        // Act
-        var result = validator.Validate(command);
-        
-        // Assert
-        result.IsValid.Should().BeFalse();
-    }
+    [Theory]
+    [InlineData("", "password123-R")]
+    [InlineData(null, "password123-R")]
+    [InlineData("  ", "password123-R")]
+    [InlineData("email@mail.com", "")]
+    [InlineData("email@mail.com", null)]
+    [InlineData("email@mail.com", "  ")]
+    [InlineData("emailmail.com", "password123")]
     
-    [Fact]
-    public void LoginValidatorTests_ShouldFailValidation_WhenPasswordIsInvalid_AndEmailIsValid()
+    public void LoginValidatorTests_ShouldFailValidation_WhenPasswordOrEmailIsInvalid_AndEmailIsInvalid(string email, string password)
     {
-        // Arrange
-        var validator = new LoginUserCommandValidator();
-        
-        var command = new LoginUserCommand("email@mail.com", "password123R");
-        
         // Act
-        var result = validator.Validate(command);
-        
-        // Assert
-        result.IsValid.Should().BeFalse();
-    }
-    
-    [Fact]
-    public void LoginValidatorTests_ShouldFailValidation_WhenPasswordAndEmailAreInvalid()
-    {
-        // Arrange
-        var validator = new LoginUserCommandValidator();
-        
-        var command = new LoginUserCommand("", "password123R");
-        
-        // Act
-        var result = validator.Validate(command);
+        var result = LoginUserCommandValidator.Validate(CreateLoginUserCommand(email, password));
         
         // Assert
         result.IsValid.Should().BeFalse();

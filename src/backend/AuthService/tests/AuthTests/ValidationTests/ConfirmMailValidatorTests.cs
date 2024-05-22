@@ -1,35 +1,30 @@
-using Application.Requests.Commands.ConfirmMail;
-using FluentAssertions;
-
 namespace AuthTests.ValidationTests;
 
-public class ConfirmMailValidatorTests
+[Collection("UnitTest")]
+public class ConfirmMailValidatorTests : UnitTestFixtures
 {
-    [Fact]
-    public void ConfirmMailValidatorTest_ShouldPassValidation()
+    [Theory]
+    [InlineData("someCode")]
+    [InlineData("someOtherCode")]
+    [InlineData("someOtherOtherCode")]
+    [InlineData("someOtherOtherOtherCode")]
+    public void ConfirmMailValidatorTest_ShouldPassValidation(string code)
     {
-        // Arrange
-        var validator = new ConfirmMailCommandValidator();
-        
-        var command = new ConfirmMailCommand(Guid.NewGuid(), "code");
-        
         // Act
-        var result = validator.Validate(command);
+        var result = ConfirmMailCommandValidator.Validate(CreateConfirmMailCommand(Guid.NewGuid(), code));
         
         // Assert
         result.IsValid.Should().BeTrue();
     }
     
-    [Fact]
-    public void ConfirmMailValidatorTest_ShouldFailValidation_WhenCodeIsInvalid()
+    [Theory]
+    [InlineData("")]
+    [InlineData(null)]
+    [InlineData("  ")]
+    public void ConfirmMailValidatorTest_ShouldFailValidation_WhenCodeIsInvalid(string code)
     {
-        // Arrange
-        var validator = new ConfirmMailCommandValidator();
-        
-        var command = new ConfirmMailCommand(Guid.NewGuid(), string.Empty);
-        
         // Act
-        var result = validator.Validate(command);
+        var result = ConfirmMailCommandValidator.Validate(CreateConfirmMailCommand(Guid.NewGuid(), code));
         
         // Assert
         result.IsValid.Should().BeFalse();
@@ -38,13 +33,8 @@ public class ConfirmMailValidatorTests
     [Fact]
     public void ConfirmMailValidatorTest_ShouldFailValidation_WhenUserIdIsInvalid()
     {
-        // Arrange
-        var validator = new ConfirmMailCommandValidator();
-        
-        var command = new ConfirmMailCommand(Guid.Empty, "code");
-        
         // Act
-        var result = validator.Validate(command);
+        var result = ConfirmMailCommandValidator.Validate(CreateConfirmMailCommand(Guid.Empty, "someCode"));
         
         // Assert
         result.IsValid.Should().BeFalse();
