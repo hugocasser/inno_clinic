@@ -31,9 +31,4 @@
       <ProjectReference Include="..\..\Core\Application\Application.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="ServicesTest\Cache\" />
-      <Folder Include="ServicesTest\Email\" />
-    </ItemGroup>
-
 </Project>
