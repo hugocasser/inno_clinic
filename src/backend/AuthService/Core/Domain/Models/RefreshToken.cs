@@ -6,6 +6,6 @@ public class RefreshToken
     public Guid UserId { get; set; }
     public User User { get; set; }
     public string Token { get; set; }
-    public DateTime AddedTime { get; set; }
-    public DateTime ExpiryTime { get; set; }
+    public DateTimeOffset AddedTime { get; set; }
+    public DateTimeOffset ExpiryTime { get; set; }
 }

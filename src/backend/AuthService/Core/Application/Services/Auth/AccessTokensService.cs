@@ -27,7 +27,7 @@ public class AccessTokensService(IOptions<AccessTokenOptions> options, UserManag
             new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
             new Claim(JwtRegisteredClaimNames.Email, user.Email),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            new Claim(JwtRegisteredClaimNames.Iat, EpochTime.GetIntDate(DateTime.Now).ToString(CultureInfo.InvariantCulture), ClaimValueTypes.Integer64)
+            new Claim(JwtRegisteredClaimNames.Iat, EpochTime.GetIntDate(DateTimeOffset.Now.UtcDateTime).ToString(CultureInfo.InvariantCulture), ClaimValueTypes.Integer64)
         };
         
         claims.AddRange(userRoles.Select(role => new Claim("role:", role)));

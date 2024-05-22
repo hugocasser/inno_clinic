@@ -75,7 +75,7 @@ public class RefreshTokenService(ICacheService cacheService,
             refreshToken = JsonSerializer.Deserialize<RefreshToken>(refreshSerializedToken);
         }
         
-        var currentTime = DateTime.Now;
+        var currentTime = DateTimeOffset.Now;
         
         if (refreshToken is not null)
         {
@@ -121,8 +121,8 @@ public class RefreshTokenService(ICacheService cacheService,
             Id = Guid.NewGuid(),
             UserId = user.Id,
             Token = Utilities.GenerateRandomString(7),
-            AddedTime = DateTime.UtcNow,
-            ExpiryTime = DateTime.UtcNow.AddMonths(2),
+            AddedTime = DateTimeOffset.UtcNow,
+            ExpiryTime = DateTimeOffset.UtcNow.AddMonths(2),
             User = user
         };
     }

@@ -9,5 +9,5 @@ public static class ErrorMessages
     public const string? InvalidRefreshToken = "Invalid refresh token, please login again";
     public const string? UserAlreadyExists = "User already exists";
     public const string? UserNotHaveSuitableRole = "User not have suitable role";
-    public const string? UserNotFound = "User not found";
+    public const string? UserNotFound = "UserNotFound";
 }
