@@ -62,28 +62,10 @@ public static class ApplicationInjection
 
     private static IServiceCollection AddOptions(this IServiceCollection services)
     {
-        // services
-        //     .AddGenericOptions<AccessTokenOptions>()
-        //     .AddGenericOptions<EmailSenderOptions>()
-        //     .AddGenericOptions<RedisOptions>();
-        
         services
-            .AddOptions<AccessTokenOptions>()
-            .BindConfiguration(nameof(AccessTokenOptions))
-            .ValidateOnStart()
-            .ValidateDataAnnotations();
-        
-        services
-            .AddOptions<EmailSenderOptions>()
-            .BindConfiguration(nameof(EmailSenderOptions))
-            .ValidateOnStart()
-            .ValidateDataAnnotations();
-        
-        services
-            .AddOptions<RedisOptions>()
-            .BindConfiguration(nameof(RedisOptions))
-            .ValidateOnStart()
-            .ValidateDataAnnotations();
+            .AddGenericOptions<AccessTokenOptions>(nameof(AccessTokenOptions))
+            .AddGenericOptions<EmailSenderOptions>(nameof(EmailSenderOptions))
+            .AddGenericOptions<RedisOptions>(nameof(RedisOptions));
         
         return services;
     }
@@ -97,7 +79,7 @@ public static class ApplicationInjection
     private static IServiceCollection AddRedisCache(this IServiceCollection services, IConfiguration configuration)
     {
         var redisOptions = new RedisOptions();
-        var redisConnectionString = Environment.GetEnvironmentVariable("RedisConnectionString");
+        var redisConnectionString = Environment.GetEnvironmentVariable("Test_RedisConnectionString");
         if (redisConnectionString != null)
         {
             redisOptions.RefreshTokenConnectionString = redisConnectionString;

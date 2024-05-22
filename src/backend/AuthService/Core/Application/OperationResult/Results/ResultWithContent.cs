@@ -10,20 +10,14 @@ public class ResultWithContent<T> : IResult
     public Error? Error { get; set; }
     public T? ResultData { get; set; }
     
-    public string GetResultMessage()
+    public object? GetResultMessage()
     {
         if (!IsSuccess)
         {
             return Error.Message;
         }
 
-        var json = JsonConvert.SerializeObject(ResultData, new JsonSerializerSettings()
-        {
-            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-            TypeNameHandling = TypeNameHandling.Objects
-        });
-
-        return json;
+        return ResultData;
     }
 
     public int? GetStatusCode()

@@ -21,7 +21,12 @@ public class RefreshTokenService(ICacheService cacheService,
         await refreshTokensRepository.CreateTokenAsync(refreshToken, cancellationToken);
         await refreshTokensRepository.SaveChangesAsync(cancellationToken);
         
-        await cacheService.SetAsync(refreshToken.UserId.ToString(), JsonConvert.SerializeObject(refreshToken), cancellationToken: cancellationToken);
+        var serializedRefreshToken = JsonConvert.SerializeObject(refreshToken, new JsonSerializerSettings()
+        {
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            TypeNameHandling = TypeNameHandling.All
+        });
+        await cacheService.SetAsync(refreshToken.UserId.ToString(), serializedRefreshToken , cancellationToken: cancellationToken);
         
         return refreshToken;
     }
@@ -63,7 +68,7 @@ public class RefreshTokenService(ICacheService cacheService,
     {
         var refreshSerializedToken = await cacheService.GetAsync(userId.ToString(), cancellationToken);
         
-        var refreshToken = new RefreshToken();
+        var refreshToken = null as RefreshToken;
         
         if (!string.IsNullOrEmpty(refreshSerializedToken))
         {
@@ -98,7 +103,13 @@ public class RefreshTokenService(ICacheService cacheService,
             return null;
         }
 
-        await cacheService.SetAsync(refreshToken.UserId.ToString(), JsonConvert.SerializeObject(refreshToken), cancellationToken: cancellationToken);
+        var serializedRefreshToken = JsonConvert.SerializeObject(refreshToken, new JsonSerializerSettings()
+        {
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            TypeNameHandling = TypeNameHandling.All
+        });
+        
+        await cacheService.SetAsync(refreshToken.UserId.ToString(), serializedRefreshToken , cancellationToken: cancellationToken);
                 
         return refreshToken;
     }

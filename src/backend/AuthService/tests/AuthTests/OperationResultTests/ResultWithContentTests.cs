@@ -2,7 +2,6 @@ using Application.OperationResult.Errors;
 using Application.OperationResult.Results;
 using Domain.Models;
 using FluentAssertions;
-using Newtonsoft.Json;
 
 namespace AuthTests.OperationResultTests;
 
@@ -16,7 +15,7 @@ public class ResultWithContentTests
         
         // Act
         var result = ResultWithContent<User>.Success(user);
-        var objectResult = JsonConvert.DeserializeObject<User>(result.GetResultMessage());
+        var objectResult = result.GetResultMessage() as User;
         // Assert
         result.IsSuccess.Should().BeTrue();
         result.GetStatusCode().Should().Be(200);

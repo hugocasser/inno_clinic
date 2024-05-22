@@ -7,9 +7,12 @@ namespace Presentation.Extensions;
 
 public static class LoggingExtension
 {
-        public static WebApplication UseLogging(this WebApplication application)
+    public static WebApplication UseLogging(this WebApplication application)
     {
-        application.UseSerilogRequestLogging();
+        if (Environment.GetEnvironmentVariable("Test_Logs") != "Disable elasticsearch")
+        {
+            application.UseSerilogRequestLogging();
+        }
         
         return application;
     }
@@ -17,7 +20,7 @@ public static class LoggingExtension
     public static WebApplicationBuilder AddLoggingServices(
         this WebApplicationBuilder builder)
     {
-        if (Environment.GetEnvironmentVariable("ElasticConfiguration:Uri") != "no_set")
+        if (Environment.GetEnvironmentVariable("Test_Logs") != "Disable elasticsearch")
         {
             return builder.AddElasticAndSerilog();
         }

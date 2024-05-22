@@ -37,10 +37,10 @@ public static class Utilities
         return result.ToString();
     }
     
-    public static IServiceCollection AddGenericOptions<T>(this IServiceCollection services) where T : class
+    public static IServiceCollection AddGenericOptions<T>(this IServiceCollection services, string configSectionPath) where T : class
     {
         services.AddOptions<T>()
-            .BindConfiguration(nameof(T))
+            .BindConfiguration(configSectionPath)
             .ValidateOnStart()
             .ValidateDataAnnotations();
         

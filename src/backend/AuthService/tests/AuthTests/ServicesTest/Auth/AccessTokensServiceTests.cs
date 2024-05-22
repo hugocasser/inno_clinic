@@ -28,7 +28,7 @@ public class AccessTokensServiceTests
                 Key = "0567e065-e6a5-4c25-aa36-e8304303b14b"
 
             });
-        _accessTokensService = new AccessTokensService(_mockOptions.Object, _userManagerMock.Object, _mockRefreshTokensService.Object);
+        _accessTokensService = new AccessTokensService(_mockOptions.Object, _userManagerMock.Object);
     }
     
 
@@ -44,7 +44,7 @@ public class AccessTokensServiceTests
             .ReturnsAsync(roles);
         
         // Act
-        var result =  _accessTokensService.CreateAccessToken(user, roles, CancellationToken.None);
+        var result =  _accessTokensService.CreateAccessToken(user, roles);
         
         // Assert
         result.Should().NotBeNullOrEmpty();
@@ -57,7 +57,7 @@ public class AccessTokensServiceTests
         var user = TestUtils.FakeUser();
         
         // Act
-        var result =  _accessTokensService.CreateAccessToken(user, null, CancellationToken.None);
+        var result =  _accessTokensService.CreateAccessToken(user, null);
         
         // Assert
         result.Should().BeNullOrEmpty();

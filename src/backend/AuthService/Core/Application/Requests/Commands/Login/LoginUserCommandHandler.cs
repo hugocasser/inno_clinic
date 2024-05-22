@@ -26,7 +26,7 @@ public class LoginUserCommandHandler(
         }
         
         var userRoles = await accessTokensService.GetRolesAsync(success.ResultData);
-        var accessToken = accessTokensService.CreateAccessToken(success.ResultData,userRoles, cancellationToken);
+        var accessToken = accessTokensService.CreateAccessToken(success.ResultData,userRoles);
 
         if (string.IsNullOrEmpty(accessToken))
         {

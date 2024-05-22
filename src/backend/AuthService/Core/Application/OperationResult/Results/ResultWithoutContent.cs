@@ -7,7 +7,7 @@ public class ResultWithoutContent : IResult
 {
     public bool IsSuccess { get; set; }
     public Error? Error { get; set; }
-    public string GetResultMessage()
+    public object? GetResultMessage()
     {
         return !IsSuccess ? Error.Message : "No content";
     }

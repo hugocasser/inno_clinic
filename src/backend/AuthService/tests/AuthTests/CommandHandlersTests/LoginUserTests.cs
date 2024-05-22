@@ -69,7 +69,7 @@ public class LoginUserTests
         
         _accessTokensServiceMock
             .Setup(service => service
-                .CreateAccessToken(It.IsAny<User>(), It.IsAny<List<string>>(), It.IsAny<CancellationToken>()))
+                .CreateAccessToken(It.IsAny<User>(), It.IsAny<List<string>>()))
             .Returns("token");
         
         _userServiceMock

@@ -13,10 +13,9 @@ using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegiste
 
 namespace Application.Services.Auth;
 
-public class AccessTokensService(IOptions<AccessTokenOptions> options, UserManager<User> userManager,
-    IRefreshTokensService refreshTokensService) : IAccessTokensService
+public class AccessTokensService(IOptions<AccessTokenOptions> options, UserManager<User> userManager) : IAccessTokensService
 {
-    public string CreateAccessToken(User user, IList<string> userRoles, CancellationToken cancellationToken)
+    public string CreateAccessToken(User user, IList<string> userRoles)
     {
         if (userRoles is null)
         {

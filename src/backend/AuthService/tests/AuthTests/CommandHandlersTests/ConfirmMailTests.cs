@@ -1,11 +1,8 @@
 using Application.OperationResult.Errors;
-using Application.OperationResult.Results;
 using Application.Requests.Commands.ConfirmMail;
-using Bogus;
 using Domain.Models;
 using FluentAssertions;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Moq;
 
 namespace AuthTests.CommandHandlersTests;

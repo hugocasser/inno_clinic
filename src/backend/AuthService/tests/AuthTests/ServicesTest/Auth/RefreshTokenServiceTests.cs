@@ -194,7 +194,7 @@ public class RefreshTokenServiceTests
     }
     
     [Fact]
-    public async Task RevokeRefreshToken_ShouldReturnForbidden_WhenTokenNotBelongsUser()
+    public async Task RevokeRefreshToken_ShouldReturnUnauthorized_WhenTokenNotBelongsUser()
     {
         // Arrange
         var user = new User
@@ -220,6 +220,6 @@ public class RefreshTokenServiceTests
         
         // Assert
         result.IsSuccess.Should().BeFalse();
-        result.Error.Code.Should().Be(403);
+        result.Error.Code.Should().Be(401);
     }
 }
