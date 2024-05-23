@@ -30,4 +30,13 @@
     <data name="PhoneCannotBeNullOfEmpty" xml:space="preserve">
         <value>Phone number can't be null or empty</value>
     </data>
+    <data name="OfficeNotFound" xml:space="preserve">
+        <value>Office not found</value>
+    </data>
+    <data name="PhotoNotFound" xml:space="preserve">
+        <value>photo not found</value>
+    </data>
+    <data name="NothingChanged" xml:space="preserve">
+        <value>Nothing was updated</value>
+    </data>
 </root>

@@ -13,7 +13,7 @@ public class Office: Entity
     [BsonElement("is_active")]
     public bool IsActive { get; private set; } = false;
     [BsonElement("photo_id")]
-    public Guid PhotoId { get; private set; } = Guid.Empty;
+    public Guid? PhotoId { get; private set; } = Guid.Empty;
     
     public static Office CreateOffice(string address, string registryPhoneNumber, bool isActive, Guid photoId = default)
     {
@@ -31,11 +31,20 @@ public class Office: Entity
         return office;
     }
     
-    public void UpdateOffice(bool isActive, Guid photoId = default,
+    public void ChangeOfficePhoto(Guid? photoId = default)
+    {
+        if (photoId == PhotoId)
+        {
+            return;
+        }
+        
+        PhotoId = photoId;
+        RaiseDomainEvent(new EntityUpdatedEvent<Office>(this));
+    }
+    public void UpdateOffice(Guid? photoId = default,
         string? registryPhoneNumber = default, string? address = default)
     {
-        if (registryPhoneNumber is null && address is null
-            && isActive == IsActive && photoId == PhotoId)
+        if (registryPhoneNumber is null && address is null && photoId == PhotoId)
         {
             return;
         }
@@ -55,16 +64,21 @@ public class Office: Entity
             PhotoId = photoId;
         }
         
-        if (isActive != IsActive)
-        {
-            IsActive = isActive;
-        }
-        
         Address = address;
         RegistryPhoneNumber = registryPhoneNumber;
-        IsActive = isActive;
         PhotoId = photoId;
         
+        RaiseDomainEvent(new EntityUpdatedEvent<Office>(this));
+    }
+    
+    public void ChangeOfficeStatus(bool isActive)
+    {
+        if (isActive == IsActive)
+        {
+            return;
+        }
+        
+        IsActive = isActive;
         RaiseDomainEvent(new EntityUpdatedEvent<Office>(this));
     }
     

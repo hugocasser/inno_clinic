@@ -1,4 +1,5 @@
 using Application.Abstractions.Services;
+using Application.Common;
 using FluentValidation;
 
 namespace Application.Request.Commands.CreateOffice;
@@ -7,22 +8,12 @@ public class CreateOfficeCommandValidator : AbstractValidator<CreateOfficeComman
 {
     public CreateOfficeCommandValidator(IPhoneValidatorService phoneValidator, IGoogleMapsApiClient googleMapsApiClient)
     {
-        RuleFor(x => x.Address).NotEmpty()
-            .WithMessage(ErrorMessages.AddressCannotBeNullOrEmpty)
-            .MustAsync(async (address, token) =>
-            {
-                var result = await googleMapsApiClient.ValidateAddressAsync(address, token);
-                return result;
-            })
-            .WithMessage(ErrorMessages.AddressNotValid);
+        RuleFor(x => x.Address).Address(googleMapsApiClient);
+
+        RuleFor(x => x.RegistryPhoneNumber).Phone(phoneValidator);
         
-        RuleFor(x => x.RegistryPhoneNumber).NotEmpty()
-            .WithMessage(ErrorMessages.PhoneCannotBeNullOfEmpty)
-            .MustAsync(async (phoneNumber, token) =>
-            {
-                var result = await phoneValidator.ValidatePhoneNumberAsync(phoneNumber, token);
-                return result;
-            })
-            .WithMessage(ErrorMessages.PhoneNumberNotValid);
+        RuleFor(x => x.IsActive).NotNull();
+        
+        RuleFor(x => x.PhotoId).NotEmpty();
     }
 }

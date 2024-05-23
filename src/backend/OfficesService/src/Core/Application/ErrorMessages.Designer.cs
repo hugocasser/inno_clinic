@@ -68,5 +68,23 @@ namespace Application {
                 return ResourceManager.GetString("PhoneCannotBeNullOfEmpty", resourceCulture);
             }
         }
+        
+        internal static string OfficeNotFound {
+            get {
+                return ResourceManager.GetString("OfficeNotFound", resourceCulture);
+            }
+        }
+        
+        internal static string PhotoNotFound {
+            get {
+                return ResourceManager.GetString("PhotoNotFound", resourceCulture);
+            }
+        }
+        
+        internal static string NothingChanged {
+            get {
+                return ResourceManager.GetString("NothingChanged", resourceCulture);
+            }
+        }
     }
 }
