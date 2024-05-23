@@ -1,4 +1,4 @@
-namespace Application.Abstractions.Services;
+namespace Application.Abstractions.Services.ValidationServices;
 
 public interface IGoogleMapsApiClient
 {

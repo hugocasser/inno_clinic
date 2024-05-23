@@ -1,6 +1,6 @@
 using Application.Abstractions.OperationResult;
 
-namespace Application.Abstractions.Services;
+namespace Application.Abstractions.Services.ExternalServices;
 
 public interface IPhotoService
 {

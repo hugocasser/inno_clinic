@@ -1,4 +1,5 @@
 using Application.Abstractions.Services;
+using Application.Abstractions.Services.ValidationServices;
 using FluentValidation;
 
 namespace Application.Common;

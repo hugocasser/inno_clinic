@@ -1,5 +1,6 @@
 using Domain.Abstractions;
-using Domain.DomainEvents;
+using Domain.Abstractions.Events;
+using Domain.Events;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace Domain.Models;
@@ -26,7 +27,7 @@ public class Office: Entity
             PhotoId = photoId
         };
 
-        office.RaiseDomainEvent(new EntityCreatedEvent<Office>(office));
+        office.RaiseDomainEvent(new GenericDomainEvent(EventType.Created, office));
         
         return office;
     }
@@ -39,7 +40,7 @@ public class Office: Entity
         }
         
         PhotoId = photoId;
-        RaiseDomainEvent(new EntityUpdatedEvent<Office>(this));
+        RaiseDomainEvent(new GenericDomainEvent(EventType.Updated, this));
     }
     public void UpdateOffice(Guid? photoId = default,
         string? registryPhoneNumber = default, string? address = default)
@@ -68,7 +69,7 @@ public class Office: Entity
         RegistryPhoneNumber = registryPhoneNumber;
         PhotoId = photoId;
         
-        RaiseDomainEvent(new EntityUpdatedEvent<Office>(this));
+        RaiseDomainEvent(new GenericDomainEvent(EventType.Updated, this));
     }
     
     public void ChangeOfficeStatus(bool isActive)
@@ -79,11 +80,11 @@ public class Office: Entity
         }
         
         IsActive = isActive;
-        RaiseDomainEvent(new EntityUpdatedEvent<Office>(this));
+        RaiseDomainEvent(new GenericDomainEvent(EventType.Updated, this));
     }
     
     public void DeleteOffice()
     {
-        RaiseDomainEvent(new EntityDeletedEvent<Office>(this));
+        RaiseDomainEvent(new GenericDomainEvent(EventType.Deleted, this));
     }
 }
