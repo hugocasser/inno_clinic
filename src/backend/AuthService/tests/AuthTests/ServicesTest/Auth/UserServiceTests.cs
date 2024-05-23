@@ -6,6 +6,8 @@ namespace AuthTests.ServicesTest.Auth;
 [Collection("UnitTest")]
 public class UserServiceTests : UnitTestFixtures
 {
+    private const string Email = "email@mail.com";
+    private const string Password = "password123-R";
     
     public UserServiceTests()
     {
@@ -33,7 +35,7 @@ public class UserServiceTests : UnitTestFixtures
             .Verifiable();
         
         // Act
-        var result = await UsersService.RegisterUser("email@mail.com", "password123-R", Roles.Patient, CancellationToken.None);
+        var result = await UsersService.RegisterUser(Email, Password, Roles.Patient, CancellationToken.None);
         
         // Assert
         result.IsSuccess.Should().BeTrue();
@@ -49,7 +51,7 @@ public class UserServiceTests : UnitTestFixtures
             .ReturnsAsync(new User());
         
         // Act
-        var result = await UsersService.RegisterUser("email@mail.com", "password123-R", Roles.Patient, CancellationToken.None);
+        var result = await UsersService.RegisterUser(Email, Password, Roles.Patient, CancellationToken.None);
         
         // Assert
         result.IsSuccess.Should().BeFalse();
@@ -70,7 +72,7 @@ public class UserServiceTests : UnitTestFixtures
             .ReturnsAsync(true);
         
         // Act
-        var result = await UsersService.CheckUserPassword("email@mail.com", "password123-R");
+        var result = await UsersService.CheckUserPassword(Email, Password);
         
         // Assert
         result.IsSuccess.Should().BeTrue();
@@ -93,7 +95,7 @@ public class UserServiceTests : UnitTestFixtures
             }));
         
         // Act
-        var result = await UsersService.RegisterUser("email@mail.com", "password123-R", Roles.Patient, CancellationToken.None);
+        var result = await UsersService.RegisterUser(Email, Password, Roles.Patient, CancellationToken.None);
         
         // Assert
         result.IsSuccess.Should().BeFalse();
@@ -110,7 +112,7 @@ public class UserServiceTests : UnitTestFixtures
             .ReturnsAsync(null as User);
         
         // Act
-        var result = await UsersService.CheckUserPassword("email@mail.com", "password123-R");
+        var result = await UsersService.CheckUserPassword(Email, Password);
         
         // Assert
         result.IsSuccess.Should().BeFalse();
@@ -131,7 +133,7 @@ public class UserServiceTests : UnitTestFixtures
             .ReturnsAsync(false);
         
         // Act
-        var result = await UsersService.CheckUserPassword("email@mail.com", "password123-R");
+        var result = await UsersService.CheckUserPassword(Email, Password);
         
         // Assert
         result.IsSuccess.Should().BeFalse();

@@ -6,6 +6,7 @@ namespace AuthTests.CommandHandlersTests;
 [Collection("UnitTest")]
 public class ConfirmMailTests : UnitTestFixtures
 {
+    private const string Code = "code";
     
     [Fact]
     public async Task ConfirmMailTest_WhenAllCorrect_ShouldReturnNoContent()
@@ -19,7 +20,7 @@ public class ConfirmMailTests : UnitTestFixtures
             .ConfirmEmailAsync(It.IsAny<User>(), It.IsAny<string>()))
             .ReturnsAsync(IdentityResult.Success);
         
-        var confirmMailCommand = new ConfirmMailCommand(user.Id, "code");
+        var confirmMailCommand = new ConfirmMailCommand(user.Id, Code);
         var handler = new ConfirmMailCommandHandler(UserManagerMock.Object);
         // Act
         var result = await handler.Handle(confirmMailCommand, CancellationToken.None);
@@ -33,7 +34,7 @@ public class ConfirmMailTests : UnitTestFixtures
     public async Task ConfirmMailTest_WhenUserNotFound_ShouldReturnNotFound()
     {
         // Arrange
-        var confirmMailCommand = new ConfirmMailCommand(Guid.NewGuid(), "code");
+        var confirmMailCommand = new ConfirmMailCommand(Guid.NewGuid(), Code);
         UserManagerMock.Setup(manager => manager.FindByIdAsync(It.IsAny<string>())).ReturnsAsync(null as User);
         var handler = new ConfirmMailCommandHandler(UserManagerMock.Object);
         
@@ -60,7 +61,7 @@ public class ConfirmMailTests : UnitTestFixtures
                 Description = "Invalid code"
             }));
         
-        var confirmMailCommand = new ConfirmMailCommand(user.Id, "code");
+        var confirmMailCommand = new ConfirmMailCommand(user.Id, Code);
         var handler = new ConfirmMailCommandHandler(UserManagerMock.Object);
         
         // Act

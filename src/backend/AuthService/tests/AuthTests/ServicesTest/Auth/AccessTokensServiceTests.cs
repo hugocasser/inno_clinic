@@ -5,6 +5,7 @@ namespace AuthTests.ServicesTest.Auth;
 [Collection("UnitTest")]
 public class AccessTokensServiceTests : UnitTestFixtures
 {
+    private readonly User User = TestUtils.FakeUser();
     
     public AccessTokensServiceTests()
     {
@@ -25,7 +26,6 @@ public class AccessTokensServiceTests : UnitTestFixtures
     public  void CreateAccessToken_ShouldBeCreated_WhenRolesNotNull()
     {
         // Arrange
-        var user = TestUtils.FakeUser();
         var roles = new List<string>() {"role1", "role2"};
         
         UserManagerMock
@@ -33,7 +33,7 @@ public class AccessTokensServiceTests : UnitTestFixtures
             .ReturnsAsync(roles);
         
         // Act
-        var result =  AccessTokensService.CreateAccessToken(user, roles);
+        var result =  AccessTokensService.CreateAccessToken(User, roles);
         
         // Assert
         result.Should().NotBeNullOrEmpty();
@@ -42,11 +42,8 @@ public class AccessTokensServiceTests : UnitTestFixtures
     [Fact]
     public void CreateAccessToken_ShouldReturnEmpty_WhenRolesNull()
     {
-        // Arrange
-        var user = TestUtils.FakeUser();
-        
         // Act
-        var result =  AccessTokensService.CreateAccessToken(user, null);
+        var result =  AccessTokensService.CreateAccessToken(User, null);
         
         // Assert
         result.Should().BeNullOrEmpty();

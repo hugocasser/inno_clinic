@@ -12,12 +12,16 @@ namespace AuthTests.PipelineBehaviorsTests;
 [Collection("UnitTest")]
 public class ValidationPipelineBehaviorTests : UnitTestFixtures
 {
+    private readonly IEnumerable<IValidator<LoginUserCommand>> _validators = new List<IValidator<LoginUserCommand>>() 
+    { 
+        new LoginUserCommandValidator()
+    };
     
     [Fact]
     public async Task ValidationPipelineBehavior_ShouldReturnsResultWithBadRequest_WhenValidationFails()
     {
         // Arrange
-        var pipeline = new ValidationPipelineBehavior<LoginUserCommand, IResult>(Validators);
+        var pipeline = new ValidationPipelineBehavior<LoginUserCommand, IResult>(_validators);
         
         // Act
         var result = await pipeline.Handle(
@@ -36,7 +40,7 @@ public class ValidationPipelineBehaviorTests : UnitTestFixtures
 
         // Act
         var act = await GenerateValidationPipelineBehaviorBoilerplate(new LoginUserCommand("email@mail.com", "password123-R"),
-            Validators,
+            _validators,
             () => mockedPipeline.Object.Handle(It.IsAny<LoginUserCommand>(),
                 It.IsAny<RequestHandlerDelegate<IResult>>(), It.IsAny<CancellationToken>()));
 

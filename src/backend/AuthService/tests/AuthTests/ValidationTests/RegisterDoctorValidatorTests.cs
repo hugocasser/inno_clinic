@@ -1,8 +1,11 @@
+using Application.Requests.Commands.RegisterDoctor;
+
 namespace AuthTests.ValidationTests;
 
 [Collection("UnitTest")]
-public class RegisterDoctorValidatorTests : UnitTestFixtures
+public class RegisterDoctorValidatorTests
 {
+    private readonly RegisterDoctorCommandValidator RegisterDoctorCommandValidator = new();
     [Theory]
     [InlineData("email@mail.com", "password123-R")]
     [InlineData("email@mail.com", "password?123R")]
@@ -10,7 +13,7 @@ public class RegisterDoctorValidatorTests : UnitTestFixtures
     public void RegisterDoctorValidatorTest_ShouldPassValidation(string email, string password)
     {
         // Act
-        var result = RegisterDoctorCommandValidator.Validate(CreateRegisterDoctorCommand(email, password));
+        var result = RegisterDoctorCommandValidator.Validate(new RegisterDoctorCommand(email, password));
         
         // Assert
         result.IsValid.Should().BeTrue();
@@ -27,7 +30,7 @@ public class RegisterDoctorValidatorTests : UnitTestFixtures
     public void RegisterDoctorValidatorTest_ShouldFailValidation_WhenPasswordOrEmailIsInvalid(string email, string password)
     {
         // Act
-        var result = RegisterDoctorCommandValidator.Validate(CreateRegisterDoctorCommand(email, password));
+        var result = RegisterDoctorCommandValidator.Validate(new RegisterDoctorCommand(email, password));
         
         // Assert
         result.IsValid.Should().BeFalse();

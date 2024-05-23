@@ -6,6 +6,8 @@ namespace AuthTests.CommandHandlersTests;
 [Collection("UnitTest")]
 public class LoginUserTests : UnitTestFixtures
 {
+    private const string Email = "email@mail.com";
+    private const string Password = "password123-R";
     [Fact]
     public async Task LoginUserTest_WhenUserNotFound_ShouldReturnUnauthorized()
     {
@@ -15,7 +17,7 @@ public class LoginUserTests : UnitTestFixtures
             .Setup(service => service.CheckUserPassword(It.IsAny<string>(), It.IsAny<string>()))
             .ReturnsAsync(ResultWithoutContent.Failure(Error.Unauthorized().WithMessage(ErrorMessages.InvalidEmailOrPassword)));
         
-        var loginUserCommand = new LoginUserCommand("email@mail.com", "password123-R");
+        var loginUserCommand = new LoginUserCommand(Email, Password);
         var handler = new LoginUserCommandHandler(UserManagerMock.Object,
             RefreshTokensServiceMock.Object, AccessTokensServiceMock.Object, UserServiceMock.Object);
         
@@ -65,7 +67,7 @@ public class LoginUserTests : UnitTestFixtures
                 .CheckUserPassword(It.IsAny<string>(), It.IsAny<string>()))
             .ReturnsAsync(ResultWithContent<User>.Success(user));
         
-        var loginUserCommand = new LoginUserCommand("email@mail.com", "password123-R");
+        var loginUserCommand = new LoginUserCommand(Email, Password);
         var handler = new LoginUserCommandHandler(UserManagerMock.Object,
             RefreshTokensServiceMock.Object, AccessTokensServiceMock.Object, UserServiceMock.Object);
         
@@ -87,7 +89,7 @@ public class LoginUserTests : UnitTestFixtures
                 .CheckUserPassword(It.IsAny<string>(), It.IsAny<string>()))
             .ReturnsAsync(ResultWithoutContent.Failure(Error.Unauthorized().WithMessage(ErrorMessages.InvalidEmailOrPassword)));
         
-        var loginUserCommand = new LoginUserCommand("email@mail.com", "password123-R");
+        var loginUserCommand = new LoginUserCommand(Email, Password);
         var handler = new LoginUserCommandHandler(UserManagerMock.Object,
             RefreshTokensServiceMock.Object, AccessTokensServiceMock.Object, UserServiceMock.Object);
         // Act
@@ -113,7 +115,7 @@ public class LoginUserTests : UnitTestFixtures
                 .GetRolesAsync(It.IsAny<User>()))
             .ReturnsAsync(new List<string>());
         
-        var loginUserCommand = new LoginUserCommand("email@mail.com", "password123-R");
+        var loginUserCommand = new LoginUserCommand(Email, Password);
         var handler = new LoginUserCommandHandler(UserManagerMock.Object,
             RefreshTokensServiceMock.Object, AccessTokensServiceMock.Object, UserServiceMock.Object);
         // Act
