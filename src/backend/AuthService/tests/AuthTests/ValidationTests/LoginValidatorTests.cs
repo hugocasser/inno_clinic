@@ -1,8 +1,11 @@
+using Application.Requests.Commands.Login;
+
 namespace AuthTests.ValidationTests;
 
 [Collection("UnitTest")]
-public class LoginValidatorTests : UnitTestFixtures
+public class LoginValidatorTests
 {
+    private readonly LoginUserCommandValidator _validator = new();
     [Theory]
     [InlineData("email@mail.com", "password123-R")]
     [InlineData("email@mail.com", "password?123R")]
@@ -10,7 +13,7 @@ public class LoginValidatorTests : UnitTestFixtures
     public void LoginValidatorTests_ShouldPassValidation(string email, string password)
     {
         // Act
-        var result = LoginUserCommandValidator.Validate(CreateLoginUserCommand(email, password));
+        var result = _validator.Validate(new LoginUserCommand(email, password));
         
         // Assert
         result.IsValid.Should().BeTrue();
@@ -28,7 +31,7 @@ public class LoginValidatorTests : UnitTestFixtures
     public void LoginValidatorTests_ShouldFailValidation_WhenPasswordOrEmailIsInvalid_AndEmailIsInvalid(string email, string password)
     {
         // Act
-        var result = LoginUserCommandValidator.Validate(CreateLoginUserCommand(email, password));
+        var result = _validator.Validate(new LoginUserCommand(email, password));
         
         // Assert
         result.IsValid.Should().BeFalse();

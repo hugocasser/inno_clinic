@@ -1,8 +1,11 @@
+using Application.Requests.Commands.RefreshToken;
+
 namespace AuthTests.ValidationTests;
 
 [Collection("UnitTest")]
-public class RefreshTokenValidatorTests : UnitTestFixtures
+public class RefreshTokenValidatorTests
 {
+    private readonly RefreshTokenCommandValidator _refreshTokenCommandValidator = new();
     [Theory]
     [InlineData("refreshToken")]
     [InlineData("refreshToken123")]
@@ -13,7 +16,7 @@ public class RefreshTokenValidatorTests : UnitTestFixtures
     public void RefreshTokenValidatorTest_ShouldPassValidation(string refreshToken)
     {
         // Act
-        var result = RefreshTokenCommandValidator.Validate(CreateRefreshTokenCommand(refreshToken));
+        var result = _refreshTokenCommandValidator.Validate(new RefreshTokenCommand(refreshToken)); 
         
         // Assert
         result.IsValid.Should().BeTrue();
@@ -26,7 +29,7 @@ public class RefreshTokenValidatorTests : UnitTestFixtures
     public void RefreshTokenValidatorTest_ShouldFailValidation_WhenRefreshTokenIsInvalid(string refreshToken)
     {
         // Act
-        var result = RefreshTokenCommandValidator.Validate(CreateRefreshTokenCommand(refreshToken));
+        var result = _refreshTokenCommandValidator.Validate(new RefreshTokenCommand(refreshToken)); 
         
         // Assert
         result.IsValid.Should().BeFalse();

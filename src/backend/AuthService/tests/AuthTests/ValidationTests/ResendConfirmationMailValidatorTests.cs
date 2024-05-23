@@ -1,8 +1,11 @@
+using Application.Requests.Commands.ResendConfirmationMail;
+
 namespace AuthTests.ValidationTests;
 
 [Collection("UnitTest")]
-public class ResendConfirmationMailValidatorTests : UnitTestFixtures
+public class ResendConfirmationMailValidatorTests
 {
+    private readonly ResendConfirmationMailCommandValidator ResendConfirmationMailCommandValidator = new();
     [Theory]
     [InlineData("email@mail.com", "password123-R")]
     [InlineData("email@mail.com", "password?123R")]
@@ -11,7 +14,7 @@ public class ResendConfirmationMailValidatorTests : UnitTestFixtures
     {
         // Act
         var result = ResendConfirmationMailCommandValidator
-            .Validate(CreateResendConfirmationMailCommand(email, password));
+            .Validate(new ResendConfirmationMailCommand(email, password));
         
         // Assert
         result.IsValid.Should().BeTrue();
@@ -29,7 +32,7 @@ public class ResendConfirmationMailValidatorTests : UnitTestFixtures
     {
         // Act
         var result = ResendConfirmationMailCommandValidator
-            .Validate(CreateResendConfirmationMailCommand(email, password));
+            .Validate(new ResendConfirmationMailCommand(email, password));
         
         // Assert
         result.IsValid.Should().BeFalse();

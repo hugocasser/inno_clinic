@@ -1,8 +1,11 @@
+using Application.Requests.Commands.ConfirmMail;
+
 namespace AuthTests.ValidationTests;
 
 [Collection("UnitTest")]
-public class ConfirmMailValidatorTests : UnitTestFixtures
+public class ConfirmMailValidatorTests
 {
+    private readonly ConfirmMailCommandValidator _validator = new();
     [Theory]
     [InlineData("someCode")]
     [InlineData("someOtherCode")]
@@ -11,7 +14,7 @@ public class ConfirmMailValidatorTests : UnitTestFixtures
     public void ConfirmMailValidatorTest_ShouldPassValidation(string code)
     {
         // Act
-        var result = ConfirmMailCommandValidator.Validate(CreateConfirmMailCommand(Guid.NewGuid(), code));
+        var result = _validator.Validate(new ConfirmMailCommand(Guid.NewGuid(), code));
         
         // Assert
         result.IsValid.Should().BeTrue();
@@ -24,7 +27,7 @@ public class ConfirmMailValidatorTests : UnitTestFixtures
     public void ConfirmMailValidatorTest_ShouldFailValidation_WhenCodeIsInvalid(string code)
     {
         // Act
-        var result = ConfirmMailCommandValidator.Validate(CreateConfirmMailCommand(Guid.NewGuid(), code));
+        var result = _validator.Validate(new ConfirmMailCommand(Guid.NewGuid(), code));
         
         // Assert
         result.IsValid.Should().BeFalse();
@@ -34,7 +37,7 @@ public class ConfirmMailValidatorTests : UnitTestFixtures
     public void ConfirmMailValidatorTest_ShouldFailValidation_WhenUserIdIsInvalid()
     {
         // Act
-        var result = ConfirmMailCommandValidator.Validate(CreateConfirmMailCommand(Guid.Empty, "someCode"));
+        var result = _validator.Validate(new ConfirmMailCommand(Guid.Empty, "someCode"));
         
         // Assert
         result.IsValid.Should().BeFalse();

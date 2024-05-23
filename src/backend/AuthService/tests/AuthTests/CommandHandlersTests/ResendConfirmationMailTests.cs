@@ -5,7 +5,8 @@ namespace AuthTests.CommandHandlersTests;
 [Collection("UnitTest")]
 public class ResendConfirmationMailTests  : UnitTestFixtures
 {
-    
+    private const string Email = "email@mail.com";
+    private const string Password = "password123-R";
     [Fact]
     public async Task ResendConfirmationMailTest_WhenUserNotFound_ShouldReturnUnauthorized()
     {
@@ -13,7 +14,7 @@ public class ResendConfirmationMailTests  : UnitTestFixtures
         UserServiceMock
             .Setup(service => service.CheckUserPassword(It.IsAny<string>(), It.IsAny<string>()))
             .ReturnsAsync(ResultWithoutContent.Failure(Error.Unauthorized().WithMessage(ErrorMessages.InvalidEmailOrPassword)));
-        var resendConfirmationMailCommand = new ResendConfirmationMailCommand("email@mail.com", "password123-R");
+        var resendConfirmationMailCommand = new ResendConfirmationMailCommand(Email, Password);
         var handler = new ResendConfirmationMailCommandHandler(UserManagerMock.Object,
             _confirmMessageSenderMock.Object, UserServiceMock.Object);
         
@@ -37,7 +38,7 @@ public class ResendConfirmationMailTests  : UnitTestFixtures
             .ReturnsAsync(ResultWithoutContent.Failure(Error.Unauthorized().WithMessage(ErrorMessages.InvalidEmailOrPassword)));
         
         
-        var resendConfirmationMailCommand = new ResendConfirmationMailCommand("email@mail.com", "password123-R");
+        var resendConfirmationMailCommand = new ResendConfirmationMailCommand(Email, Password);
         var handler = new ResendConfirmationMailCommandHandler(UserManagerMock.Object,
             _confirmMessageSenderMock.Object, UserServiceMock.Object);
         
@@ -60,7 +61,7 @@ public class ResendConfirmationMailTests  : UnitTestFixtures
             .Setup(service => service.CheckUserPassword(It.IsAny<string>(), It.IsAny<string>()))
             .ReturnsAsync(ResultWithContent<User>.Success(user));
         
-        var command = new ResendConfirmationMailCommand(user.Email, "password123-R");
+        var command = new ResendConfirmationMailCommand(user.Email, Password);
 
         var handler =
             new ResendConfirmationMailCommandHandler(UserManagerMock.Object,
