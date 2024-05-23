@@ -6,7 +6,7 @@ namespace Application.OperationResult.Errors;
 public class Error
 {
     public int Code { get; private set; }
-    public string Message { get; private set; } = null!;
+    public string? Message { get; private set; } = null!;
 
     public static Error BadRequest()
     {
@@ -32,7 +32,7 @@ public class Error
         return new Error(500);
     }
     
-    public Error WithMessage(string message)
+    public Error WithMessage(string? message)
     {
         Message = message;
 
@@ -53,7 +53,7 @@ public class Error
         return this;
     }
 
-    private Error(int code, string message)
+    private Error(int code, string? message)
     {
         Code = code;
         Message = message;

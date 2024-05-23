@@ -33,7 +33,6 @@ public static class ProgramExtension
             .AddIdentity(builder.Configuration)
             .AddLogging()
             .AddSwagger()
-            .AddFluentValidationAutoValidation()
             .AddCors(options => options.ConfigureAllowAllCors())
             .AddEndpointsApiExplorer()
             .AddControllers();
@@ -73,7 +72,7 @@ public static class ProgramExtension
         try
         { 
             var context = scope.ServiceProvider.GetRequiredService<AuthDbContext>();
-            await context.Database.MigrateAsync();
+            await context.Database.EnsureCreatedAsync();
 
             var seeder = scope.ServiceProvider.GetRequiredService<IDataSeederService>();
             await seeder.SeedRecordsAsync();

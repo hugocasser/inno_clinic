@@ -17,12 +17,14 @@ public class ValidationPipelineBehavior<TRequest, TResponse>(IEnumerable<IValida
             .SelectMany(result => result.Errors)
             .Where(failure => failure != null)
             .ToArray();
-        
-        if (failures.Length != 0)
+
+        if (failures.Length == 0)
         {
-            ResultWithoutContent.Failure(Error.BadRequest().WithMessage(failures));
+            return await next();
         }
         
-        return await next();
+        var result = (TResponse)ResultWithoutContent.Failure(Error.BadRequest().WithMessage(failures));
+        
+        return result;
     }
 }

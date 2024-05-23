@@ -21,7 +21,7 @@ public static class Utilities
         var errors = result.Errors.Aggregate(string.Empty,
             (current, error) => current + (error.Description + "\n"));
         
-        return ResultWithoutContent.Failure(Error.BadRequest().WithMessage(errors));
+        return ResultWithoutContent.Failure(Error.Unauthorized().WithMessage(errors));
     }
 
     public static string GenerateRandomString(int length)
@@ -37,10 +37,10 @@ public static class Utilities
         return result.ToString();
     }
     
-    public static IServiceCollection AddGenericOptions<T>(this IServiceCollection services) where T : class
+    public static IServiceCollection AddGenericOptions<T>(this IServiceCollection services, string configSectionPath) where T : class
     {
         services.AddOptions<T>()
-            .BindConfiguration(nameof(T))
+            .BindConfiguration(configSectionPath)
             .ValidateOnStart()
             .ValidateDataAnnotations();
         

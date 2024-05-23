@@ -21,7 +21,12 @@ public class RefreshTokenService(ICacheService cacheService,
         await refreshTokensRepository.CreateTokenAsync(refreshToken, cancellationToken);
         await refreshTokensRepository.SaveChangesAsync(cancellationToken);
         
-        await cacheService.SetAsync(refreshToken.UserId.ToString(), JsonConvert.SerializeObject(refreshToken), cancellationToken: cancellationToken);
+        var serializedRefreshToken = JsonConvert.SerializeObject(refreshToken, new JsonSerializerSettings()
+        {
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            TypeNameHandling = TypeNameHandling.All
+        });
+        await cacheService.SetAsync(refreshToken.UserId.ToString(), serializedRefreshToken , cancellationToken: cancellationToken);
         
         return refreshToken;
     }
@@ -48,7 +53,7 @@ public class RefreshTokenService(ICacheService cacheService,
 
         if (refreshToken.UserId.ToString() != userId)
         {
-            return ResultWithoutContent.Failure(Error.Forbidden().WithMessage(ErrorMessages.AccessDenied));
+            return ResultWithoutContent.Failure(Error.Unauthorized().WithMessage(ErrorMessages.AccessDenied));
         }
         
         await refreshTokensRepository.RemoveTokenAsync(refreshToken);
@@ -61,9 +66,17 @@ public class RefreshTokenService(ICacheService cacheService,
 
     private async Task<RefreshToken?> GetUserRefreshTokenAsync(Guid userId, CancellationToken cancellationToken)
     {
-        var refreshToken = JsonSerializer.Deserialize<RefreshToken>( await cacheService.GetAsync(userId.ToString(), cancellationToken) ?? string.Empty);
+        var refreshSerializedToken = await cacheService.GetAsync(userId.ToString(), cancellationToken);
         
-        var currentTime = DateTime.Now;
+        var refreshToken = null as RefreshToken;
+        
+        if (!string.IsNullOrEmpty(refreshSerializedToken))
+        {
+            refreshToken = JsonSerializer.Deserialize<RefreshToken>(refreshSerializedToken);
+        }
+        
+        var currentTime = DateTimeOffset.Now;
+        
         if (refreshToken is not null)
         {
             if (refreshToken.ExpiryTime < currentTime)
@@ -90,7 +103,13 @@ public class RefreshTokenService(ICacheService cacheService,
             return null;
         }
 
-        await cacheService.SetAsync(refreshToken.UserId.ToString(), JsonConvert.SerializeObject(refreshToken), cancellationToken: cancellationToken);
+        var serializedRefreshToken = JsonConvert.SerializeObject(refreshToken, new JsonSerializerSettings()
+        {
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            TypeNameHandling = TypeNameHandling.All
+        });
+        
+        await cacheService.SetAsync(refreshToken.UserId.ToString(), serializedRefreshToken , cancellationToken: cancellationToken);
                 
         return refreshToken;
     }
@@ -102,8 +121,8 @@ public class RefreshTokenService(ICacheService cacheService,
             Id = Guid.NewGuid(),
             UserId = user.Id,
             Token = Utilities.GenerateRandomString(7),
-            AddedTime = DateTime.UtcNow,
-            ExpiryTime = DateTime.UtcNow.AddMonths(2),
+            AddedTime = DateTimeOffset.UtcNow,
+            ExpiryTime = DateTimeOffset.UtcNow.AddMonths(2),
             User = user
         };
     }

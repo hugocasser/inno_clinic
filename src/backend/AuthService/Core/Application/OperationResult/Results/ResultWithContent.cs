@@ -8,22 +8,16 @@ public class ResultWithContent<T> : IResult
 {
     public bool IsSuccess { get; set; }
     public Error? Error { get; set; }
-    internal T? ResultData { get; set; }
+    public T? ResultData { get; set; }
     
-    public string GetResultMessage()
+    public object? GetResultMessage()
     {
         if (!IsSuccess)
         {
             return Error.Message;
         }
 
-        var json = JsonConvert.SerializeObject(ResultData, new JsonSerializerSettings()
-        {
-            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-            TypeNameHandling = TypeNameHandling.Objects
-        });
-
-        return json;
+        return ResultData;
     }
 
     public int? GetStatusCode()
