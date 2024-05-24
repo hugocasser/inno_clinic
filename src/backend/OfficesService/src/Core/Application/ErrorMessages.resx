@@ -39,4 +39,16 @@
     <data name="NothingChanged" xml:space="preserve">
         <value>Nothing was updated</value>
     </data>
+    <data name="PageSettingCannotBeNull" xml:space="preserve">
+        <value>Page setting can not be null</value>
+    </data>
+    <data name="PageMustBeGrateWhenZero" xml:space="preserve">
+        <value>Page must be grater then zero</value>
+    </data>
+    <data name="PageSizeMustBeGraterThenZero" xml:space="preserve">
+        <value>Page size must be grater then zero</value>
+    </data>
+    <data name="CountryCanNotBeEmpty" xml:space="preserve">
+        <value>country must be not empty string</value>
+    </data>
 </root>

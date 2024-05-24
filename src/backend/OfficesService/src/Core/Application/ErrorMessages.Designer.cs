@@ -86,5 +86,29 @@ namespace Application {
                 return ResourceManager.GetString("NothingChanged", resourceCulture);
             }
         }
+        
+        internal static string PageSettingCannotBeNull {
+            get {
+                return ResourceManager.GetString("PageSettingCannotBeNull", resourceCulture);
+            }
+        }
+        
+        internal static string PageMustBeGrateWhenZero {
+            get {
+                return ResourceManager.GetString("PageMustBeGrateWhenZero", resourceCulture);
+            }
+        }
+        
+        internal static string PageSizeMustBeGraterThenZero {
+            get {
+                return ResourceManager.GetString("PageSizeMustBeGraterThenZero", resourceCulture);
+            }
+        }
+        
+        internal static string CountryCanNotBeEmpty {
+            get {
+                return ResourceManager.GetString("CountryCanNotBeEmpty", resourceCulture);
+            }
+        }
     }
 }

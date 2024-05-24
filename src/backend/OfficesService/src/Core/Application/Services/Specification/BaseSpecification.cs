@@ -1,5 +1,5 @@
 using System.Linq.Expressions;
-using Application.Abstractions.Repositories.Specification;
+using Application.Abstractions.Persistence.Repositories.Specification;
 using Domain.Abstractions;
 
 namespace Application.Services.Specification;

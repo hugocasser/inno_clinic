@@ -2,9 +2,9 @@ using Domain.Models;
 
 namespace Application.Services.Specification.Offices;
 
-public class UnActiveOffices : BaseSpecification<Office>
+public class InactiveOffices : BaseSpecification<Office>
 {
-    public UnActiveOffices()
+    public InactiveOffices()
     {
         Predicate = office => !office.IsActive;
     }

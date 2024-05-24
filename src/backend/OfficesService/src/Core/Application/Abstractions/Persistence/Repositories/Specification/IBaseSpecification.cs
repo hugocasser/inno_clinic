@@ -1,7 +1,6 @@
 using System.Linq.Expressions;
-using Domain.Abstractions;
 
-namespace Application.Abstractions.Repositories.Specification;
+namespace Application.Abstractions.Persistence.Repositories.Specification;
 
 public interface IBaseSpecification<T> 
 {

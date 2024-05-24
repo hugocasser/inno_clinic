@@ -1,6 +1,8 @@
 using Application.Abstractions.Services;
 using Application.Abstractions.Services.ValidationServices;
+using Application.Dtos.Requests;
 using FluentValidation;
+using Google.Maps.AddressValidation.V1;
 using Google.Type;
 
 namespace Application.Common;
@@ -31,5 +33,15 @@ public static class CustomValidationRules
                     
                     return result.IsSuccess;
                 }).WithMessage(ErrorMessages.AddressNotValid);
+    }
+    
+    public static IRuleBuilder<T, PageSettings> PageSettings<T>(this IRuleBuilder<T, PageSettings> ruleBuilder)
+    {
+        ruleBuilder
+            .NotNull().WithMessage(ErrorMessages.PageSettingCannotBeNull);
+        
+        return ruleBuilder
+            .Must(x => x.Page > 0).WithMessage(ErrorMessages.PageMustBeGrateWhenZero)
+            .Must(x => x.ItemsPerPage > 0).WithMessage(ErrorMessages.PageSizeMustBeGraterThenZero);
     }
 }

@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 using System.Reflection;
-using Application.Abstractions.Repositories.Specification;
+using Application.Abstractions.Persistence.Repositories.Specification;
 
 namespace Application.Services.Specification;
 

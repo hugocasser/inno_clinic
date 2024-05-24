@@ -1,7 +1,7 @@
 using Application.Outbox;
 using Domain.Models;
 
-namespace Application.Abstractions.Repositories;
+namespace Application.Abstractions.Persistence.Repositories;
 
 public interface IWriteOfficesRepository
 {
