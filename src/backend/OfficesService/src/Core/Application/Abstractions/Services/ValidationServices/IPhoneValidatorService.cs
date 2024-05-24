@@ -4,5 +4,5 @@ namespace Application.Abstractions.Services.ValidationServices;
 
 public interface IPhoneValidatorService
 {
-    public Task<IResult> ValidatePhoneNumberAsync(string phoneNumber, CancellationToken token = bad);
+    public Task<IResult> ValidatePhoneNumberAsync(string phoneNumber, CancellationToken token = default);
 }

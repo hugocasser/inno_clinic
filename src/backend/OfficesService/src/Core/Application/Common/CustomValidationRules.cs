@@ -1,21 +1,22 @@
 using Application.Abstractions.Services;
 using Application.Abstractions.Services.ValidationServices;
 using FluentValidation;
+using Google.Type;
 
 namespace Application.Common;
 
 public static class CustomValidationRules
 {
-    public static IRuleBuilderOptions<T, string> Address<T>(this IRuleBuilder<T, string> ruleBuilder, IGoogleMapsApiClient googleMapsApiClient)
+    public static IRuleBuilderOptions<T, PostalAddress> Address<T>(this IRuleBuilder<T, PostalAddress> ruleBuilder, IGoogleMapsApiClient googleMapsApiClient)
     {        
         return 
             ruleBuilder
-            .NotEmpty().WithMessage(ErrorMessages.AddressCannotBeNullOrEmpty)
+            .NotNull().WithMessage(ErrorMessages.AddressCannotBeNullOrEmpty)
             .MustAsync(async (address, token) =>
                 {
                     var result = await googleMapsApiClient.ValidateAddressAsync(address, token);
                     
-                     return result;
+                     return result.IsSuccess;
                 }).WithMessage(ErrorMessages.AddressNotValid);
     }
     
@@ -28,7 +29,7 @@ public static class CustomValidationRules
                 {
                     var result = await phoneValidatorService.ValidatePhoneNumberAsync(address, token);
                     
-                    return result;
+                    return result.IsSuccess;
                 }).WithMessage(ErrorMessages.AddressNotValid);
     }
 }

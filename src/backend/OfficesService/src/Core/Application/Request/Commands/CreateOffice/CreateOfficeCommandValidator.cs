@@ -9,7 +9,7 @@ public class CreateOfficeCommandValidator : AbstractValidator<CreateOfficeComman
 {
     public CreateOfficeCommandValidator(IPhoneValidatorService phoneValidator, IGoogleMapsApiClient googleMapsApiClient)
     {
-        RuleFor(x => x.Address).Address(googleMapsApiClient);
+        RuleFor(x => x.AddressRequestDto.ToPostalAddress()).Address(googleMapsApiClient);
 
         RuleFor(x => x.RegistryPhoneNumber).Phone(phoneValidator);
         

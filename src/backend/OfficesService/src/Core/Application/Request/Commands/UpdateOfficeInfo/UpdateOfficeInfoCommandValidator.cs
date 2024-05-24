@@ -10,7 +10,7 @@ public class UpdateOfficeInfoCommandValidator : AbstractValidator<UpdateOfficeIn
     public UpdateOfficeInfoCommandValidator(IGoogleMapsApiClient googleMapsApiClient,
         IPhoneValidatorService phoneValidator)
     {
-        RuleFor(x => x.Address).Address(googleMapsApiClient);
+        RuleFor(x => x.AddressRequestDto.ToPostalAddress()).Address(googleMapsApiClient);
         
         RuleFor(x => x.OfficeId).NotEmpty();
         

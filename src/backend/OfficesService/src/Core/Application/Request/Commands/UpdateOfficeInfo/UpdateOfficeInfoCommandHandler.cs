@@ -18,14 +18,16 @@ public class UpdateOfficeInfoCommandHandler
         {
             return ResultBuilder.NotFound(ErrorMessages.OfficeNotFound);
         }
-
-        if (office.RegistryPhoneNumber == request.RegistryPhoneNumber && office.Address == request.Address)
+        
+        var stringAddress = request.AddressRequestDto.ToString();
+        if (office.RegistryPhoneNumber == request.RegistryPhoneNumber && office.Address == stringAddress)
         {
             return ResultBuilder.BadRequest(ErrorMessages.NothingChanged);
         }
         
-        office.UpdateOffice(request.OfficeId, request.Address, request.RegistryPhoneNumber );
-        await writeOfficesRepository.UpdateOfficeAsync(office);
+        
+        office.UpdateOffice(request.OfficeId, stringAddress, request.RegistryPhoneNumber );
+        await writeOfficesRepository.UpdateOfficeAsync(office, cancellationToken);
         
         var officeViewDto = OfficeWithoutPhotoViewDto.MapFromModel(office);
         
