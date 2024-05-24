@@ -1,5 +1,5 @@
 using Application.Abstractions.OperationResult;
-using Application.Abstractions.Repositories;
+using Application.Abstractions.Persistence.Repositories;
 using Application.Dtos;
 using Application.OperationResults;
 using MediatR;
@@ -10,7 +10,7 @@ public class ChangeOfficeStatusCommandHandler(IWriteOfficesRepository writeOffic
 {
     public async Task<IResult> Handle(ChangeOfficeStatusCommand request, CancellationToken cancellationToken)
     {
-        var office = await writeOfficesRepository.GetOfficeAsync(request.OfficeId);
+        var office = await writeOfficesRepository.GetOfficeAsync(request.OfficeId, cancellationToken);
         
         if (office is null)
         {
@@ -23,7 +23,7 @@ public class ChangeOfficeStatusCommandHandler(IWriteOfficesRepository writeOffic
         }
         
         office.ChangeOfficeStatus((request).IsActive);
-        await writeOfficesRepository.UpdateOfficeAsync(office);
+        await writeOfficesRepository.UpdateOfficeAsync(office, cancellationToken);
         
         return ResultBuilder.Success().WithStatusCode(200).WithData(OfficeWithoutPhotoViewDto.MapFromModel(office));
     }

@@ -9,12 +9,12 @@ public class CreateOfficeCommandValidator : AbstractValidator<CreateOfficeComman
 {
     public CreateOfficeCommandValidator(IPhoneValidatorService phoneValidator, IGoogleMapsApiClient googleMapsApiClient)
     {
-        RuleFor(x => x.AddressRequestDto.ToPostalAddress()).Address(googleMapsApiClient);
+        RuleFor(command => command.AddressRequestDto.ToPostalAddress()).Address(googleMapsApiClient);
 
-        RuleFor(x => x.RegistryPhoneNumber).Phone(phoneValidator);
+        RuleFor(command => command.RegistryPhoneNumber).Phone(phoneValidator);
         
-        RuleFor(x => x.IsActive).NotNull();
+        RuleFor(command => command.IsActive).NotNull();
         
-        RuleFor(x => x.PhotoId).NotEmpty();
+        RuleFor(command => command.PhotoId).NotEmpty();
     }
 }

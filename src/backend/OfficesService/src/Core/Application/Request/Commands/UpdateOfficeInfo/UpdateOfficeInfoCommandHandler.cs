@@ -1,5 +1,5 @@
 using Application.Abstractions.OperationResult;
-using Application.Abstractions.Repositories;
+using Application.Abstractions.Persistence.Repositories;
 using Application.Dtos;
 using Application.OperationResults;
 using MediatR;
@@ -12,7 +12,7 @@ public class UpdateOfficeInfoCommandHandler
 {
     public async Task<IResult> Handle(UpdateOfficeInfoCommand request, CancellationToken cancellationToken)
     {
-        var office = await writeOfficesRepository.GetOfficeAsync(request.OfficeId);
+        var office = await writeOfficesRepository.GetOfficeAsync(request.OfficeId, cancellationToken);
         
         if (office is null)
         {

@@ -6,7 +6,7 @@ public class ChangeOfficePhotoCommandValidator : AbstractValidator<ChangeOfficeP
 {
     public ChangeOfficePhotoCommandValidator()
     {
-        RuleFor(x => x.OfficeId).NotEmpty();
-        RuleFor(x => x.PhotoId).NotEmpty();
+        RuleFor(command => command.OfficeId).NotEmpty();
+        RuleFor(command => command.PhotoId).NotEmpty();
     }
 }

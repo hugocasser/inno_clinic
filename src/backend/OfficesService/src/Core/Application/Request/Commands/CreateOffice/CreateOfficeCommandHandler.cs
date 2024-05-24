@@ -1,6 +1,5 @@
 using Application.Abstractions.OperationResult;
-using Application.Abstractions.Repositories;
-using Application.Abstractions.Services;
+using Application.Abstractions.Persistence.Repositories;
 using Application.Abstractions.Services.ValidationServices;
 using Application.Dtos;
 using Application.OperationResults;
