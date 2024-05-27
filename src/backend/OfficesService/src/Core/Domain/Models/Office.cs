@@ -1,6 +1,7 @@
 using Domain.Abstractions;
 using Domain.Abstractions.Events;
 using Domain.Events;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace Domain.Models;
@@ -8,12 +9,16 @@ namespace Domain.Models;
 public class Office: Entity
 {
     [BsonElement("address")]
+    [BsonRepresentation(BsonType.String)]
     public string? Address { get; private set; } = string.Empty;
     [BsonElement("registry_phone_number")]
+    [BsonRepresentation(BsonType.String)]
     public string? RegistryPhoneNumber { get; private set; } = string.Empty;
     [BsonElement("is_active")]
+    [BsonRepresentation(BsonType.Boolean)]
     public bool IsActive { get; private set; } = false;
     [BsonElement("photo_id")]
+    [BsonRepresentation(BsonType.String)]
     public Guid? PhotoId { get; private set; } = Guid.Empty;
     
     public static Office CreateOffice(string address, string registryPhoneNumber, bool isActive, Guid photoId = default)

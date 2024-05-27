@@ -2,6 +2,7 @@ using Application.Abstractions.OperationResult;
 using Application.Abstractions.Persistence.Repositories;
 using Application.Abstractions.Services.ValidationServices;
 using Application.Dtos;
+using Application.Dtos.View;
 using Application.OperationResults;
 using Domain.Models;
 using MediatR;

@@ -1,6 +1,7 @@
 using Application.Abstractions.OperationResult;
 using Application.Abstractions.Persistence.Repositories;
 using Application.Dtos;
+using Application.Dtos.View;
 using Application.OperationResults;
 using MediatR;
 

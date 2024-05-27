@@ -6,7 +6,7 @@ namespace Application.Services.ExternalServices;
 
 public class PhotoService : IPhotoService
 {
-    public Task<IResult> UploadPhotoInBase64Async(Guid photoId, CancellationToken cancellationToken)
+    public Task<IResult> UploadPhotoInBase64Async(Guid? photoId, CancellationToken cancellationToken)
     {
         return Task.FromResult(ResultBuilder.Success());
     }

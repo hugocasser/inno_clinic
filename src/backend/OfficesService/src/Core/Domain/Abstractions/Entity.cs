@@ -5,7 +5,9 @@ namespace Domain.Abstractions;
 
 public abstract class Entity
 {
-    [BsonElement("id")] public Guid Id { get; protected set; } = Guid.Empty;
+    [BsonId]
+    [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
+    public Guid Id { get; protected set; } = Guid.Empty;
     
     private readonly IList<IDomainEvent<Entity>> _events = new List<IDomainEvent<Entity>>();
 

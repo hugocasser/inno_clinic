@@ -15,7 +15,7 @@ public static class ResultBuilder
         return new OperationResult(false);
     }
     
-    public static IResult WithData(this IResult result, object data)
+    public static IResult WithData(this IResult result, object? data)
     {
         result.ResultData = data;
         
@@ -29,27 +29,27 @@ public static class ResultBuilder
         return result;
     }
     
-    public static IResult Unauthorized(string message)
+    public static IResult Unauthorized(string? message)
     {
         return new OperationResult(false).WithStatusCode(401).WithData(message);
     }
     
-    public static IResult Forbidden(string message)
+    public static IResult Forbidden(string? message)
     {
         return new OperationResult(false).WithStatusCode(403).WithData(message);
     }
     
-    public static IResult NotFound(string message)
+    public static IResult NotFound(string? message)
     {
         return new OperationResult(false).WithStatusCode(404).WithData(message);
     }
     
-    public static IResult InternalServerError(string message)
+    public static IResult InternalServerError(string? message)
     {
         return new OperationResult(false).WithStatusCode(500).WithData(message);
     }
     
-    public static IResult BadRequest(string message)
+    public static IResult BadRequest(string? message)
     {
         return new OperationResult(false).WithStatusCode(400).WithData(message);
     }

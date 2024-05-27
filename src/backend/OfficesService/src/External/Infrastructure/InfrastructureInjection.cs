@@ -1,6 +1,11 @@
+using Microsoft.Extensions.DependencyInjection;
+
 namespace Infrastructure;
 
-public class InfrastructureInjection
+public static class InfrastructureInjection
 {
-    
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services)
+    {
+        return services;
+    }
 }

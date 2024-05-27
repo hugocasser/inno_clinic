@@ -5,10 +5,13 @@ using Application.Abstractions.Services.TransactionalOutboxServices;
 using Application.Abstractions.Services.ValidationServices;
 using Application.Common;
 using Application.Options;
+using Application.Request.Commands.CreateOffice;
+using Application.Request.Commands.UpdateOfficeInfo;
 using Application.Services.ExternalServices;
 using Application.Services.TransactionalOutboxServices;
 using Application.Services.ValidationServices;
 using Application.Services.ValidationServices.DecoratedServicesWithRateLimiting;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.Abstractions;
 using Polly;
@@ -45,7 +48,9 @@ public static class ApplicationInjection
     {
         return services
             .AddGenericOptions<GoogleApiClientOptions>(nameof(GoogleApiClientOptions))
-            .AddGenericOptions<PhoneValidatorOptions>(nameof(PhoneValidatorOptions));
+            .AddGenericOptions<PhoneValidatorOptions>(nameof(PhoneValidatorOptions))
+            .AddGenericOptions<GoogleApiRpsOptions>(nameof(GoogleApiRpsOptions))
+            .AddGenericOptions<PhoneValidatorRpsOptions>(nameof(PhoneValidatorRpsOptions));
     }
     
     private static IServiceCollection AddResiliencePipeline(this IServiceCollection services)
@@ -82,6 +87,21 @@ public static class ApplicationInjection
                         }));
             } );
         
+        return services;
+    }
+
+    private static IServiceCollection AddHandlers(this IServiceCollection services)
+    {
+        return services;
+    }
+    
+    private static IServiceCollection AddValidators(this IServiceCollection services)
+    {
+        return services;
+    }
+    
+    private static IServiceCollection AddPipelineBehaviors(this IServiceCollection services)
+    {
         return services;
     }
 }
