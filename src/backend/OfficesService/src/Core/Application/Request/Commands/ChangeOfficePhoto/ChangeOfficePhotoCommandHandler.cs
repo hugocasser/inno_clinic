@@ -24,7 +24,9 @@ public class ChangeOfficePhotoCommandHandler(IWriteOfficesRepository writeOffice
         }
         
         office.ChangeOfficePhoto(request.PhotoId);
-        await writeOfficesRepository.UpdateOfficeAsync(office, cancellationToken);
+        await writeOfficesRepository.UpdateOfficeAsync(office);
+
+        await writeOfficesRepository.SaveChangesAsync(cancellationToken);
         
         return ResultBuilder.Success().WithStatusCode(200).WithData(OfficeWithoutPhotoViewDto.MapFromModel(office));
     }

@@ -23,8 +23,10 @@ public class ChangeOfficeStatusCommandHandler(IWriteOfficesRepository writeOffic
             return ResultBuilder.BadRequest(ErrorMessages.NothingChanged);
         }
         
-        office.ChangeOfficeStatus((request).IsActive);
-        await writeOfficesRepository.UpdateOfficeAsync(office, cancellationToken);
+        office.ChangeOfficeStatus(request.IsActive);
+        
+        await writeOfficesRepository.UpdateOfficeAsync(office);
+        await writeOfficesRepository.SaveChangesAsync(cancellationToken);
         
         return ResultBuilder.Success().WithStatusCode(200).WithData(OfficeWithoutPhotoViewDto.MapFromModel(office));
     }

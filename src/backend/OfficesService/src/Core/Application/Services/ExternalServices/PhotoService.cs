@@ -8,6 +8,8 @@ public class PhotoService : IPhotoService
 {
     public Task<IResult> UploadPhotoInBase64Async(Guid? photoId, CancellationToken cancellationToken)
     {
-        return Task.FromResult(ResultBuilder.Success());
+        // TODO : upload photo in base64
+        // now just return some string because photo service is not implemented
+        return Task.FromResult(ResultBuilder.Success().WithData("some base64 string").WithStatusCode(200));
     }
 }
