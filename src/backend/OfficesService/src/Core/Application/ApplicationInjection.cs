@@ -1,12 +1,12 @@
+using System.Reflection;
 using System.Threading.RateLimiting;
 using Application.Abstractions.OperationResult;
 using Application.Abstractions.Services.ExternalServices;
 using Application.Abstractions.Services.TransactionalOutboxServices;
 using Application.Abstractions.Services.ValidationServices;
+using Application.BackgroundJobs;
 using Application.Common;
 using Application.Options;
-using Application.Request.Commands.CreateOffice;
-using Application.Request.Commands.UpdateOfficeInfo;
 using Application.Services.ExternalServices;
 using Application.Services.TransactionalOutboxServices;
 using Application.Services.ValidationServices;
@@ -15,6 +15,8 @@ using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.Abstractions;
 using Polly;
+using Polly.Retry;
+using Quartz;
 
 namespace Application;
 
@@ -24,7 +26,12 @@ public static class ApplicationInjection
     {
         services
             .AddServices()
-            .AddResiliencePipeline();
+            .AddResiliencePipeline()
+            .AddOptions()
+            .AddJobs()
+            .AddValidators()
+            .AddPipelineBehaviors()
+            .AddHandlers();
         
         return services;
     }
@@ -74,16 +81,15 @@ public static class ApplicationInjection
         services.AddResiliencePipeline<string, IResult>(nameof(DecoratedPhoneValidatorService),
             (builder, pollyContext) =>
             {
-                var allowedRps = pollyContext
-                    .GetOptions<PhoneValidatorRpsOptions>()
-                    .RequestsPerSecond;
+                var options = pollyContext
+                    .GetOptions<PhoneValidatorRpsOptions>();
 
                 builder
                     .ConfigureTelemetry(NullLoggerFactory.Instance)
                     .AddRateLimiter(new FixedWindowRateLimiter(
                         new FixedWindowRateLimiterOptions()
                         {
-                            PermitLimit = allowedRps,
+                            PermitLimit = options.RequestsPerSecond,
                         }));
             } );
         
@@ -92,11 +98,34 @@ public static class ApplicationInjection
 
     private static IServiceCollection AddHandlers(this IServiceCollection services)
     {
+        services.AddMediatR(configuration => configuration.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
+        
+        return services;
+    }
+    
+    private static IServiceCollection AddJobs(this IServiceCollection services)
+    {
+        services.AddQuartz(configure =>
+        {
+            var jobKey = new JobKey(nameof(ProcessOutboxMessagesJob));
+            configure
+                .AddJob<ProcessOutboxMessagesJob>(jobKey)
+                .AddTrigger(trigger =>
+                    trigger.ForJob(jobKey)
+                        .WithSimpleSchedule(schedule =>
+                            schedule.WithIntervalInSeconds(60).RepeatForever())); 
+            configure.UseMicrosoftDependencyInjectionJobFactory();
+        });
+
+        services.AddQuartzHostedService();
+        
         return services;
     }
     
     private static IServiceCollection AddValidators(this IServiceCollection services)
     {
+        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+        
         return services;
     }
     

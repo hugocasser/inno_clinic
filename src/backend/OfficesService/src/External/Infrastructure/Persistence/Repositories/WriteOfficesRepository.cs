@@ -12,7 +12,7 @@ public class WriteOfficesRepository(OfficesWriteDbContext context) : IWriteOffic
         await context.Offices.AddAsync(office, cancellationToken);
     }
 
-    public Task UpdateOfficeAsync(Office office, CancellationToken cancellationToken = default)
+    public Task UpdateOfficeAsync(Office office)
     {
         context.Offices.Update(office);
         return Task.CompletedTask;
@@ -34,14 +34,26 @@ public class WriteOfficesRepository(OfficesWriteDbContext context) : IWriteOffic
         return office;
     }
 
-    public async Task<IReadOnlyList<OutboxMessage>> GetNotProcessedMessagesAsync(int count, CancellationToken cancellationToken = default)
+    public async Task<IReadOnlyList<OutboxMessage>> GetNotProcessedMessagesAsync(int count,
+        CancellationToken cancellationToken = default)
     {
         return await context
             .OutboxMessages
-            .Include(outbox => outbox.Entity)
             .Where(outboxMessage => outboxMessage.ProcessedAt == null)
             .OrderBy(outboxMessage => outboxMessage.CreatedAt)
             .Take(count)
             .ToListAsync(cancellationToken);
+    }
+
+    public Task SetProcessedAtRangeAsync(IEnumerable<OutboxMessage> outboxMessages)
+    {
+        context.OutboxMessages.UpdateRange(outboxMessages);
+        
+        return Task.CompletedTask;
+    }
+    
+    public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        await context.SaveChangesAsync(cancellationToken);
     }
 }
