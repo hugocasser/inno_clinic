@@ -12,7 +12,8 @@ namespace Presentation.Abstractions;
 public abstract class ApiController(ISender sender) : ControllerBase
 {
     protected readonly ISender Sender = sender;
-    public static IActionResult FromOperationResult(IResult result)
+
+    protected static IActionResult FromOperationResult(IResult result)
     {
         return new ObjectResult(result.GetOperationResult())
         {
