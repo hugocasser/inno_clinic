@@ -7,6 +7,7 @@ namespace UnitTests.RequestHandlers.Commands;
 
 public class UpdateOfficeInfoCommandHandlerTests
 {
+    private const string RegistryPhoneNumber = "1234567890";
     private readonly Mock<IWriteOfficesRepository> _writeOfficesRepositoryMock = new ();
     
     [Fact]
@@ -19,10 +20,10 @@ public class UpdateOfficeInfoCommandHandlerTests
             .Verifiable();
         
         var handler = new UpdateOfficeInfoCommandHandler(_writeOfficesRepositoryMock.Object);
-        var addressRequestDto = new AddressRequestDto("street", "city", "state", "zip", "country");
+        var addressRequestDto = Utilities.GenerateAddress();
         
         // Act
-        var result = await handler.Handle(new UpdateOfficeInfoCommand(Guid.NewGuid(), addressRequestDto, "description"), CancellationToken.None);
+        var result = await handler.Handle(new UpdateOfficeInfoCommand(Guid.NewGuid(), addressRequestDto, RegistryPhoneNumber), CancellationToken.None);
         
         // Assert
         result.Should().BeEquivalentTo(ResultBuilder.NotFound(ErrorMessages.OfficeNotFound));
@@ -53,12 +54,13 @@ public class UpdateOfficeInfoCommandHandlerTests
             .Verifiable();
         
         var handler = new UpdateOfficeInfoCommandHandler(_writeOfficesRepositoryMock.Object);
-        var addressRequestDto = new AddressRequestDto("street", "city", "state", "zip", "country");
+        var addressRequestDto = Utilities.GenerateAddress();
         
         // Act
-        var result = await handler.Handle(new UpdateOfficeInfoCommand(office.Id, addressRequestDto, "description"), CancellationToken.None);
+        var result = await handler.Handle(new UpdateOfficeInfoCommand(office.Id, addressRequestDto, RegistryPhoneNumber), CancellationToken.None);
+        
         office.Address = addressRequestDto.ToString();
-        office.RegistryPhoneNumber = "description";
+        office.RegistryPhoneNumber = RegistryPhoneNumber;
         
         // Assert
         result.Should().BeEquivalentTo(ResultBuilder.Success().WithData(OfficeWithoutPhotoViewDto.MapFromModel(office)).WithStatusCode(200));

@@ -15,25 +15,28 @@ public class SpecificationExpander : ExpressionVisitor
 
         var method = node.Method;
 
-        if (method == null || method.Name != "op_Implicit")
+        if (method == null || method.Name != "op_Implicit" || !IsBaseSpecificationConversion(method))
         {
             return base.VisitUnary(node);
         }
 
-        var declaringType = method.DeclaringType;
-
-        if (!declaringType!.GetTypeInfo().IsGenericType
-            || declaringType!.GetGenericTypeDefinition() != typeof(BaseSpecification<>))
-        {
-            return base.VisitUnary(node);
-        }
-
-        const string name = nameof(BaseSpecification<object>.ToExpression);
-
-        var toExpression = declaringType.GetMethod(name);
+        var toExpression = GetToExpressionMethod(method.DeclaringType!);
 
         return ExpandSpecification(node.Operand, toExpression!);
+    }
 
+    private static bool IsBaseSpecificationConversion(MemberInfo method)
+    {
+        var declaringType = method.DeclaringType;
+        return declaringType != null &&
+            declaringType.GetTypeInfo().IsGenericType &&
+            declaringType.GetGenericTypeDefinition() == typeof(BaseSpecification<>);
+    }
+
+    private static MethodInfo GetToExpressionMethod(Type declaringType)
+    {
+        const string name = nameof(BaseSpecification<object>.ToExpression);
+        return declaringType.GetMethod(name);
     }
 
     protected override Expression VisitMethodCall(MethodCallExpression node)

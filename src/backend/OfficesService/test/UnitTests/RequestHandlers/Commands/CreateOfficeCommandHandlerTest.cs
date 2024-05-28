@@ -31,7 +31,7 @@ public class CreateOfficeCommandHandlerTest
             .Verifiable();
 
         var handler = new CreateOfficeCommandHandler(_writeOfficesRepositoryMock.Object);
-        var addressRequestDto = new AddressRequestDto("street", "city", "state", "zip", "country");
+        var addressRequestDto = Utilities.GenerateAddress();
         // Act
         var result = await handler.Handle(new CreateOfficeCommand(addressRequestDto, office.RegistryPhoneNumber, office.IsActive, office.PhotoId), CancellationToken.None);
         
