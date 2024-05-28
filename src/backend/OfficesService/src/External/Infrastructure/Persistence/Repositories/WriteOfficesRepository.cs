@@ -1,11 +1,12 @@
 using Application.Abstractions.Persistence.Repositories;
 using Application.Outbox;
 using Domain.Models;
+using Infrastructure.Abstractions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.Repositories;
 
-public class WriteOfficesRepository(OfficesWriteDbContext context) : IWriteOfficesRepository
+public class WriteOfficesRepository(IOfficesWriteDbContext context) : IWriteOfficesRepository
 {
     public async Task AddOfficeAsync(Office office, CancellationToken cancellationToken = default)
     {

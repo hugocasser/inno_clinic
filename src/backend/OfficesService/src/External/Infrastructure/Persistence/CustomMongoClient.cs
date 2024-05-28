@@ -4,4 +4,4 @@ using MongoDB.Driver;
 
 namespace Infrastructure.Persistence;
 
-public class CustomMongoClient(IOptions<MongoOptions> options) : MongoClient(options.Value.ConnectionUri);
+public class CustomMongoClient(IOptions<MongoOptions> options) : MongoClient(options.Value.ConnectionString);

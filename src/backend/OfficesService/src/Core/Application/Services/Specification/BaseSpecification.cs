@@ -6,16 +6,16 @@ namespace Application.Services.Specification;
 
 public class BaseSpecification<T> : IBaseSpecification<T>
 {
-    private Func<T, bool> _function;
+    private Func<T, bool> _function = null!;
 
     private Func<T, bool> Function =>
         _function ??= Predicate.Compile();
 
-    protected Expression<Func<T, bool>> Predicate;
+    protected Expression<Func<T, bool>> Predicate = null!;
 
     protected BaseSpecification() { }
 
-    public BaseSpecification(Expression<Func<T, bool>> predicate)
+    private BaseSpecification(Expression<Func<T, bool>> predicate)
     {
         Predicate = predicate;
     }

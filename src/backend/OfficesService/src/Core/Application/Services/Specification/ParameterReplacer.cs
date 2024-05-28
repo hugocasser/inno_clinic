@@ -11,7 +11,7 @@ internal class ParameterReplacer(ParameterExpression parameter, ParameterExpress
         return base.VisitParameter(parameter == node ? replacement : node);
     }
 
-    public Expression Visit(Expression node)
+    public new Expression Visit(Expression node)
     {
         return base.Visit(node);
     }

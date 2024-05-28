@@ -2,30 +2,31 @@ using Application.Abstractions.Persistence.Repositories;
 using Application.Abstractions.Persistence.Repositories.Specification;
 using Application.Dtos.Requests;
 using Domain.Models;
+using Infrastructure.Abstractions;
 using MongoDB.Driver;
 
 namespace Infrastructure.Persistence.Repositories;
 
-public class ReadOfficesRepository(OfficesReadContext context): IReadOfficesRepository
+public class ReadOfficesRepository(IOfficesReadDbContext dbContext): IReadOfficesRepository
 {
     public async Task AddAsync(Office entity, CancellationToken cancellationToken = default)
     {
-        await context.Offices.InsertOneAsync(entity, cancellationToken: cancellationToken);
+        await dbContext.Offices.InsertOneAsync(entity, cancellationToken: cancellationToken);
     }
 
     public async Task UpdateAsync(Office entity, CancellationToken cancellationToken = default)
     {
-        await context.Offices.ReplaceOneAsync(office => office.Id == entity.Id, entity, cancellationToken: cancellationToken);
+        await dbContext.Offices.ReplaceOneAsync(office => office.Id == entity.Id, entity, cancellationToken: cancellationToken);
     }
 
     public async Task DeleteAsync(Office entity, CancellationToken cancellationToken = default)
     {
-        await context.Offices.DeleteOneAsync(office => office.Id == entity.Id, cancellationToken: cancellationToken);
+        await dbContext.Offices.DeleteOneAsync(office => office.Id == entity.Id, cancellationToken: cancellationToken);
     }
 
     public async Task<Office?> GetByAsync(IBaseSpecification<Office> specification, CancellationToken cancellationToken = default)
     {
-        var office = await context.Offices
+        var office = await dbContext.Offices
             .FindAsync(specification.ToExpression(), cancellationToken: cancellationToken);
 
         return await office.FirstOrDefaultAsync(cancellationToken);
@@ -35,7 +36,7 @@ public class ReadOfficesRepository(OfficesReadContext context): IReadOfficesRepo
         CancellationToken cancellationToken = default)
     {
         var cursor =
-            await context.Offices.FindAsync(specification.ToExpression(), cancellationToken: cancellationToken);
+            await dbContext.Offices.FindAsync(specification.ToExpression(), cancellationToken: cancellationToken);
 
         var offices = await cursor
             .ToListAsync(cancellationToken: cancellationToken);

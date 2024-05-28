@@ -48,7 +48,7 @@ public class GetOfficesByAddressQueryHandler
             }
 
             var photo = await photoService
-                .UploadPhotoInBase64Async(office.PhotoId, cancellationToken);
+                .UploadPhotoInBase64Async(office?.PhotoId, cancellationToken);
 
             if (photo.IsSuccess)
             {
@@ -60,8 +60,8 @@ public class GetOfficesByAddressQueryHandler
             }
         }
         
-        var views = offices.Select((t, i) => 
-            OfficeWithPhotoViewDto.MapFromModel(t, officesPhotos[i])).ToList();
+        var views = offices.Select((office, i) => 
+            OfficeWithPhotoViewDto.MapFromModel(office!, officesPhotos[i]!));
 
         return ResultBuilder.Success().WithData(offices).WithStatusCode(200);
 

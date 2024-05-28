@@ -2,5 +2,5 @@ namespace Application.Options;
 
 public class PhoneValidatorRpsOptions
 {
-    public int RequestsPerSecond { get; set; }
+    public int RequestsPerSecond { get; set; } = 5;
 }

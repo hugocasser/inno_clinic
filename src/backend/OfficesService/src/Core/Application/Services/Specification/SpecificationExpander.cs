@@ -8,46 +8,49 @@ public class SpecificationExpander : ExpressionVisitor
 {
     protected override Expression VisitUnary(UnaryExpression node)
     {
-        if (node.NodeType == ExpressionType.Convert)
+        if (node.NodeType != ExpressionType.Convert)
         {
-            MethodInfo method = node.Method;
-
-            if (method != null && method.Name == "op_Implicit")
-            {
-                Type declaringType = method.DeclaringType;
-
-                if (declaringType.GetTypeInfo().IsGenericType
-                    && declaringType.GetGenericTypeDefinition() == typeof(BaseSpecification<>))
-                {
-                    const string name = nameof(BaseSpecification<object>.ToExpression);
-
-                    MethodInfo toExpression = declaringType.GetMethod(name);
-
-                    return ExpandSpecification(node.Operand, toExpression);
-                }
-            }
+            return base.VisitUnary(node);
         }
 
-        return base.VisitUnary(node);
+        var method = node.Method;
+
+        if (method == null || method.Name != "op_Implicit")
+        {
+            return base.VisitUnary(node);
+        }
+
+        var declaringType = method.DeclaringType;
+
+        if (!declaringType!.GetTypeInfo().IsGenericType
+            || declaringType!.GetGenericTypeDefinition() != typeof(BaseSpecification<>))
+        {
+            return base.VisitUnary(node);
+        }
+
+        const string name = nameof(BaseSpecification<object>.ToExpression);
+
+        var toExpression = declaringType.GetMethod(name);
+
+        return ExpandSpecification(node.Operand, toExpression!);
+
     }
 
     protected override Expression VisitMethodCall(MethodCallExpression node)
     {
-        MethodInfo method = node.Method;
+        var method = node.Method;
 
-        if (method.Name == nameof(IBaseSpecification<object>.ToExpression))
+        if (method.Name != nameof(IBaseSpecification<object>.ToExpression))
         {
-            Type declaringType = method.DeclaringType;
-            Type[] interfaces = declaringType.GetTypeInfo().GetInterfaces();
-
-            if (interfaces.Any(i => i.GetTypeInfo().IsGenericType
-                && i.GetGenericTypeDefinition() == typeof(IBaseSpecification<>)))
-            {
-                return ExpandSpecification(node.Object, method);
-            }
+            return base.VisitMethodCall(node);
         }
 
-        return base.VisitMethodCall(node);
+        var declaringType = method.DeclaringType;
+        var interfaces = declaringType!.GetTypeInfo().GetInterfaces();
+
+        return interfaces.Any(i => i.GetTypeInfo().IsGenericType
+            && i.GetGenericTypeDefinition() == typeof(IBaseSpecification<>)) 
+            ? ExpandSpecification(node.Object!, method) : base.VisitMethodCall(node);
     }
 
     private Expression ExpandSpecification(Expression instance, MethodInfo toExpression)

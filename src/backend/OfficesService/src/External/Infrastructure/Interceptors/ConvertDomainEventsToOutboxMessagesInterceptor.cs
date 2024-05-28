@@ -31,7 +31,7 @@ public class ConvertDomainEventsToOutboxMessagesInterceptor : SaveChangesInterce
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     TypeNameHandling = TypeNameHandling.All
                 }),
-            });
+            }).ToList();
         
         context.Set<OutboxMessage>().AddRange(messages);
         

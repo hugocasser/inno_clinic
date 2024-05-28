@@ -1,5 +1,6 @@
 using Application.Abstractions.Persistence.Repositories;
 using Application.Common;
+using Infrastructure.Abstractions;
 using Infrastructure.Interceptors;
 using Infrastructure.Options;
 using Infrastructure.Persistence;
@@ -24,29 +25,40 @@ public static class InfrastructureInjection
     
     private static IServiceCollection AddWriteContext(this IServiceCollection services)
     {
-        var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
         var connectionString = Environment.GetEnvironmentVariable("POSTGRES_CONNECTION_STRING");
 
+        services.AddSingleton<ConvertDomainEventsToOutboxMessagesInterceptor>();
+        
         if (!string.IsNullOrEmpty(connectionString))
         {
             return services
-                .AddDbContext<OfficesWriteDbContext>((serviceProvider, options) =>
+                .AddDbContext<IOfficesWriteDbContext, OfficesWriteDbContext>((serviceProvider, options) =>
                 {
                     var tenantInterceptor = serviceProvider
                         .GetRequiredService<ConvertDomainEventsToOutboxMessagesInterceptor>();
-                    options.UseNpgsql(connectionString).AddInterceptors(tenantInterceptor);
+                    options.UseNpgsql(connectionString, npgsqlOptions =>
+                        {
+                            npgsqlOptions.MigrationsAssembly("PostgresMigrations");
+                        })
+                        .AddInterceptors(tenantInterceptor);
                     options.EnableSensitiveDataLogging();
                     options.EnableDetailedErrors();
                 });
         }
 
+        var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+        
         return services
-            .AddDbContext<OfficesWriteDbContext>((serviceProvider, options) =>
+            .AddDbContext<IOfficesWriteDbContext, OfficesWriteDbContext>((serviceProvider, options) =>
             {
                 var dbOptions = serviceProvider.GetRequiredService<IOptions<PostgresOptions>>();
                 var tenantInterceptor = serviceProvider
                     .GetRequiredService<ConvertDomainEventsToOutboxMessagesInterceptor>();
-                options.UseNpgsql(dbOptions.Value.ConnectionString).AddInterceptors(tenantInterceptor);
+                options.UseNpgsql(dbOptions.Value.ConnectionString, npgsqlOptions =>
+                {
+                    npgsqlOptions.MigrationsAssembly("PostgresMigrations");
+                })
+                    .AddInterceptors(tenantInterceptor);
 
                 if (environment != "Development")
                 {
@@ -61,6 +73,7 @@ public static class InfrastructureInjection
     private static IServiceCollection AddReadContext(this IServiceCollection services)
     {
         services.AddScoped<IMongoClient, CustomMongoClient>();
+        services.AddScoped<IOfficesReadDbContext, OfficesReadDbContext>();
 
         return services;
     }

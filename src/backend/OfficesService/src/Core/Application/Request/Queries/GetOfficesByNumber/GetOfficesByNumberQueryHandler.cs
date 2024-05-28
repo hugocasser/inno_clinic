@@ -45,7 +45,7 @@ public class GetOfficesByNumberQueryHandler
             }
 
             var photo = await photoService
-                .UploadPhotoInBase64Async(office.PhotoId, cancellationToken);
+                .UploadPhotoInBase64Async(office?.PhotoId, cancellationToken);
 
             if (photo.IsSuccess)
             {

@@ -15,7 +15,6 @@ using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.Abstractions;
 using Polly;
-using Polly.Retry;
 using Quartz;
 
 namespace Application;
@@ -43,6 +42,8 @@ public static class ApplicationInjection
             .AddScoped<IPhotoService, PhotoService>()
             .AddScoped<IGoogleMapsApiClient, GoogleMapsApiClient>()
             .AddScoped<IPhoneValidatorService, PhoneValidatorService>();
+
+        services.AddHttpClient();
         
         services
             .Decorate<IGoogleMapsApiClient, DecoratedGoogleMapsApiClient>()
