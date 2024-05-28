@@ -20,7 +20,7 @@ public class ChangeOfficeStatusCommandHandlerTests
             .Verifiable();
 
         _writeOfficesRepositoryMock
-            .Setup(x => x.UpdateOfficeAsync(It.IsAny<Domain.Models.Office>()))
+            .Setup(x => x.UpdateOfficeAsync(It.IsAny<Office>()))
             .Returns(Task.CompletedTask)
             .Verifiable();
 
@@ -46,7 +46,7 @@ public class ChangeOfficeStatusCommandHandlerTests
         // Arrange
         _writeOfficesRepositoryMock
             .Setup(x => x.GetOfficeAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync((Domain.Models.Office?) null)
+            .ReturnsAsync((Office?) null)
             .Verifiable();
         
         var handler = new ChangeOfficeStatusCommandHandler(_writeOfficesRepositoryMock.Object);
@@ -77,6 +77,4 @@ public class ChangeOfficeStatusCommandHandlerTests
         // Assert
         result.Should().BeEquivalentTo(ResultBuilder.BadRequest(ErrorMessages.NothingChanged));
     }
-    
-    
 }
