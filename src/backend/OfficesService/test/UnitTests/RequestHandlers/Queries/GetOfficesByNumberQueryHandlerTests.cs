@@ -9,7 +9,7 @@ namespace UnitTests.RequestHandlers.Queries;
 
 public class GetOfficesByNumberQueryHandlerTests
 {
-        private readonly string _randomString = Guid.NewGuid().ToString();
+    private readonly string _randomString = Guid.NewGuid().ToString();
     private readonly Mock<IReadOfficesRepository> _readOfficesRepository = new();
     private readonly Mock<IPhotoService> _photoService = new();
     
@@ -17,7 +17,7 @@ public class GetOfficesByNumberQueryHandlerTests
     public async Task GetOfficesByAddress_ShouldReturnSuccessWithData_WhenOfficesExists()
     {
         // Arrange
-        var pageSettings = Utilities.GeneratePageSettings();
+        var pageSettings = Utilities.GenerateValidPageSettings();
         var query = new GetOfficesByNumberQuery(_randomString, pageSettings, false);
         var offices = Utilities.GenerateOfficesList(pageSettings.ItemsPerPage).ToList();
         
@@ -49,7 +49,7 @@ public class GetOfficesByNumberQueryHandlerTests
                 It.IsAny<PageSettings>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(null as IReadOnlyList<Office>);
         
-        var pageSettings = Utilities.GeneratePageSettings();
+        var pageSettings = Utilities.GenerateValidPageSettings();
         var query = new GetOfficesByNumberQuery(_randomString, pageSettings, false);
         var handler = new GetOfficesByNumberQueryHandler(_readOfficesRepository.Object, _photoService.Object);
         

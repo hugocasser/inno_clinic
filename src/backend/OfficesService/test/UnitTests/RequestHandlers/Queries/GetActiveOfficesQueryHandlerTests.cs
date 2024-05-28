@@ -14,7 +14,7 @@ public class GetActiveOfficesQueryHandlerTests
     public async Task GetActiveOffices_ShouldReturnSuccessWithData_WhenOfficesExists()
     {
         // Arrange
-        var pageSettings = Utilities.GeneratePageSettings();
+        var pageSettings = Utilities.GenerateValidPageSettings();
         var offices = Utilities.GenerateOfficesList(pageSettings.ItemsPerPage)
             .ToList().AsReadOnly();
         
@@ -37,7 +37,7 @@ public class GetActiveOfficesQueryHandlerTests
     [Fact]
     public async Task GetActiveOffices_ShouldReturnSuccessWithoutData_WhenNoOfficesExists()
     {
-        var pageSettings = Utilities.GeneratePageSettings();
+        var pageSettings = Utilities.GenerateValidPageSettings();
         var query = new GetActiveOfficesQuery(pageSettings);
         
         _readOfficesRepository.Setup(repo => 

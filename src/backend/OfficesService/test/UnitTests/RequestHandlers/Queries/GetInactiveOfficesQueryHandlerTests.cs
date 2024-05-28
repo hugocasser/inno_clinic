@@ -14,7 +14,7 @@ public class GetInactiveOfficesQueryHandlerTests
     public async Task GetActiveOffices_ShouldReturnSuccessWithData_WhenOfficesExists()
     {
         // Arrange
-        var pageSettings = Utilities.GeneratePageSettings();
+        var pageSettings = Utilities.GenerateValidPageSettings();
         var offices = Utilities.GenerateOfficesList(pageSettings.ItemsPerPage)
             .ToList().AsReadOnly();
         
@@ -42,7 +42,7 @@ public class GetInactiveOfficesQueryHandlerTests
                     It.IsAny<PageSettings>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(null as IReadOnlyList<Office>);
         
-        var pageSettings = Utilities.GeneratePageSettings();
+        var pageSettings = Utilities.GenerateValidPageSettings();
         var query = new GetInactiveOfficesQuery(pageSettings);
         var handler = new GetInactiveOfficesQueryHandler(_readOfficesRepository.Object);
         

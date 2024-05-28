@@ -27,10 +27,28 @@ public static class Utilities
             .Create();
     }
     
-    public static PageSettings GeneratePageSettings()
+    public static PageSettings GenerateValidPageSettings()
     {
         return _fixture
             .Build<PageSettings>()
+            .Create();
+    }
+    
+    public static PageSettings GenerateNotValidPageSettings()
+    {
+        return _fixture
+            .Build<PageSettings>()
+            .With(settings => settings.ItemsPerPage, new Random().Next(-1000 ,0))
+            .With(settings => settings.Page, new Random().Next(-1000, 0))
+            .Create();
+    }
+    
+    public static PageSettings GenerateNullPageSettings()
+    {
+        return _fixture
+            .Build<PageSettings>()
+            .Without(pageSettings => pageSettings.Page)
+            .Without(pageSettings => pageSettings.ItemsPerPage)
             .Create();
     }
     

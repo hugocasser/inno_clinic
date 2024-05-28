@@ -17,7 +17,7 @@ public class GetOfficesByAddressQueryTests
     public async Task GetOfficesByAddress_ShouldReturnSuccessWithData_WhenOfficesExists()
     {
         // Arrange
-        var pageSettings = Utilities.GeneratePageSettings();
+        var pageSettings = Utilities.GenerateValidPageSettings();
         var query = new GetOfficesByAddressQuery(_randomString, pageSettings, false);
         var offices = Utilities.GenerateOfficesList(pageSettings.ItemsPerPage).ToList();
         
@@ -49,7 +49,7 @@ public class GetOfficesByAddressQueryTests
                 It.IsAny<PageSettings>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(null as IReadOnlyList<Office>);
         
-        var pageSettings = Utilities.GeneratePageSettings();
+        var pageSettings = Utilities.GenerateValidPageSettings();
         var query = new GetOfficesByAddressQuery(_randomString, pageSettings, false);
         var handler = new GetOfficesByAddressQueryHandler(_readOfficesRepository.Object, _photoService.Object);
         
