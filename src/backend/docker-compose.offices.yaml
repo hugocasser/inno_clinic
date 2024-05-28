@@ -1,0 +1,34 @@
+services: 
+  db-offices:
+    container_name: db-offices
+    image: postgres:latest
+    volumes:
+      - database-data:/data/db
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=office
+      - POSTGRES_DATABASE=office-write-db
+#    networks: 
+#      - office
+#  mongo:
+#    image: mongo:latest
+#    networks:
+#      - office
+#    ports:
+#      - "27017:27017"
+#      - "28017:28017"
+#  office:
+#    image: offices:latest
+#    depends_on:
+#      - db-offices
+#      - mongo
+#    environment:
+#      - ASPNETCORE_ENVIRONMENT=Container
+#    networks:
+#      - office
+#    ports:
+#      - "5000:5000"
+#      - "5001:5001"
+
+volumes:
+  database-data:
