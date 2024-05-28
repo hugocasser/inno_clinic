@@ -27,7 +27,7 @@ public class UpdateOfficeInfoCommandHandler
         }
         
         
-        office.UpdateOffice(request.OfficeId, stringAddress, request.RegistryPhoneNumber );
+        office.UpdateOffice(request.OfficeId,  request.RegistryPhoneNumber, stringAddress);
         await writeOfficesRepository.UpdateOfficeAsync(office);
 
         await writeOfficesRepository.SaveChangesAsync(cancellationToken);

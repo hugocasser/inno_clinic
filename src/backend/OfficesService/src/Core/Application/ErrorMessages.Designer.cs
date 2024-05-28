@@ -14,7 +14,7 @@ namespace Application {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class ErrorMessages {
+    public class ErrorMessages {
         
         private static System.Resources.ResourceManager resourceMan;
         
@@ -45,67 +45,67 @@ namespace Application {
             }
         }
         
-        internal static string AddressNotValid {
+        public static string AddressNotValid {
             get {
                 return ResourceManager.GetString("AddressNotValid", resourceCulture);
             }
         }
         
-        internal static string PhoneNumberNotValid {
+        public static string PhoneNumberNotValid {
             get {
                 return ResourceManager.GetString("PhoneNumberNotValid", resourceCulture);
             }
         }
         
-        internal static string AddressCannotBeNullOrEmpty {
+        public static string AddressCannotBeNullOrEmpty {
             get {
                 return ResourceManager.GetString("AddressCannotBeNullOrEmpty", resourceCulture);
             }
         }
         
-        internal static string PhoneCannotBeNullOfEmpty {
+        public static string PhoneCannotBeNullOfEmpty {
             get {
                 return ResourceManager.GetString("PhoneCannotBeNullOfEmpty", resourceCulture);
             }
         }
         
-        internal static string OfficeNotFound {
+        public static string OfficeNotFound {
             get {
                 return ResourceManager.GetString("OfficeNotFound", resourceCulture);
             }
         }
         
-        internal static string PhotoNotFound {
+        public static string PhotoNotFound {
             get {
                 return ResourceManager.GetString("PhotoNotFound", resourceCulture);
             }
         }
         
-        internal static string NothingChanged {
+        public static string NothingChanged {
             get {
                 return ResourceManager.GetString("NothingChanged", resourceCulture);
             }
         }
         
-        internal static string PageSettingCannotBeNull {
+        public static string PageSettingCannotBeNull {
             get {
                 return ResourceManager.GetString("PageSettingCannotBeNull", resourceCulture);
             }
         }
         
-        internal static string PageMustBeGrateWhenZero {
+        public static string PageMustBeGrateWhenZero {
             get {
                 return ResourceManager.GetString("PageMustBeGrateWhenZero", resourceCulture);
             }
         }
         
-        internal static string PageSizeMustBeGraterThenZero {
+        public static string PageSizeMustBeGraterThenZero {
             get {
                 return ResourceManager.GetString("PageSizeMustBeGraterThenZero", resourceCulture);
             }
         }
         
-        internal static string CountryCanNotBeEmpty {
+        public static string CountryCanNotBeEmpty {
             get {
                 return ResourceManager.GetString("CountryCanNotBeEmpty", resourceCulture);
             }
