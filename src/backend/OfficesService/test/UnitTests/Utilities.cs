@@ -59,4 +59,13 @@ public static class Utilities
             .Without(office => office.PhotoId)
             .CreateMany(count);
     }
+
+    public static Office GenerateOffice()
+    {
+        return 
+            _fixture
+                .Build<Office>()
+                .Without(office => office.PhotoId)
+                .Create();
+    }
 }
