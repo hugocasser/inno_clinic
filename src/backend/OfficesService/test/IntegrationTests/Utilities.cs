@@ -19,11 +19,6 @@ public static class Utilities
         return new PageSettings(1, 10);
     }
     
-    public static PageSettings GenerateInvalidPageSettings()
-    {
-        return new PageSettings(-3, -3);
-    }
-    
     public static AddressRequestDto GenerateValidAddressRequestDto()
     {
         return new AddressRequestDto("Street", "City", "State", "Country", "PostalCode");
