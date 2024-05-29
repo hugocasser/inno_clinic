@@ -8,6 +8,16 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace IntegrationTests.Controllers;
 
+public class OfficesControllerTests : IClassFixture<ControllersAppFactoryFixture>
+{
+    private readonly ControllersAppFactoryFixture _fixture;
+    private readonly HttpClient _client;
+    
+    public OfficesControllerTests(ControllersAppFactoryFixture fixture)
+    {
+        _fixture = fixture;
+        _client = _fixture.CreateClient();
+    }
     
     [Fact]
     public async Task GetOfficesWithPhotos_ReturnsOk()
@@ -145,3 +155,4 @@ namespace IntegrationTests.Controllers;
         await Task.WhenAll(tasks);
         await writeRepository.SaveChangesAsync();
     }
+}
