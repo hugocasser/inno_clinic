@@ -9,11 +9,7 @@ public class PhoneValidatorServiceTests : PhoneValidatorServiceTestsFixture
     public async Task ValidatePhoneNumber_ShouldReturnSuccess_WhenPhoneNumberIsValid()
     {
         // Arrange
-        var phoneValidatorResponse = new PhoneValidatorResponse
-            (PhoneNumber, true, new Format("", ""), new Country("", "", ""),
-                "", "", "");
-        
-        SetupHttpClientFactory(HttpStatusCode.OK, phoneValidatorResponse);
+        SetupHttpClientFactory(HttpStatusCode.OK,  true);
 
         // Act
         var result = await PhoneValidatorService.ValidatePhoneNumberAsync(PhoneNumber);
@@ -26,11 +22,7 @@ public class PhoneValidatorServiceTests : PhoneValidatorServiceTestsFixture
     public async Task ValidatePhoneNumber_ShouldReturnError_WhenPhoneNumberIsNotValid()
     {
         // Arrange
-        var phoneValidatorResponse = new PhoneValidatorResponse
-            (PhoneNumber, false, new Format("", ""), new Country("", "", ""),
-                "", "", "");
-        
-        SetupHttpClientFactory(HttpStatusCode.OK, phoneValidatorResponse);
+        SetupHttpClientFactory(HttpStatusCode.OK, false);
         
         // Act
         var result = await PhoneValidatorService.ValidatePhoneNumberAsync(PhoneNumber);
@@ -43,11 +35,7 @@ public class PhoneValidatorServiceTests : PhoneValidatorServiceTestsFixture
     public async Task ValidatePhoneNumber_ShouldReturnError_WhenStatusCodeIsNotOk()
     {
         // Arrange
-        var phoneValidatorResponse = new PhoneValidatorResponse
-        (PhoneNumber, false, new Format("", ""), new Country("", "", ""),
-            "", "", "");
-        
-        SetupHttpClientFactory(HttpStatusCode.BadRequest, phoneValidatorResponse);
+        SetupHttpClientFactory(HttpStatusCode.BadRequest, false);
         
         // Act
         var result = await PhoneValidatorService.ValidatePhoneNumberAsync(PhoneNumber);
@@ -60,7 +48,7 @@ public class PhoneValidatorServiceTests : PhoneValidatorServiceTestsFixture
     public async Task ValidatePhoneNumber_ShouldReturnError_WhenResponseIsNull()
     {
         // Arrange
-        SetupHttpClientFactory(HttpStatusCode.OK, null);
+        SetupHttpClientFactory(HttpStatusCode.OK, false, true);
         
         // Act
         var result = await PhoneValidatorService.ValidatePhoneNumberAsync(PhoneNumber);

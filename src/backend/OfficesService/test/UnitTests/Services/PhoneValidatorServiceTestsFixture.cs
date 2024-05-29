@@ -40,8 +40,25 @@ public abstract class PhoneValidatorServiceTestsFixture
         return handler;
     }
     
-    protected void SetupHttpClientFactory(HttpStatusCode statusCode, PhoneValidatorResponse response)
+    protected void SetupHttpClientFactory(HttpStatusCode statusCode, bool valid = true, bool isNull = false)
     {
+        
+        var response = new PhoneValidatorResponse
+        (PhoneNumber, true, new Format("", ""), new Country("", "", ""),
+            "", "", "");
+        
+        if (isNull)
+        {
+            response = null;
+        }
+        
+        if (!valid)
+        {
+            response = new PhoneValidatorResponse
+            (PhoneNumber, false, new Format("", ""), new Country("", "", ""),
+                "", "", "");
+        }
+        
         var httpClient = new HttpClient(CreateMockHttpMessageHandler(statusCode, response));
         HttpClientFactory
             .Setup(factory => factory.CreateClient(It.IsAny<string>()))
