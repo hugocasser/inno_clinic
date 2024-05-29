@@ -36,6 +36,6 @@ public class OfficesConfiguration : IEntityTypeConfiguration<Office>
         builder
             .Property(office => office.PhotoId)
             .ValueGeneratedNever()
-            .IsRequired(false);
+            .IsRequired();
     }
 }

@@ -15,7 +15,7 @@ public class CreateOfficeCommandHandler
     {
         var stringAddress = request.AddressRequestDto.ToString();
         
-        var office = Office.CreateOffice(stringAddress, request.RegistryPhoneNumber, request.IsActive);
+        var office = Office.CreateOffice(stringAddress, request.RegistryPhoneNumber, request.IsActive, Guid.Empty);
         await writeOfficesRepository.AddOfficeAsync(office, cancellationToken);
         await writeOfficesRepository.SaveChangesAsync(cancellationToken);
         

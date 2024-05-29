@@ -12,7 +12,8 @@ public record AddressRequestDto(string Street, string City, string State, string
             PostalCode = PostalCode,
             RegionCode = Country,
             LanguageCode = "en",
-            AddressLines = {Street, City, State}
+            AddressLines = {Street, City, State},
+            Locality = City
         };
         return postalAddress;
     }

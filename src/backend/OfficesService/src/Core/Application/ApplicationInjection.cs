@@ -7,11 +7,13 @@ using Application.Abstractions.Services.ValidationServices;
 using Application.BackgroundJobs;
 using Application.Common;
 using Application.Options;
+using Application.PipelineBehaviors;
 using Application.Services.ExternalServices;
 using Application.Services.TransactionalOutboxServices;
 using Application.Services.ValidationServices;
 using Application.Services.ValidationServices.DecoratedServicesWithRateLimiting;
 using FluentValidation;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.Abstractions;
 using Polly;
@@ -132,6 +134,9 @@ public static class ApplicationInjection
     
     private static IServiceCollection AddPipelineBehaviors(this IServiceCollection services)
     {
+        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingPipelineBehavior<,>));
+        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
+        
         return services;
     }
 }
