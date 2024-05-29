@@ -15,4 +15,37 @@
       <PackageReference Include="Microsoft.Extensions.Options" Version="8.0.2" />
     </ItemGroup>
 
+    <ItemGroup>
+      <EmbeddedResource Update="OperationResult\Resources\HttpErrorMessages.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>HttpErrorMessages.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="OperationResult\Resources\ResponseMessages.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>ResponseMessages.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="OperationResult\Resources\ValidationErrorMessages.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>ValidationErrorMessages.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="OperationResult\Resources\HttpErrorMessages.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>HttpErrorMessages.resx</DependentUpon>
+      </Compile>
+      <Compile Update="OperationResult\Resources\ResponseMessages.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>ResponseMessages.resx</DependentUpon>
+      </Compile>
+      <Compile Update="OperationResult\Resources\ValidationErrorMessages.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>ValidationErrorMessages.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
 </Project>
