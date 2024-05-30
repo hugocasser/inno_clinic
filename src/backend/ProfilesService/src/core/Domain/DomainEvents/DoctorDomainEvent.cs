@@ -8,7 +8,7 @@ namespace Domain.DomainEvents;
 public class DoctorDomainEvent : IDomainEvent
 {
     private readonly Doctor _doctor;
-    public bool SpecializationChanged { get; set; } = false;
+    public bool SpecializationChanged { get; private init; } = false;
     private readonly EventType _eventType;
     public EventType GetEventType()
     {

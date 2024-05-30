@@ -23,4 +23,9 @@ public abstract class Profile
     {
         _domainEvents.Add(domainEvent);  
     }
+
+    public void ClearDomainEvents()
+    {
+        _domainEvents.Clear();
+    }
 }
