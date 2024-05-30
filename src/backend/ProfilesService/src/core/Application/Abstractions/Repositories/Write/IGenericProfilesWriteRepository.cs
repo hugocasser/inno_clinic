@@ -1,6 +1,6 @@
 using Domain.Abstractions;
 
-namespace Application.Abstractions.Repositories;
+namespace Application.Abstractions.Repositories.Write;
 
 public interface IGenericProfilesWriteRepository<T> where T : Profile
 {
