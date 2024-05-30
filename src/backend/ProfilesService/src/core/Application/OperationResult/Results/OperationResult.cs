@@ -6,6 +6,11 @@ namespace Application.OperationResult.Results;
 public class OperationResult<T> : IResult
 {
     public bool IsSuccess { get; set; }
+    public object? GetContent()
+    {
+        return Content;
+    }
+
     private T? Content { get; set; }
 
     private IEnumerable<Error>? Errors { get; set; }
@@ -15,11 +20,11 @@ public class OperationResult<T> : IResult
         IsSuccess = isSuccess;
     }
 
-    // public OperationResult(Error[] errors)
-    // {
-    //     IsSuccess = false;
-    //     Errors = errors;
-    // }
+    public OperationResult(Error[] errors)
+    {
+        IsSuccess = false;
+        Errors = errors;
+    }
     
     public OperationResult(T content)
     {
@@ -33,7 +38,7 @@ public class OperationResult<T> : IResult
         Errors = errors;
     }
     
-    public T GetContent()
+    public T GetTypedContent()
     {
         if (Content != null)
         {

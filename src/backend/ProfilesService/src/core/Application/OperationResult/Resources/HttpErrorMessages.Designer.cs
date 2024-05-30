@@ -28,7 +28,7 @@ namespace Application.OperationResult {
         internal static System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.Equals(null, resourceMan)) {
-                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("Application.OperationResult.HttpErrorMessages", typeof(HttpErrorMessages).Assembly);
+                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("Application.OperationResult.Resources.HttpErrorMessages", typeof(HttpErrorMessages).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -54,6 +54,36 @@ namespace Application.OperationResult {
         internal static string InternalServerError {
             get {
                 return ResourceManager.GetString("InternalServerError", resourceCulture);
+            }
+        }
+        
+        internal static string SpecializationNotFound {
+            get {
+                return ResourceManager.GetString("SpecializationNotFound", resourceCulture);
+            }
+        }
+        
+        internal static string UserWithThisEmailNotExist {
+            get {
+                return ResourceManager.GetString("UserWithThisEmailNotExist", resourceCulture);
+            }
+        }
+        
+        internal static string OfficeNotFound {
+            get {
+                return ResourceManager.GetString("OfficeNotFound", resourceCulture);
+            }
+        }
+        
+        internal static string PhotoNotFound {
+            get {
+                return ResourceManager.GetString("PhotoNotFound", resourceCulture);
+            }
+        }
+        
+        internal static string RegistrationFailed {
+            get {
+                return ResourceManager.GetString("RegistrationFailed", resourceCulture);
             }
         }
     }

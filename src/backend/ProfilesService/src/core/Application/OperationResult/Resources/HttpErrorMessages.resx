@@ -24,4 +24,19 @@
     <data name="InternalServerError" xml:space="preserve">
         <value>Ops! somthing went wrong, please try again</value>
     </data>
+    <data name="SpecializationNotFound" xml:space="preserve">
+        <value>Specialization not found</value>
+    </data>
+    <data name="UserWithThisEmailNotExist" xml:space="preserve">
+        <value>User with this email not exist</value>
+    </data>
+    <data name="OfficeNotFound" xml:space="preserve">
+        <value>OfficeNotFound</value>
+    </data>
+    <data name="PhotoNotFound" xml:space="preserve">
+        <value>Photo not fount</value>
+    </data>
+    <data name="RegistrationFailed" xml:space="preserve">
+        <value>Error occured while registration</value>
+    </data>
 </root>

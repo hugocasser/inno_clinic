@@ -1,6 +1,3 @@
 namespace Application.Abstractions.CQRS;
 
-public interface IRequest<TResponse>
-{
-    
-}
+public interface IRequest<TResponse>;
