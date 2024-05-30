@@ -13,7 +13,7 @@ public abstract class Profile
     public Guid UserId { get; set; }
     public bool IsDeleted { get; set; }
     public Guid PhotoId { get; set; }
-    
+
     public ReadOnlyCollection<IDomainEvent> GetDomainEvents()
     {
         return _domainEvents.AsReadOnly();
@@ -21,6 +21,6 @@ public abstract class Profile
 
     public void RaiseEvent(IDomainEvent domainEvent)
     {
-      _domainEvents.Add(domainEvent);  
-    } 
+        _domainEvents.Add(domainEvent);  
+    }
 }

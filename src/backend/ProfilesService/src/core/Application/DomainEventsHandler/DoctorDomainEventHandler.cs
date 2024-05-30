@@ -1,5 +1,6 @@
 using Application.Abstractions.DomainEvents;
 using Application.Abstractions.Repositories.Read;
+using Application.Abstractions.Services.ExternalServices;
 using Application.ReadModels;
 using Domain.Abstractions.DomainEvents;
 using Domain.DomainEvents;
@@ -7,20 +8,38 @@ using Domain.Models;
 
 namespace Application.DomainEventsHandler;
 
-public class DoctorDomainEventHandler(IReadDoctorsRepository readRepository) : IDomainEventHandler<DoctorDomainEvent>
+public class DoctorDomainEventHandler
+    (IReadDoctorsRepository readRepository,
+        ISpecializationsService specializationsService)
+    : IDomainEventHandler<DoctorDomainEvent>
 {
     public async Task HandleAsync(DoctorDomainEvent domainEvent, CancellationToken cancellationToken)
     {
-        var readModel = DoctorReadModel.MapToReadModel(domainEvent.GetEntity() as Doctor);
+        if (domainEvent.GetEntity() is not Doctor model)
+        {
+            return;    
+        }
+        
+        var readModel = DoctorReadModel.MapToReadModel(model);
+        
         switch (domainEvent.GetEventType())
         {
             case EventType.Created:
             {
+                var specialization = await specializationsService.GetSpecializationNameAsync(model.SpecializationId, cancellationToken);
+                readModel.Specialization = specialization;
+                
                 await readRepository.AddAsync(readModel, cancellationToken);
                 break;
             }
             case EventType.Updated:
             {
+                if (domainEvent.SpecializationChanged)
+                {
+                    var specialization = await specializationsService.GetSpecializationNameAsync(model.SpecializationId, cancellationToken);
+                    readModel.Specialization = specialization;
+                }
+                
                 await readRepository.UpdateAsync(readModel, cancellationToken);
                 break;
             }

@@ -4,6 +4,5 @@ namespace Domain.Abstractions.DomainEvents;
 
 public interface IDomainEvent
 {
-    public EventType GetEventType();
-    public object GetEntity();
-}
+    public string Serialize();
+};

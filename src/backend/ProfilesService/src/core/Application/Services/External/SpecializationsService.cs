@@ -12,4 +12,9 @@ public class SpecializationsService : ISpecializationsService
     {
         return Task.FromResult(OperationResultBuilder.Success() as IResult);
     }
+
+    public Task<string> GetSpecializationNameAsync(Guid specializationId, CancellationToken cancellationToken)
+    {
+        return Task.FromResult("Specialization name");
+    }
 }
