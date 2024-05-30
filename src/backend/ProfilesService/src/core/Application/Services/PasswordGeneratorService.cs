@@ -14,8 +14,6 @@ public class PasswordGeneratorService : IPasswordGeneratorService
 
     public string GenerateRandomPassword()
     {
-
-        
         _passwordBuilder.Append(Letters[_randomizer.Next(Letters.Length)]);
         _passwordBuilder.Append(UppercaseLetters[_randomizer.Next(UppercaseLetters.Length)]);
         _passwordBuilder.Append(Numbers[_randomizer.Next(Numbers.Length)]);
