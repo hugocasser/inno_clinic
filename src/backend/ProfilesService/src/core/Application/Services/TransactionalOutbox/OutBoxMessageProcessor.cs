@@ -1,3 +1,6 @@
+using System.Runtime.CompilerServices;
+using Application.Abstractions.DomainEvents;
+using Application.Abstractions.Repositories.OutBox;
 using Application.Abstractions.TransactionalOutbox;
 using Application.OperationResult.Builders;
 using Application.OperationResult.Errors;
@@ -5,15 +8,35 @@ using Application.OperationResult.Results;
 
 namespace Application.Services.TransactionalOutbox;
 
-public class OutBoxMessageProcessor(IServiceProvider serviceProvider) : IOutboxMessageProcessor
+public class OutboxMessageProcessor
+    (IOutboxMessagesRepository<OutboxMessage> outboxMessagesRepository,
+        IDomainEventSender domainEventSender) : IOutboxMessageProcessor
 {
-    public async Task<OperationResult<bool>> ProcessAsync(IOutboxMessage? message, CancellationToken cancellationToken)
+    public async IAsyncEnumerable<OperationResult<bool>> ProcessAsync(IEnumerable<IOutboxMessage?> messages, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        if (message is null)
+        foreach (var message in messages)
         {
-            return OperationResultBuilder.Failure(new Error("message is null"));
+            if (message is null)
+            {
+                yield return OperationResultBuilder.Failure();
+                continue;
+            }
+            
+            var domainEvent = message.GetDomainEvent();
+            
+            if (domainEvent is null)
+            {
+                yield return OperationResultBuilder.Failure();
+                continue;
+            }
+            
+            await domainEventSender.SendAsync(domainEvent, cancellationToken);
+            message.Processed();
+            await outboxMessagesRepository.UpdateAsync((message as OutboxMessage)!, cancellationToken);
+            
+            yield return OperationResultBuilder.Success(true);
         }
         
-        return OperationResultBuilder.Success();
+        await outboxMessagesRepository.SaveChangesAsync(cancellationToken);
     }
 }

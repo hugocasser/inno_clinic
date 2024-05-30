@@ -4,5 +4,6 @@ namespace Application.Abstractions.TransactionalOutbox;
 
 public interface IOutboxMessageProcessor
 {
-    public Task<OperationResult<bool>> ProcessAsync(IOutboxMessage? message,CancellationToken cancellationToken);
+    public IAsyncEnumerable<OperationResult<bool>> ProcessAsync(IEnumerable<IOutboxMessage> message,
+        CancellationToken cancellationToken);
 }
