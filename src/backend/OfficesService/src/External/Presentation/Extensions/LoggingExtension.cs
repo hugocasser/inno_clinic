@@ -9,7 +9,7 @@ public static class LoggingExtension
 {
     public static WebApplication UseLogging(this WebApplication application)
     {
-        if (Environment.GetEnvironmentVariable("Test_Logs") != "Disable elasticsearch")
+        if (Environment.GetEnvironmentVariable("ELASTIC_CONNECTION_STRING") != "Disable elasticsearch")
         {
             application.UseSerilogRequestLogging();
         }
@@ -20,7 +20,7 @@ public static class LoggingExtension
     public static WebApplicationBuilder AddLoggingServices(
         this WebApplicationBuilder builder)
     {
-        if (Environment.GetEnvironmentVariable("Test_Logs") != "Disable elasticsearch")
+        if (Environment.GetEnvironmentVariable("ELASTIC_CONNECTION_STRING") != "Disable elasticsearch")
         {
             return builder.AddElasticAndSerilog();
         }

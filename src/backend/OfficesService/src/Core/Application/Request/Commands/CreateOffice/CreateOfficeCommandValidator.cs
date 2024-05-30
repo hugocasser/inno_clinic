@@ -11,7 +11,8 @@ public class CreateOfficeCommandValidator : AbstractValidator<CreateOfficeComman
     {
         RuleFor(command => command.AddressRequestDto.ToPostalAddress()).Address(googleMapsApiClient);
 
-        RuleFor(command => command.RegistryPhoneNumber).Phone(phoneValidator);
+        RuleFor(command => command.RegistryPhoneNumber)
+            .Phone(phoneValidator);
         
         RuleFor(command => command.IsActive).NotNull();
         

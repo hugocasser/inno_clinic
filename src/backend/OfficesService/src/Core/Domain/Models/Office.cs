@@ -10,16 +10,16 @@ public class Office: Entity
 {
     [BsonElement("address")]
     [BsonRepresentation(BsonType.String)]
-    public string? Address { get; private set; } = string.Empty;
+    public string? Address { get;  set; } = string.Empty;
     [BsonElement("registry_phone_number")]
     [BsonRepresentation(BsonType.String)]
-    public string? RegistryPhoneNumber { get; private set; } = string.Empty;
+    public string? RegistryPhoneNumber { get; set; } = string.Empty;
     [BsonElement("is_active")]
     [BsonRepresentation(BsonType.Boolean)]
-    public bool IsActive { get; private set; } = false;
+    public bool IsActive { get;  set; }
     [BsonElement("photo_id")]
     [BsonRepresentation(BsonType.String)]
-    public Guid? PhotoId { get; private set; } = Guid.Empty;
+    public Guid PhotoId { get;  set; } = Guid.Empty;
     
     public static Office CreateOffice(string address, string registryPhoneNumber, bool isActive, Guid photoId = default)
     {
@@ -37,7 +37,7 @@ public class Office: Entity
         return office;
     }
     
-    public void ChangeOfficePhoto(Guid? photoId = default)
+    public void ChangeOfficePhoto(Guid photoId = default)
     {
         if (photoId == PhotoId)
         {
@@ -47,7 +47,7 @@ public class Office: Entity
         PhotoId = photoId;
         RaiseDomainEvent(new GenericDomainEvent(EventType.Updated, this));
     }
-    public void UpdateOffice(Guid? photoId = default,
+    public void UpdateOffice(Guid photoId = default,
         string? registryPhoneNumber = default, string? address = default)
     {
         if (registryPhoneNumber is null && address is null && photoId == PhotoId)

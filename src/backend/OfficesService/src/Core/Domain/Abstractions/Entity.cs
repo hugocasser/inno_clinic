@@ -6,7 +6,7 @@ namespace Domain.Abstractions;
 public abstract class Entity
 {
     [BsonId]
-    public Guid Id { get; protected set; } = Guid.Empty;
+    public Guid Id { get;  init; } = Guid.Empty;
     
     private readonly IList<IDomainEvent<Entity>> _events = new List<IDomainEvent<Entity>>();
 
