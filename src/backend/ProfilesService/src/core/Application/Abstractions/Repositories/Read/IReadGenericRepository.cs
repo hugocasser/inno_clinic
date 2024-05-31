@@ -9,6 +9,6 @@ public interface IReadGenericRepository<TReadModel, TModel> where TReadModel : I
     public Task AddAsync(TReadModel entity, CancellationToken cancellationToken = default);
     public Task UpdateAsync(TReadModel entity, CancellationToken cancellationToken = default);
     public Task DeleteAsync(TReadModel entity, CancellationToken cancellationToken = default);
-    public Task<IReadProfileModel<TReadModel>> GetByAsync();
-    public Task<IEnumerable<IReadProfileModel<TReadModel>>> GetByManyAsync();
+    public Task<IReadProfileModel<TReadModel>> GetByAsync(CancellationToken cancellationToken = default);
+    public Task<IEnumerable<IReadProfileModel<TReadModel>>> GetByManyAsync(CancellationToken cancellationToken = default);
 }

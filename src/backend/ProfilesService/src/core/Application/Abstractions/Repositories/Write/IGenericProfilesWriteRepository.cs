@@ -4,7 +4,7 @@ namespace Application.Abstractions.Repositories.Write;
 
 public interface IGenericProfilesWriteRepository<T> where T : Profile
 {
-    public Task<T> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+    public Task<T?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
     
     public Task AddAsync(T entity, CancellationToken cancellationToken = default);
     
