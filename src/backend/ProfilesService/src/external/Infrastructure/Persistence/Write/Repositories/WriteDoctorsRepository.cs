@@ -4,5 +4,5 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.Write.Repositories;
 
-public class DoctorsWriteRepository(DbContext context)
-    : GenericProfilesWriteRepository<Doctor>(context), IDoctorsWriteRepository;
+public class WriteDoctorsRepository(DbContext context)
+    : WriteGenericProfilesRepository<Doctor>(context), IWriteDoctorsRepository;

@@ -1,10 +1,14 @@
 using System.Reflection;
 using Application.Abstractions.CQRS;
+using Application.Abstractions.DomainEvents;
 using Application.Abstractions.Services;
 using Application.Abstractions.Services.ExternalServices;
+using Application.Abstractions.TransactionalOutbox;
 using Application.Services;
 using Application.Services.CQRS;
+using Application.Services.DomainEvents;
 using Application.Services.External;
+using Application.Services.TransactionalOutbox;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,15 +18,21 @@ public static class ApplicationInjection
 {
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
+        var assembly = Assembly.GetExecutingAssembly();
+        
         return services
-            .AddCqrs()
-            .AddValidators();
+            .AddCqrs(assembly)
+            .AddValidators()
+            .AddServices()
+            .AddDomainEvents(assembly)
+            .AddTransactionalOutbox();
     }
     
-    private static IServiceCollection AddCqrs(this IServiceCollection services)
+    private static IServiceCollection AddCqrs(this IServiceCollection services, Assembly assembly)
     {
-        services.AddRequestHandlersFromAssembly(Assembly.GetExecutingAssembly());
-        services.AddPipelineBehaviorsFromAssembly(Assembly.GetExecutingAssembly());
+        services.AddRequestHandlersFromAssembly(assembly);
+        services.AddPipelineBehaviorsFromAssembly(assembly);
+        
         services.AddScoped<IRequestSender, RequestSender>();
         
         return services;
@@ -46,4 +56,21 @@ public static class ApplicationInjection
         
         return services;
     }
+
+    private static IServiceCollection AddDomainEvents(this IServiceCollection services, Assembly assembly)
+    {
+        services.AddDomainEventHandlersFromAssembly(assembly);
+        
+        services.AddScoped<IDomainEventSender, DomainEventSender>();
+        
+        return services;
+    }
+    
+    private static IServiceCollection AddTransactionalOutbox(this IServiceCollection services)
+    {
+        services.AddScoped<IOutboxMessageProcessor, OutboxMessageProcessor>();
+        
+        return services;
+    }
+    
 }

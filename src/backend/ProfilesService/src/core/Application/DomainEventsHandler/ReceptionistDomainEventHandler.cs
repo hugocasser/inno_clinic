@@ -7,7 +7,7 @@ using Domain.Models;
 
 namespace Application.DomainEventsHandler;
 
-public class ReceptionistDomainEventHandler(IReceptionistReadRepository readRepository) : IDomainEventHandler<ReceptionistDomainEvent>
+public class ReceptionistDomainEventHandler(IReadReceptionistsRepository readReceptionistsRepository) : IDomainEventHandler<ReceptionistDomainEvent>
 {
     public async Task HandleAsync(ReceptionistDomainEvent domainEvent, CancellationToken cancellationToken)
     {
@@ -16,17 +16,17 @@ public class ReceptionistDomainEventHandler(IReceptionistReadRepository readRepo
         {
             case EventType.Created:
             {
-                await readRepository.AddAsync(readModel, cancellationToken);
+                await readReceptionistsRepository.AddAsync(readModel, cancellationToken);
                 break;
             }
             case EventType.Updated:
             {
-                await readRepository.UpdateAsync(readModel, cancellationToken);
+                await readReceptionistsRepository.UpdateAsync(readModel, cancellationToken);
                 break;
             }
             case EventType.Deleted:
             {
-                await readRepository.DeleteAsync(readModel, cancellationToken);
+                await readReceptionistsRepository.DeleteAsync(readModel, cancellationToken);
                 break;
             }
             default:

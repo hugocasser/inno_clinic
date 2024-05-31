@@ -18,7 +18,7 @@ public class OutboxMessagesRepository(ProfilesWriteDbContext context) : IOutboxM
         await context.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task<List<OutboxMessage?>?> GetNotProcessedAsync(int count, CancellationToken cancellationToken)
+    public async Task<List<OutboxMessage>> GetNotProcessedAsync(int count, CancellationToken cancellationToken)
     {
         return await 
             context.OutboxMessages

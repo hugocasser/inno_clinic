@@ -7,7 +7,7 @@ using Domain.Models;
 
 namespace Application.DomainEventsHandler;
 
-public class PatientDomainEventHandler(IReadPatientRepository readRepository) : IDomainEventHandler<PatientDomainEvent>
+public class PatientDomainEventHandler(IReadPatientsRepository readRepository) : IDomainEventHandler<PatientDomainEvent>
 {
     public async Task HandleAsync(PatientDomainEvent domainEvent, CancellationToken cancellationToken)
     {
