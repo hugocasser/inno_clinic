@@ -1,5 +1,4 @@
 using System.Collections.Frozen;
-using System.Collections.Immutable;
 using System.Runtime.CompilerServices;
 using Application.Abstractions.DomainEvents;
 using Application.Abstractions.Repositories.OutBox;

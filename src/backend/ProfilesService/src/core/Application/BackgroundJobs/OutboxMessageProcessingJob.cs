@@ -14,6 +14,7 @@ public class OutboxMessageProcessingJob
 {
     private const string SuccessfullyProcessed = "Successfully processed message ";
     private const string FailedToProcess = "Failed to process message, error was: ";
+    
     public async Task Execute(IJobExecutionContext context)
     {
         logger.LogInformation("Starting processing of outbox messages at {time}", DateTimeOffset.Now);
@@ -49,4 +50,6 @@ public class OutboxMessageProcessingJob
         logger.LogInformation("Successfully processed {count} messages", successfullyCount);
         logger.LogInformation("Failed to process {count} messages", failedCount);
     }
+    
+    
 }

@@ -11,7 +11,7 @@ using Domain.Models;
 namespace Application.Requests.Commands.CreateDoctorProfile;
 
 public class CreateDoctorProfileCommandHandler
-    (IDoctorsRepository repository,
+    (IDoctorsWriteRepository writeRepository,
         IAuthService authService,
         ISpecializationsService specializationsService,
         IOfficesService officesService,
@@ -55,10 +55,10 @@ public class CreateDoctorProfileCommandHandler
         
         doctor.UserId = registrationResult.GetTypedContent();
         
-        await repository
+        await writeRepository
             .AddAsync(doctor, cancellationToken);
         
-        await repository
+        await writeRepository
             .SaveChangesAsync(cancellationToken);
         
         return HttpResultBuilder.Success(DoctorWithoutPhotoViewDto.MapFromModel(doctor));

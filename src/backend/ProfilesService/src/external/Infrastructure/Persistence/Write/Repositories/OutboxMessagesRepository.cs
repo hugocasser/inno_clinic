@@ -6,7 +6,7 @@ namespace Infrastructure.Persistence.Write.Repositories;
 
 public class OutboxMessagesRepository(ProfilesWriteDbContext context) : IOutboxMessagesRepository<OutboxMessage>
 {
-    public Task UpdateAsync(OutboxMessage message, CancellationToken cancellationToken)
+    public Task UpdateAsync(OutboxMessage? message, CancellationToken cancellationToken)
     {
         context.OutboxMessages.Update(message);
         
@@ -18,7 +18,7 @@ public class OutboxMessagesRepository(ProfilesWriteDbContext context) : IOutboxM
         await context.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task<List<OutboxMessage>> GetNotProcessedAsync(int count, CancellationToken cancellationToken)
+    public async Task<List<OutboxMessage?>?> GetNotProcessedAsync(int count, CancellationToken cancellationToken)
     {
         return await 
             context.OutboxMessages

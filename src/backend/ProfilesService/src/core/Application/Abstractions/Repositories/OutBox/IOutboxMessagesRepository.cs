@@ -8,5 +8,5 @@ public interface IOutboxMessagesRepository<in T> where T : IOutboxMessage
     public Task UpdateAsync(T message, CancellationToken cancellationToken);
     public Task SaveChangesAsync(CancellationToken cancellationToken);
     
-    public Task<List<OutboxMessage>> GetNotProcessedAsync(int count, CancellationToken cancellationToken);
+    public Task<List<OutboxMessage?>?> GetNotProcessedAsync(int count, CancellationToken cancellationToken);
 }
