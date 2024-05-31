@@ -6,6 +6,7 @@ namespace Application.Services.TransactionalOutbox;
 
 public class OutboxMessage : IOutboxMessage
 {
+    public Guid Id { get;  set; }
     public string SerializedDomainEvent { get;  set; } = string.Empty;
     public static OutboxMessage Create(IDomainEvent domainEvent)
     {

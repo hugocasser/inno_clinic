@@ -24,4 +24,9 @@ public static class OperationResultBuilder
     {
         return new OperationResult<bool>(errors);
     }
+    
+    public static OperationResult<T> Failure<T>(params Error[] errors)
+    {
+        return new OperationResult<T>(errors);
+    }
 }

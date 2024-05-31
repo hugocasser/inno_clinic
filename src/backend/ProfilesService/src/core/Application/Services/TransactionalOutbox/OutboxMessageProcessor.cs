@@ -1,3 +1,5 @@
+using System.Collections.Frozen;
+using System.Collections.Immutable;
 using System.Runtime.CompilerServices;
 using Application.Abstractions.DomainEvents;
 using Application.Abstractions.Repositories.OutBox;
@@ -12,13 +14,14 @@ public class OutboxMessageProcessor
     (IOutboxMessagesRepository<OutboxMessage> outboxMessagesRepository,
         IDomainEventSender domainEventSender) : IOutboxMessageProcessor
 {
-    public async IAsyncEnumerable<OperationResult<bool>> ProcessAsync(IEnumerable<IOutboxMessage?> messages, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+    public async IAsyncEnumerable<OperationResult<OutboxMessage>> ProcessAsync(FrozenSet<OutboxMessage?> messages,
+        [EnumeratorCancellation] CancellationToken cancellationToken)
     {
         foreach (var message in messages)
         {
             if (message is null)
             {
-                yield return OperationResultBuilder.Failure();
+                yield return OperationResultBuilder.Failure<OutboxMessage>(new Error($"Message {nameof(message)} is null"));
                 continue;
             }
             
@@ -26,15 +29,15 @@ public class OutboxMessageProcessor
             
             if (domainEvent is null)
             {
-                yield return OperationResultBuilder.Failure();
+                yield return OperationResultBuilder.Failure<OutboxMessage>(new Error($"Message {message.Id} has no domain event"));
                 continue;
             }
             
             await domainEventSender.SendAsync(domainEvent, cancellationToken);
             message.Processed();
-            await outboxMessagesRepository.UpdateAsync((message as OutboxMessage)!, cancellationToken);
+            await outboxMessagesRepository.UpdateAsync(message, cancellationToken);
             
-            yield return OperationResultBuilder.Success(true);
+            yield return OperationResultBuilder.Success(message);
         }
         
         await outboxMessagesRepository.SaveChangesAsync(cancellationToken);
