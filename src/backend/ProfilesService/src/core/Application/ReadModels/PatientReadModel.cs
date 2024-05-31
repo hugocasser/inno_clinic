@@ -9,4 +9,7 @@ public class PatientReadModel : IReadProfileModel<Patient>
     {
         return new PatientReadModel();
     }
+
+    public Guid Id { get; set; }
+    public string FullName { get; set; }
 }

@@ -5,8 +5,27 @@ namespace Application.ReadModels;
 
 public class DoctorReadModel : IReadProfileModel<Doctor>
 {
-    public static DoctorReadModel MapToReadModel(Doctor? entity)
+    public Guid Id { get; set; }
+    public string FullName { get; set; } = string.Empty;
+    public string Specialization { get; set; } = string.Empty;
+    public DateOnly BirthDate { get; set; }
+    public DateOnly CareerStarted { get; set; }
+    public Guid OfficeId { get; set; }
+    public bool IsActive { get; set; }
+    public bool IsDeleted { get; set; }
+    public static DoctorReadModel MapToReadModel(Doctor entity)
     {
-        return new DoctorReadModel();
+        var readModel = new DoctorReadModel()
+        {
+            Id = entity.Id,
+            FullName = entity.LastName + " " + entity.FirstName + " " + entity.MiddleName,
+            BirthDate = entity.DateOfBirth,
+            CareerStarted = entity.StartedCareer,
+            OfficeId = entity.OfficeId,
+            IsActive = entity.IsActive,
+            IsDeleted = entity.IsDeleted
+        };
+        
+        return readModel;
     }
 }

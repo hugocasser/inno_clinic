@@ -9,4 +9,7 @@ public class ReceptionistReadModel : IReadProfileModel<Receptionist>
     {
         return new ReceptionistReadModel();
     }
+
+    public Guid Id { get; set; }
+    public string FullName { get; set; }
 }
