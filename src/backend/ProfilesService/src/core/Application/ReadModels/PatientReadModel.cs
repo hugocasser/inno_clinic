@@ -12,4 +12,5 @@ public class PatientReadModel : IReadProfileModel<Patient>
 
     public Guid Id { get; set; }
     public string FullName { get; set; }
+    public bool IsDeleted { get; set; } = false;
 }

@@ -8,7 +8,7 @@ public static class ProgramExtension
     public static WebApplicationBuilder ConfigureBuilder(this WebApplicationBuilder builder)
     {
         builder.Configuration
-            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
             .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)
             .AddEnvironmentVariables();
         
@@ -18,8 +18,6 @@ public static class ProgramExtension
             .AddLogging()
             .AddIdentity()
             .AddControllers();
-        
-        
         
         return builder;
     }

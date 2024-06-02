@@ -8,10 +8,18 @@ namespace Infrastructure.Persistence.Read.Repositories;
 public abstract class ReadGenericProfilesRepository<TReadModel, TModel>(ProfilesReadDbContext context) : IReadGenericProfilesRepository<TReadModel, TModel> 
     where TReadModel : class, IReadProfileModel<TModel> where TModel : Profile 
 {
-    public async Task<TReadModel> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<TReadModel?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var model = await context.Collection<TReadModel, TModel>()
-            .FindAsync(x => x.Id == id, cancellationToken: cancellationToken);
+            .FindAsync(x => x.Id == id && !x.IsDeleted, cancellationToken: cancellationToken);
+        
+        return await model.FirstOrDefaultAsync(cancellationToken: cancellationToken);
+    }
+
+    public async Task<TReadModel?> GetByIdFromDeletedAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        var model = await context.Collection<TReadModel, TModel>()
+            .FindAsync(x => x.Id == id && x.IsDeleted, cancellationToken: cancellationToken);
         
         return await model.FirstOrDefaultAsync(cancellationToken: cancellationToken);
     }

@@ -1,6 +1,7 @@
 using Application.Abstractions.OperationResult;
 using Application.Abstractions.Services.ExternalServices;
 using Application.OperationResult.Builders;
+using Application.OperationResult.Results;
 
 namespace Application.Services.External;
 
@@ -11,5 +12,10 @@ public class PhotoService : IPhotoService
     public Task<IResult> CheckPhotoAsync(Guid? photoId, CancellationToken cancellationToken)
     {
         return Task.FromResult(OperationResultBuilder.Success() as IResult);
+    }
+
+    public Task<OperationResult<bool>> DeletePhotoAsync(Guid patientPhotoId, CancellationToken cancellationToken)
+    {
+        return Task.FromResult(OperationResultBuilder.Success());
     }
 }

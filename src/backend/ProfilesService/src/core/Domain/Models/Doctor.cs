@@ -9,16 +9,17 @@ public class Doctor : Profile
     public DateOnly StartedCareer { get; set; }
     public Guid OfficeId { get; set; }
     public Guid SpecializationId { get; set; }
-    public bool IsActive { get; set; }
+    
+    public DoctorsStatus Status { get; set; }
+    public Guid StatusId { get; set; }
 
     public Doctor()
     {
         Created();
     }
 
-    public void Delete()
+    public void Deleted()
     {
-        IsDeleted = true;
         RaiseEvent(DoctorDomainEvent.Deleted(this));
     }
     
@@ -32,5 +33,10 @@ public class Doctor : Profile
     private void Created()
     {
         RaiseEvent(DoctorDomainEvent.Created(this));
+    }
+
+    public void Updated()
+    {
+        RaiseEvent(DoctorDomainEvent.Updated(this));
     }
 }

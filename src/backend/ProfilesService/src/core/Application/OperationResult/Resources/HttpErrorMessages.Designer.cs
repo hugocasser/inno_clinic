@@ -86,5 +86,11 @@ namespace Application.OperationResult {
                 return ResourceManager.GetString("RegistrationFailed", resourceCulture);
             }
         }
+        
+        internal static string StatusNotExist {
+            get {
+                return ResourceManager.GetString("StatusNotExist", resourceCulture);
+            }
+        }
     }
 }

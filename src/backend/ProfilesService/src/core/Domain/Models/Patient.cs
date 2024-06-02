@@ -18,9 +18,13 @@ public class Patient : Profile
         RaiseEvent(PatientDomainEvent.Created(this));
     }
     
-    public void Delete()
+    public void Deleted()
     {
-        IsDeleted = true;
         RaiseEvent(PatientDomainEvent.Deleted(this));
+    }
+    
+    private void Updated()
+    {
+        RaiseEvent(PatientDomainEvent.Updated(this));
     }
 }

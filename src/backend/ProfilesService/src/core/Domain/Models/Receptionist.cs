@@ -17,9 +17,13 @@ public class Receptionist : Profile
         RaiseEvent(ReceptionistDomainEvent.Created(this));
     }
     
-    public void Delete()
+    public void Deleted()
     {
-        IsDeleted = true;
         RaiseEvent(ReceptionistDomainEvent.Deleted(this));
+    }
+    
+    private void Updated()
+    {
+        RaiseEvent(ReceptionistDomainEvent.Updated(this));
     }
 }

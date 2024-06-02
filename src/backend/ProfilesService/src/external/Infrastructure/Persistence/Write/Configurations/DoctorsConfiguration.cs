@@ -40,8 +40,9 @@ public class DoctorsConfiguration : IEntityTypeConfiguration<Doctor>
             .IsRequired();
         
         builder
-            .Property(doctor => doctor.IsActive)
-            .ValueGeneratedNever()
+            .HasOne(doctor => doctor.Status)
+            .WithMany(status => status.Doctors)
+            .HasForeignKey(doctor => doctor.StatusId)
             .IsRequired();
         
         builder

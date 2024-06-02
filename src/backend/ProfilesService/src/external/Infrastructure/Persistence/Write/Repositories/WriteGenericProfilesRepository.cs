@@ -13,6 +13,12 @@ public abstract class WriteGenericProfilesRepository<T>(DbContext context)
             (entity => entity.Id == id && !entity.IsDeleted, cancellationToken: cancellationToken);
     }
 
+    public async Task<T?> GetByIdFromDeletedAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        return await context.Set<T>().FirstOrDefaultAsync
+            (entity => entity.Id == id && entity.IsDeleted, cancellationToken: cancellationToken);
+    }
+
     public async Task AddAsync(T entity, CancellationToken cancellationToken = default)
     {
         await context.Set<T>().AddAsync(entity, cancellationToken);

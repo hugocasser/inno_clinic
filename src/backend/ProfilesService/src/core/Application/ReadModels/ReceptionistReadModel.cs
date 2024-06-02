@@ -12,4 +12,5 @@ public class ReceptionistReadModel : IReadProfileModel<Receptionist>
 
     public Guid Id { get; set; }
     public string FullName { get; set; }
+    public bool IsDeleted { get; set; } = false;
 }

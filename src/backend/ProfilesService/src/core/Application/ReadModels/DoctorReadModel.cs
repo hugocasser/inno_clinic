@@ -11,7 +11,7 @@ public class DoctorReadModel : IReadProfileModel<Doctor>
     public DateOnly BirthDate { get; set; }
     public DateOnly CareerStarted { get; set; }
     public Guid OfficeId { get; set; }
-    public bool IsActive { get; set; }
+    public string Status { get; set; } = string.Empty;
     public bool IsDeleted { get; set; }
     public static DoctorReadModel MapToReadModel(Doctor entity)
     {
@@ -22,7 +22,7 @@ public class DoctorReadModel : IReadProfileModel<Doctor>
             BirthDate = entity.DateOfBirth,
             CareerStarted = entity.StartedCareer,
             OfficeId = entity.OfficeId,
-            IsActive = entity.IsActive,
+            Status = entity.Status.StatusName,
             IsDeleted = entity.IsDeleted
         };
         
