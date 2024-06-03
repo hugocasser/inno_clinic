@@ -1,6 +1,7 @@
 using Application.Abstractions.CQRS;
 using Application.Abstractions.Repositories.Write;
 using Application.Abstractions.Services.ExternalServices;
+using Application.Dtos.Views;
 using Application.OperationResult;
 using Application.OperationResult.Builders;
 using Application.OperationResult.Results;
@@ -20,20 +21,17 @@ public class EditDoctorsProfileCommandHandler(
         
         if (doctor is null)
         {
-            return HttpResultBuilder
-                .BadRequest(HttpErrorMessages.ProfileNotFound);
+            return HttpResultBuilder.BadRequest(HttpErrorMessages.ProfileNotFound);
         }
         
-        var status = await statusesRepository
-            .GetByIdAsync(request.StatusId, cancellationToken);
+        var status = await statusesRepository.GetByIdAsync(request.StatusId, cancellationToken);
         
         if (status is null)
         {
             return HttpResultBuilder.BadRequest(HttpErrorMessages.StatusNotExist);
         }
         
-        var officeCheckResult = await officesService
-            .CheckOfficeAsync(request.OfficeId, cancellationToken);
+        var officeCheckResult = await officesService.CheckOfficeAsync(request.OfficeId, cancellationToken);
         
         if (!officeCheckResult.IsSuccess)
         {
@@ -42,8 +40,7 @@ public class EditDoctorsProfileCommandHandler(
         
         if (request.PhotoId is not null)
         {
-            var photoCheckResult = await photoService
-                .CheckPhotoAsync(request.PhotoId, cancellationToken);
+            var photoCheckResult = await photoService.CheckPhotoAsync(request.PhotoId, cancellationToken);
             
             if (!photoCheckResult.IsSuccess)
             {
@@ -57,6 +54,6 @@ public class EditDoctorsProfileCommandHandler(
         await repository.UpdateAsync(doctor, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);
         
-        return HttpResultBuilder.NoContent();
+        return HttpResultBuilder.Success(DoctorWithoutPhotoViewDto.MapFromModel(doctor));
     }
 }
