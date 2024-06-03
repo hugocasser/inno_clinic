@@ -4,6 +4,6 @@ namespace Application.Abstractions.CQRS;
 
 public interface IRequestSender
 {
-    public Task<IResult> SendAsync<TResponse>(IRequest<TResponse> request,
-        CancellationToken cancellationToken = default) where TResponse : IResult;
+    public Task<IResult> SendAsync<TRequest, TResponse>(TRequest request,
+        CancellationToken cancellationToken = default) where TRequest : IRequest<TResponse> where TResponse : IResult;
 }

@@ -1,4 +1,5 @@
 using Application.Abstractions.TransactionalOutbox;
+using Application.Common;
 using Domain.Models;
 
 namespace Application.ReadModels;
@@ -15,10 +16,22 @@ public class DoctorReadModel : IReadProfileModel<Doctor>
     public bool IsDeleted { get; set; }
     public static DoctorReadModel MapToReadModel(Doctor entity)
     {
+        var valueStringBuilder = new ValueStringBuilder(stackalloc char[256]);
+        
+            valueStringBuilder.Append(entity.LastName);
+            valueStringBuilder.Append(' ');
+            valueStringBuilder.Append(entity.FirstName);
+
+        if (!string.IsNullOrWhiteSpace(entity.MiddleName))
+        {
+            valueStringBuilder.Append(' ');
+            valueStringBuilder.Append(entity.MiddleName);
+        }
+        
         var readModel = new DoctorReadModel()
         {
             Id = entity.Id,
-            FullName = entity.LastName + " " + entity.FirstName + " " + entity.MiddleName,
+            FullName = valueStringBuilder.ToString(),
             BirthDate = entity.DateOfBirth,
             CareerStarted = entity.StartedCareer,
             OfficeId = entity.OfficeId,

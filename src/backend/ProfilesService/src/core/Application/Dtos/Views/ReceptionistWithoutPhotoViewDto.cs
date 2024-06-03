@@ -8,7 +8,7 @@ public record ReceptionistWithoutPhotoViewDto(Guid Id, string FullName)
 {
     public static ReceptionistWithoutPhotoViewDto MapFromModel(Receptionist model)
     {
-        var valueStringBuilder = new ValueStringBuilder();
+        var valueStringBuilder = new ValueStringBuilder(stackalloc char[256]);
 
         valueStringBuilder.Append(model.FirstName);
         valueStringBuilder.Append(" ");

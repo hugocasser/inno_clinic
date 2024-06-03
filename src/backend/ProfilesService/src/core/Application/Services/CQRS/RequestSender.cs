@@ -6,8 +6,8 @@ namespace Application.Services.CQRS;
 
 public class RequestSender(IServiceProvider serviceProvider) : IRequestSender
 {
-    public async Task<IResult> SendAsync<TResponse>(IRequest<TResponse> request,
-        CancellationToken cancellationToken = default) where TResponse : IResult
+    public async Task<IResult> SendAsync<TRequest,TResponse>(TRequest request,
+        CancellationToken cancellationToken = default) where TRequest : IRequest<TResponse> where TResponse : IResult
     {
         var pipelineBehaviors = serviceProvider
             .GetServices<IPipelineBehavior<IRequest<TResponse>, TResponse>>().ToList();
@@ -22,7 +22,8 @@ public class RequestSender(IServiceProvider serviceProvider) : IRequestSender
             }
         }
         
-        var handler = serviceProvider.GetRequiredService<IRequestHandler<IRequest<TResponse>, TResponse>>();
+        var handler = serviceProvider.GetRequiredService<IRequestHandler<TRequest, TResponse>>();
+        
         var requestResult = await handler.HandleAsync(request, cancellationToken);
 
         foreach (var pipelineBehavior in pipelineBehaviors)
