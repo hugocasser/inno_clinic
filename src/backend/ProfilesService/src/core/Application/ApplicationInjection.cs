@@ -1,6 +1,7 @@
 using System.Reflection;
 using Application.Abstractions.CQRS;
 using Application.Abstractions.DomainEvents;
+using Application.Abstractions.Http;
 using Application.Abstractions.Services;
 using Application.Abstractions.Services.ExternalServices;
 using Application.Abstractions.TransactionalOutbox;
@@ -8,6 +9,7 @@ using Application.Services;
 using Application.Services.CQRS;
 using Application.Services.DomainEvents;
 using Application.Services.External;
+using Application.Services.Http;
 using Application.Services.TransactionalOutbox;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
@@ -53,6 +55,7 @@ public static class ApplicationInjection
         services.AddScoped<IOfficesService, OfficesService>();
         services.AddScoped<IPhotoService, PhotoService>();
         services.AddScoped<ISpecializationsService, SpecializationsService>();
+        services.AddScoped<IHttpContextAccessorExtensions, HttpContextAccessorExtensions>();
         
         return services;
     }
