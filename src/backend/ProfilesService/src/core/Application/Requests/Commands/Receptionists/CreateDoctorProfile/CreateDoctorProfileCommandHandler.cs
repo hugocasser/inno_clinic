@@ -1,5 +1,4 @@
 using Application.Abstractions.CQRS;
-using Application.Abstractions.Repositories;
 using Application.Abstractions.Repositories.Write;
 using Application.Abstractions.Services.ExternalServices;
 using Application.Dtos.Views;
@@ -8,18 +7,26 @@ using Application.OperationResult.Builders;
 using Application.OperationResult.Results;
 using Domain.Models;
 
-namespace Application.Requests.Commands.CreateDoctorProfile;
+namespace Application.Requests.Commands.Receptionists.CreateDoctorProfile;
 
 public class CreateDoctorProfileCommandHandler
     (IWriteDoctorsRepository repository,
         IAuthService authService,
         ISpecializationsService specializationsService,
         IOfficesService officesService,
-        IPhotoService photoService)
+        IPhotoService photoService,
+        IStatusesRepository statusesRepository)
     : IRequestHandler<CreateDoctorProfileCommand, HttpRequestResult>
 {
     public async Task<HttpRequestResult> HandleAsync(CreateDoctorProfileCommand request, CancellationToken cancellationToken = default)
     {
+        var statusCheckResult = await statusesRepository.GetByIdAsync(request.StatusId, cancellationToken);
+
+        if (statusCheckResult is null)
+        {
+            return HttpResultBuilder.BadRequest(HttpErrorMessages.StatusNotExist);
+        }
+        
         var specializationCheckResult = await specializationsService
             .CheckSpecializationAsync(request.SpecializationId, cancellationToken);
 

@@ -16,7 +16,7 @@ public class RollbackPatientsProfileCommandHandler
         var patientFromWriteRepository = await patientsWriteRepository
             .GetByIdAsync(request.PatientId, cancellationToken);
         
-        if (patientFromWriteRepository == null)
+        if (patientFromWriteRepository is null)
         {
             return HttpResultBuilder.NotFound(HttpErrorMessages.ProfileNotFound);
         }
@@ -24,16 +24,19 @@ public class RollbackPatientsProfileCommandHandler
         var patientFromReadRepository = await patientsReadRepository
             .GetByIdAsync(request.PatientId, cancellationToken);
         
-        if (patientFromReadRepository == null)
+        if (patientFromReadRepository is null)
         {
-            return HttpResultBuilder.NotFound(HttpErrorMessages.ProfileNotFound);
+            patientFromWriteRepository.Created();
+        }
+        else
+        {
+            patientFromReadRepository.IsDeleted = false;
+            await patientsReadRepository.UpdateAsync(patientFromReadRepository, cancellationToken);
         }
         
         patientFromWriteRepository.IsDeleted = false;
-        patientFromReadRepository.IsDeleted = false;
         
         await patientsWriteRepository.UpdateAsync(patientFromWriteRepository, cancellationToken);
-        await patientsReadRepository.UpdateAsync(patientFromReadRepository, cancellationToken);
         await patientsWriteRepository.SaveChangesAsync(cancellationToken);
         
         return HttpResultBuilder.NoContent();

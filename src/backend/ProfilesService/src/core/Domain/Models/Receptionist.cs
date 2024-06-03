@@ -11,8 +11,8 @@ public class Receptionist : Profile
     {
         Created();
     }
-    
-    private void Created()
+
+    public void Created()
     {
         RaiseEvent(ReceptionistDomainEvent.Created(this));
     }
@@ -21,8 +21,8 @@ public class Receptionist : Profile
     {
         RaiseEvent(ReceptionistDomainEvent.Deleted(this));
     }
-    
-    private void Updated()
+
+    public void Updated()
     {
         RaiseEvent(ReceptionistDomainEvent.Updated(this));
     }

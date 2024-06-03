@@ -2,7 +2,7 @@ using Application.Abstractions.CQRS;
 using Application.OperationResult.Results;
 using Domain.Models;
 
-namespace Application.Requests.Commands.CreateDoctorProfile;
+namespace Application.Requests.Commands.Receptionists.CreateDoctorProfile;
 
 public record CreateDoctorProfileCommand(
     Guid? PhotoId,
@@ -14,7 +14,7 @@ public record CreateDoctorProfileCommand(
     Guid SpecializationId,
     Guid OfficeId,
     DateOnly CareerStarted,
-    bool Status)
+    Guid StatusId)
     : IRequest<HttpRequestResult>
 {
     public Doctor MapToModel()
@@ -28,7 +28,6 @@ public record CreateDoctorProfileCommand(
             SpecializationId = SpecializationId,
             OfficeId = OfficeId,
             StartedCareer = CareerStarted,
-            IsActive = Status,
             IsDeleted = false
         };
 

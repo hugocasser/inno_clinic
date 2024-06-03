@@ -13,7 +13,8 @@ public class Patient : Profile
     {
         Created();
     }
-    private void Created()
+
+    public void Created()
     {
         RaiseEvent(PatientDomainEvent.Created(this));
     }

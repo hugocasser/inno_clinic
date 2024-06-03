@@ -55,6 +55,7 @@ public class EditDoctorsProfileCommandHandler(
         doctor.Updated();
         
         await repository.UpdateAsync(doctor, cancellationToken);
+        await repository.SaveChangesAsync(cancellationToken);
         
         return HttpResultBuilder.NoContent();
     }
