@@ -42,4 +42,7 @@
     <data name="StatusNotExist" xml:space="preserve">
         <value>Status don't exist</value>
     </data>
+    <data name="Unauthorized" xml:space="preserve">
+        <value>You unauthorized</value>
+    </data>
 </root>

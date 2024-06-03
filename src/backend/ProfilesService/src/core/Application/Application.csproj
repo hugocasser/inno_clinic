@@ -61,7 +61,6 @@
     <ItemGroup>
       <Folder Include="Abstractions\Services\Saga\" />
       <Folder Include="Requests\Commands\Doctors\" />
-      <Folder Include="Requests\Commands\Patients\" />
     </ItemGroup>
 
 </Project>

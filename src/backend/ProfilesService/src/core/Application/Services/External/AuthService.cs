@@ -29,4 +29,9 @@ public class AuthService(IPasswordGeneratorService passwordGeneratorService) : I
     {
         return Task.FromResult(OperationResultBuilder.Success());
     }
+
+    public Task<OperationResult<bool>> UpdatePhoneNumberAsync(Guid userId, string phoneNumber, CancellationToken cancellationToken)
+    {
+        return Task.FromResult(OperationResultBuilder.Success());
+    }
 }

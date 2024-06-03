@@ -1,6 +1,7 @@
 using System.Collections.Frozen;
 using System.Collections.ObjectModel;
 using Application.Abstractions.Http;
+using Application.Common;
 using Microsoft.AspNetCore.Http;
 
 namespace Application.Services.Http;
@@ -20,24 +21,17 @@ public class HttpContextAccessorExtensions : HttpContextAccessor, IHttpContextAc
         return Guid.TryParse(value, out var id) ? id : Guid.Empty;
     }
 
-    public IReadOnlyCollection<string>  GetUserRoleFromClaims()
+    public bool CheckUserRoles(EnumRoles roleToCheck = EnumRoles.Receptionist)
     {
         if (HttpContext?.User.Identities.First().Claims.FirstOrDefault()?.Value is null ||
             HttpContext.User.Identities.First().Claims.FirstOrDefault()?.Value == string.Empty)
         {
-            return new List<string>()
-            {
-                "none"
-                
-            }.AsReadOnly();
+            return false;
         }
         
         var claims = HttpContext.User.Identities.First().Claims;
         
-        var roles = claims.Where(claim => claim.ValueType == "role:")
-            .Select(claim => claim.Value)
-            .ToList().AsReadOnly();
-        
-        return roles;
+        return claims.Where(claim => claim.ValueType == "role:")
+            .Any(role => role.Value == roleToCheck.ToString());
     }
 }

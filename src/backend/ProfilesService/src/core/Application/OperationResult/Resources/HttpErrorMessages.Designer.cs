@@ -92,5 +92,11 @@ namespace Application.OperationResult {
                 return ResourceManager.GetString("StatusNotExist", resourceCulture);
             }
         }
+        
+        internal static string Unauthorized {
+            get {
+                return ResourceManager.GetString("Unauthorized", resourceCulture);
+            }
+        }
     }
 }

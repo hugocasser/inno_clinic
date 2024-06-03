@@ -44,9 +44,9 @@ public static class HttpResultBuilder
         return Error(message).WithStatusCode(404);
     }
     
-    public static HttpRequestResult InternalServerError(string message)
+    public static HttpRequestResult InternalServerError()
     {
-        return Error(message).WithStatusCode(500);
+        return Error(HttpErrorMessages.InternalServerError).WithStatusCode(500);
     }
     
     public static HttpRequestResult BadRequest(string message)
@@ -54,9 +54,9 @@ public static class HttpResultBuilder
         return Error(message).WithStatusCode(400);
     }
     
-    public static HttpRequestResult Unauthorized(string message)
+    public static HttpRequestResult Unauthorized()
     {
-        return Error(message).WithStatusCode(401);
+        return Error(HttpErrorMessages.Unauthorized).WithStatusCode(401);
     }
     
     public static HttpRequestResult Forbidden(string message)

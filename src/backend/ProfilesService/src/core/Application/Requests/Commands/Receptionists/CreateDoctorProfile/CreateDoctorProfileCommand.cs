@@ -10,14 +10,14 @@ public record CreateDoctorProfileCommand(
     string LastName,
     string? MiddleName,
     DateOnly BirthDate,
-    string Email,
+    Guid UserId,
     Guid SpecializationId,
     Guid OfficeId,
     DateOnly CareerStarted,
     Guid StatusId)
     : IRequest<HttpRequestResult>
 {
-    public Doctor MapToModel()
+    public Doctor MapToModel(DoctorsStatus status)
     {
         var doctor = new Doctor
         {
@@ -28,12 +28,20 @@ public record CreateDoctorProfileCommand(
             SpecializationId = SpecializationId,
             OfficeId = OfficeId,
             StartedCareer = CareerStarted,
-            IsDeleted = false
+            IsDeleted = false,
+            UserId = UserId,
+            StatusId = status.Id,
+            Status = status
         };
 
         if (!string.IsNullOrEmpty(MiddleName))
         {
             doctor.MiddleName = MiddleName;
+        }
+        
+        if (PhotoId is not null)
+        {
+            doctor.PhotoId = PhotoId.Value;
         }
         
         return doctor;
