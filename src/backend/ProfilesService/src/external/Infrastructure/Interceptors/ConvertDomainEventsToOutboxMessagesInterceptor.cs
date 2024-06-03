@@ -30,7 +30,7 @@ public class ConvertDomainEventsToOutboxMessagesInterceptor : SaveChangesInterce
             })
             .Select(OutboxMessage.Create);
 
-        await context.AddRangeAsync(domainEvents, cancellationToken);
+        await context.Set<OutboxMessage>().AddRangeAsync(domainEvents, cancellationToken);
         
         return await base.SavingChangesAsync(eventData, result, cancellationToken);
     }

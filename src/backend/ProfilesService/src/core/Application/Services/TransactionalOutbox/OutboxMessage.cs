@@ -1,29 +1,33 @@
 using Application.Abstractions.TransactionalOutbox;
 using Domain.Abstractions.DomainEvents;
-using Newtonsoft.Json;
 
 namespace Application.Services.TransactionalOutbox;
 
 public class OutboxMessage : IOutboxMessage
 {
-    public Guid Id { get;  set; }
-    public string SerializedDomainEvent { get; init; } = null!;
-    public DateTime? ProcessedAt { get;  set; } = null;
+    public Guid Id { get;  init; }
+    public SerializedEvent SerializedDomainEvent { get; init; } = null!;
+    public DateTime? ProcessedAt { get;  set; }
     public DateTime CreatedAt { get;  init; } = DateTime.UtcNow;
 
     public static OutboxMessage Create(IDomainEvent domainEvent)
     {
+        var serializedDomainEvent = new SerializedEvent(domainEvent);
+        
         var message = new OutboxMessage
         {
-            SerializedDomainEvent = domainEvent.Serialize()
+            Id = Guid.NewGuid(),
+            SerializedDomainEvent = serializedDomainEvent
         };
+        
+        serializedDomainEvent.SetMessage(message);
         
         return message;
     }
 
     public IDomainEvent? GetDomainEvent()
     {
-        return JsonConvert.DeserializeObject<IDomainEvent>(SerializedDomainEvent);
+        return SerializedDomainEvent.GetDomainEvent();
     }
 
     public void Processed()

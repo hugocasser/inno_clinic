@@ -30,6 +30,18 @@ public class OutboxMessagesConfiguration : IEntityTypeConfiguration<OutboxMessag
             .Property(outboxMessage => outboxMessage.CreatedAt)
             .ValueGeneratedNever()
             .IsRequired();
+        
+        builder
+            .HasOne(outboxMessage => outboxMessage.SerializedDomainEvent)
+            .WithOne(serializedDomainEvent => serializedDomainEvent.OutboxMessage)
+            .HasForeignKey<SerializedEvent>(serializedDomainEvent => serializedDomainEvent.OutboxMessageId)
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired();
+        
+        builder
+            .Property(outboxMessage => outboxMessage.SerializedDomainEvent)
+            .ValueGeneratedNever()
+            .IsRequired();
 
         builder.HasIndex(outboxMessage => outboxMessage.ProcessedAt);
     }
