@@ -6,11 +6,6 @@ namespace Domain.Models;
 public class Receptionist : Profile
 {
     public Guid OfficeId { get; set; }
-    
-    public Receptionist()
-    {
-        Created();
-    }
 
     public void Created()
     {

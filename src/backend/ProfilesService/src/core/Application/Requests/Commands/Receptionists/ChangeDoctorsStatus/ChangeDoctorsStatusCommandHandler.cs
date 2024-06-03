@@ -33,11 +33,10 @@ public class ChangeDoctorsStatusCommandHandler(
         
         doctor.StatusId = request.StatusId;
         doctor.Status = status;
+        
         doctor.Updated();
         
-        await repository
-            .UpdateAsync(doctor, cancellationToken);
-        
+        await repository.UpdateAsync(doctor, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);
         
         return HttpResultBuilder.NoContent();

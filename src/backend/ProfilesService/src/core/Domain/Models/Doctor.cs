@@ -9,14 +9,9 @@ public class Doctor : Profile
     public DateOnly StartedCareer { get; set; }
     public Guid OfficeId { get; set; }
     public Guid SpecializationId { get; set; }
-    
-    public DoctorsStatus Status { get; set; }
-    public Guid StatusId { get; set; }
 
-    public Doctor()
-    {
-        Created();
-    }
+    public DoctorsStatus Status { get; set; } = null!;
+    public Guid StatusId { get; set; }
 
     public void Deleted()
     {
@@ -30,7 +25,7 @@ public class Doctor : Profile
         RaiseEvent(doctorEvent);
     }
 
-    private void Created()
+    public void Created()
     {
         RaiseEvent(DoctorDomainEvent.Created(this));
     }

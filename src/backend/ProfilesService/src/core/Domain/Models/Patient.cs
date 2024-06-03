@@ -8,12 +8,6 @@ public class Patient : Profile
     public bool IsLinkedToAccount { get; set; }
     public DateOnly DateOfBirth { get; set; }
 
-
-    public Patient()
-    {
-        Created();
-    }
-
     public void Created()
     {
         RaiseEvent(PatientDomainEvent.Created(this));
@@ -23,8 +17,8 @@ public class Patient : Profile
     {
         RaiseEvent(PatientDomainEvent.Deleted(this));
     }
-    
-    private void Updated()
+
+    public void Updated()
     {
         RaiseEvent(PatientDomainEvent.Updated(this));
     }

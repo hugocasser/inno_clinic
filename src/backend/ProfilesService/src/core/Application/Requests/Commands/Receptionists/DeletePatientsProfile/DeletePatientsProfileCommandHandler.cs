@@ -12,21 +12,17 @@ public class DeletePatientsProfileCommandHandler
 {
     public async Task<HttpRequestResult> HandleAsync(DeletePatientsProfileCommand request, CancellationToken cancellationToken = default)
     {
-        var patient = await patientsRepository
-            .GetByIdAsync(request.PatientId, cancellationToken);
+        var patient = await patientsRepository.GetByIdAsync(request.PatientId, cancellationToken);
         
         if (patient == null)
         {
             return HttpResultBuilder.NotFound(HttpErrorMessages.ProfileNotFound);
         }
         
-        await patientsRepository
-            .DeleteAsync(request.PatientId, cancellationToken);
+        patient.Deleted();
         
-        patient.IsDeleted = true;
-        
-        await patientsRepository
-            .SaveChangesAsync(cancellationToken);
+        await patientsRepository.DeleteAsync(request.PatientId, cancellationToken);
+        await patientsRepository.SaveChangesAsync(cancellationToken);
         
         return HttpResultBuilder.NoContent();
     }

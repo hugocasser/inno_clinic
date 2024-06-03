@@ -32,6 +32,8 @@ public class EditPatientProfileCommandHandler
         
         request.MapModel(patient);
         
+        patient.Updated();
+        
         await repository.UpdateAsync(patient, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);
         

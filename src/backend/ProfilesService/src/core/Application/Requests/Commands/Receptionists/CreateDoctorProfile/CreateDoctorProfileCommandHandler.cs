@@ -42,9 +42,12 @@ public class CreateDoctorProfileCommandHandler
         }
 
         var doctor = request.MapToModel(status);
+
+        doctor.Created();
         
         await repository.AddAsync(doctor, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);
+        
         
         return HttpResultBuilder.Success(DoctorWithoutPhotoViewDto.MapFromModel(doctor));
     }

@@ -13,6 +13,8 @@ public class CreatePatientProfileCommandHandler
     {
         var patient = request.MapToModel();
         
+        patient.Created();
+        
         await repository.AddAsync(patient, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);
         
