@@ -15,7 +15,7 @@ public class DoctorDomainEvent : IDomainEvent
         return _eventType;
     }
 
-    public Profile GetEntity()
+    public Doctor GetEntity()
     {
         return _doctor;
     }

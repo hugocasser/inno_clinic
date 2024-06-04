@@ -13,17 +13,11 @@ public class OutboxMessageProcessor
     (IOutboxMessagesRepository<OutboxMessage> outboxMessagesRepository,
         IDomainEventSender domainEventSender) : IOutboxMessageProcessor
 {
-    public async IAsyncEnumerable<OperationResult<OutboxMessage>> ProcessAsync(FrozenSet<OutboxMessage?> messages,
+    public async IAsyncEnumerable<OperationResult<OutboxMessage>> ProcessAsync(FrozenSet<OutboxMessage> messages,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
         foreach (var message in messages)
         {
-            if (message is null)
-            {
-                yield return OperationResultBuilder.Failure<OutboxMessage>(new Error($"Message {nameof(message)} is null"));
-                continue;
-            }
-            
             var domainEvent = message.GetDomainEvent();
             
             if (domainEvent is null)

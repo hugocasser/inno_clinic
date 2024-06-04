@@ -11,7 +11,8 @@ public class ReceptionistDomainEventHandler(IReadReceptionistsRepository readRec
 {
     public async Task HandleAsync(ReceptionistDomainEvent domainEvent, CancellationToken cancellationToken)
     {
-        var readModel = ReceptionistReadModel.MapToReadModel(domainEvent.GetEntity() as Receptionist);
+        var readModel = ReceptionistReadModel.MapToReadModel(domainEvent.GetEntity());
+        
         switch (domainEvent.GetEventType())
         {
             case EventType.Created:

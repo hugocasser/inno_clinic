@@ -22,7 +22,7 @@ public class OutboxMessageProcessingJob
         var token = context.CancellationToken;
         var messages = await outboxMessagesRepository.GetNotProcessedAsync(50, token);
         
-        if (messages is null)
+        if (messages.Count != 0)
         {
             logger.LogInformation("No messages to process");
             

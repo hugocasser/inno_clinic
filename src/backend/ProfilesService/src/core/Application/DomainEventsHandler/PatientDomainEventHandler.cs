@@ -11,7 +11,7 @@ public class PatientDomainEventHandler(IReadPatientsRepository readRepository) :
 {
     public async Task HandleAsync(PatientDomainEvent domainEvent, CancellationToken cancellationToken)
     {
-        var readModel = PatientReadModel.MapToReadModel(domainEvent.GetEntity() as Patient);
+        var readModel = PatientReadModel.MapToReadModel(domainEvent.GetEntity());
 
         switch (domainEvent.GetEventType())
         {

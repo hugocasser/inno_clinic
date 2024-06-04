@@ -6,6 +6,6 @@ namespace Application.Abstractions.TransactionalOutbox;
 
 public interface IOutboxMessageProcessor
 {
-    public IAsyncEnumerable<OperationResult<OutboxMessage>> ProcessAsync(FrozenSet<OutboxMessage?> message,
+    public IAsyncEnumerable<OperationResult<OutboxMessage>> ProcessAsync(FrozenSet<OutboxMessage> message,
         CancellationToken cancellationToken);
 }

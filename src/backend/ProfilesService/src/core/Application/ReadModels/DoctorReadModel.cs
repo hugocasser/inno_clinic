@@ -14,6 +14,8 @@ public class DoctorReadModel : IReadProfileModel<Doctor>
     public Guid OfficeId { get; set; }
     public string Status { get; set; } = string.Empty;
     public bool IsDeleted { get; set; }
+    public Guid PhotoId { get; set; }
+
     public static DoctorReadModel MapToReadModel(Doctor entity)
     {
         var valueStringBuilder = new ValueStringBuilder(stackalloc char[256]);
@@ -36,7 +38,8 @@ public class DoctorReadModel : IReadProfileModel<Doctor>
             CareerStarted = entity.StartedCareer,
             OfficeId = entity.OfficeId,
             Status = entity.Status.StatusName,
-            IsDeleted = entity.IsDeleted
+            IsDeleted = entity.IsDeleted,
+            PhotoId = entity.PhotoId
         };
         
         return readModel;

@@ -15,11 +15,7 @@ public class DoctorDomainEventHandler
 {
     public async Task HandleAsync(DoctorDomainEvent domainEvent, CancellationToken cancellationToken)
     {
-        if (domainEvent.GetEntity() is not Doctor model)
-        {
-            return;    
-        }
-        
+        var model = domainEvent.GetEntity();
         var readModel = DoctorReadModel.MapToReadModel(model);
         
         switch (domainEvent.GetEventType())
