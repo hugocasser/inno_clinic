@@ -1,6 +1,7 @@
 using Application.Abstractions.CQRS;
 using Application.Abstractions.Repositories.Write;
 using Application.Dtos.Views;
+using Application.Dtos.Views.Patients;
 using Application.OperationResult.Builders;
 using Application.OperationResult.Results;
 
@@ -18,6 +19,6 @@ public class CreatePatientProfileCommandHandler
         await repository.AddAsync(patient, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);
         
-        return HttpResultBuilder.Success(PatientWithoutPhotoViewDto.MapFromModel(patient));
+        return HttpResultBuilder.Success(PatientViewDto.MapFromModel(patient));
     }
 }
