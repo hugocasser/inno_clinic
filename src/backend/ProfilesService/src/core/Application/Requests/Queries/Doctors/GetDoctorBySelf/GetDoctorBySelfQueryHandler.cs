@@ -22,7 +22,7 @@ public class GetDoctorBySelfQueryHandler
             return HttpResultBuilder.Unauthorized();
         }
         
-        var filter = DoctorsSpecifications.ByIdNotDeleted(request.Id);
+        var filter = DoctorsSpecifications.IdNotDeleted(request.Id);
         
         var doctor = await repository
             .GetByAsync(filter, cancellationToken);

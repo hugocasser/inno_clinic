@@ -17,6 +17,6 @@ public class GetDoctorsAsPatientQueryHandler
             
         var doctors = await repository.GetByManyAsync(filter, request.PageSettings, cancellationToken);
 
-        return HttpResultBuilder.Success(DoctorsListItemByPatientViewDto.MapFromReadModels(doctors));
+        return HttpResultBuilder.Success(DoctorListItemViewDto.MapFromReadModels(doctors));
     }
 }

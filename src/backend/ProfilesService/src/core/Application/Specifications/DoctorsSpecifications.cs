@@ -8,14 +8,19 @@ public static class DoctorsSpecifications
     private static readonly FilterDefinitionBuilder<DoctorReadModel> _builder = new ();
     private static readonly FilterDefinition<DoctorReadModel> _notDeleted = _builder.Eq(doctor => doctor.IsDeleted, false);
     
-    public static FilterDefinition<DoctorReadModel> ByOfficeNotDeleted(Guid officeId)
+    public static FilterDefinition<DoctorReadModel> OfficeNotDeleted(Guid officeId)
     {
         return _builder.And(Office(officeId) , _notDeleted);
     }
 
-    public static FilterDefinition<DoctorReadModel> ByIdNotDeleted(Guid id)
+    public static FilterDefinition<DoctorReadModel> IdNotDeleted(Guid id)
     {
         return _builder.And(Id(id), _notDeleted);
+    }
+
+    public static FilterDefinition<DoctorReadModel> NameNotDeleted(string name)
+    {
+        return _builder.And(Name(name), _notDeleted);
     }
 
     public static FilterDefinition<DoctorReadModel> SpecializationNotDeleted(string specialization)
@@ -56,5 +61,12 @@ public static class DoctorsSpecifications
         
         return _builder.Gte(x => x.CareerStarted.Year, min) 
             & _builder.Lte(x => x.CareerStarted.Year, max);
+    }
+
+    private static FilterDefinition<DoctorReadModel> Name(string name)
+    {
+        return string.IsNullOrEmpty(name)
+            ? _builder.Empty 
+            : _builder.StringIn(x => x.FullName, name);
     }
 }

@@ -13,7 +13,7 @@ public class GetDoctorByReceptionistQueryHandler
 {
     public async Task<HttpRequestResult> HandleAsync(GetDoctorByReceptionistQuery request, CancellationToken cancellationToken = default)
     {
-        var doctor = await repository.GetByAsync(DoctorsSpecifications.ByIdNotDeleted(request.Id), cancellationToken);
+        var doctor = await repository.GetByAsync(DoctorsSpecifications.IdNotDeleted(request.Id), cancellationToken);
         
         return doctor is null
             ? HttpResultBuilder.NotFound(HttpErrorMessages.ProfileNotFound)

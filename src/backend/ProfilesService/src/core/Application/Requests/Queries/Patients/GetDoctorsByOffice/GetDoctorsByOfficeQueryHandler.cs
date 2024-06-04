@@ -12,10 +12,10 @@ public class GetDoctorsByOfficeQueryHandler
 {
     public async Task<HttpRequestResult> HandleAsync(GetDoctorsByOfficeQuery request, CancellationToken cancellationToken = default)
     {
-        var filter = DoctorsSpecifications.ByOfficeNotDeleted(request.OfficeId);
+        var filter = DoctorsSpecifications.OfficeNotDeleted(request.OfficeId);
         
         var doctors = await repository.GetByManyAsync(filter, request.PageSettings, cancellationToken);
         
-        return HttpResultBuilder.Success(DoctorsListItemByPatientViewDto.MapFromReadModels(doctors));
+        return HttpResultBuilder.Success(DoctorListItemViewDto.MapFromReadModels(doctors));
     }
 }
