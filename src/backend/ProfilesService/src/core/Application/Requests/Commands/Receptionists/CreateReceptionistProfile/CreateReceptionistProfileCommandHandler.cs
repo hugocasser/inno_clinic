@@ -2,6 +2,7 @@ using Application.Abstractions.CQRS;
 using Application.Abstractions.Repositories.Write;
 using Application.Abstractions.Services.ExternalServices;
 using Application.Dtos.Views;
+using Application.Dtos.Views.Receptionists;
 using Application.OperationResult;
 using Application.OperationResult.Builders;
 using Application.OperationResult.Results;
@@ -29,6 +30,6 @@ public class CreateReceptionistProfileCommandHandler
         await receptionistsRepository.AddAsync(receptionist, cancellationToken);
         await receptionistsRepository.SaveChangesAsync(cancellationToken);
         
-        return HttpResultBuilder.Success(ReceptionistWithoutPhotoViewDto.MapFromModel(receptionist));
+        return HttpResultBuilder.Success(ReceptionistViewDto.MapFromModel(receptionist));
     }
 }

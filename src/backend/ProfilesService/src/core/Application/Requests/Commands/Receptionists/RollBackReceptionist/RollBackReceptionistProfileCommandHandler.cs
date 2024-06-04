@@ -7,12 +7,12 @@ using Application.OperationResult.Results;
 
 namespace Application.Requests.Commands.Receptionists.RollBackReceptionist;
 
-public class RollBackReceptionistCommandHandler
+public class RollBackReceptionistProfileCommandHandler
     (IReadReceptionistsRepository readReceptionistsRepository,
      IWriteReceptionistsRepository writeReceptionistsRepository)
-    : IRequestHandler<RollBackReceptionistCommand, HttpRequestResult>
+    : IRequestHandler<RollBackReceptionistProfileCommand, HttpRequestResult>
 {
-    public async Task<HttpRequestResult> HandleAsync(RollBackReceptionistCommand request, CancellationToken cancellationToken = default)
+    public async Task<HttpRequestResult> HandleAsync(RollBackReceptionistProfileCommand request, CancellationToken cancellationToken = default)
     {
         var receptionist = await writeReceptionistsRepository.GetByIdFromDeletedAsync(request.ReceptionistId, cancellationToken);
         

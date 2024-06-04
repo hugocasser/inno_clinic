@@ -22,7 +22,7 @@ public class RollbackPatientsProfileCommandHandler
         }
         
         var patientFromReadRepository = await patientsReadRepository
-            .GetByIdAsync(request.PatientId, cancellationToken);
+            .GetByIdFromDeletedAsync(request.PatientId, cancellationToken);
         
         if (patientFromReadRepository is null)
         {
