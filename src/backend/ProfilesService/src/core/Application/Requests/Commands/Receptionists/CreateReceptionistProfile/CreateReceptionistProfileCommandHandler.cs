@@ -10,19 +10,11 @@ using Application.OperationResult.Results;
 namespace Application.Requests.Commands.Receptionists.CreateReceptionistProfile;
 
 public class CreateReceptionistProfileCommandHandler
-    (IWriteReceptionistsRepository receptionistsRepository,
-        IOfficesService officesService)
+    (IWriteReceptionistsRepository receptionistsRepository)
     : IRequestHandler<CreateReceptionistProfileCommand, HttpRequestResult>
 {
     public async Task<HttpRequestResult> HandleAsync(CreateReceptionistProfileCommand request, CancellationToken cancellationToken = default)
     {
-        var officeCheckResult = await officesService.CheckOfficeAsync(request.OfficeId, cancellationToken);
-        
-        if (!officeCheckResult.IsSuccess)
-        {
-            return HttpResultBuilder.BadRequest(HttpErrorMessages.OfficeNotFound);
-        }
-        
         var receptionist = request.MapToModel();
         
         receptionist.Created();

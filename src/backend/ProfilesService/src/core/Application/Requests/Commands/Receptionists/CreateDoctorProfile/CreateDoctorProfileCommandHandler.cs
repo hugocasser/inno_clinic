@@ -13,10 +13,6 @@ namespace Application.Requests.Commands.Receptionists.CreateDoctorProfile;
 
 public class CreateDoctorProfileCommandHandler
     (IWriteDoctorsRepository repository,
-        IAuthService authService,
-        ISpecializationsService specializationsService,
-        IOfficesService officesService,
-        IPhotoService photoService,
         IStatusesRepository statusesRepository)
     : IRequestHandler<CreateDoctorProfileCommand, HttpRequestResult>
 {
@@ -27,20 +23,6 @@ public class CreateDoctorProfileCommandHandler
         if (status is null)
         {
             return HttpResultBuilder.BadRequest(HttpErrorMessages.StatusNotExist);
-        }
-        
-        var specializationCheckResult = await specializationsService.CheckSpecializationAsync(request.SpecializationId, cancellationToken);
-
-        if (!specializationCheckResult.IsSuccess)
-        {
-            return HttpResultBuilder.BadRequest(HttpErrorMessages.SpecializationNotFound); 
-        }
-        
-        var officeCheckResult = await officesService.CheckOfficeAsync(request.OfficeId, cancellationToken);
-        
-        if (!officeCheckResult.IsSuccess)
-        {
-            return HttpResultBuilder.BadRequest(HttpErrorMessages.OfficeNotFound);
         }
 
         var doctor = request.MapToModel(status);

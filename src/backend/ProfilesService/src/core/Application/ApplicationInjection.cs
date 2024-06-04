@@ -51,9 +51,6 @@ public static class ApplicationInjection
     {
         services.AddSingleton<IPasswordGeneratorService, PasswordGeneratorService>();
         
-        services.AddScoped<IAuthService, AuthService>();
-        services.AddScoped<IOfficesService, OfficesService>();
-        services.AddScoped<IPhotoService, PhotoService>();
         services.AddScoped<ISpecializationsService, SpecializationsService>();
         services.AddScoped<IHttpContextAccessorExtensions, HttpContextAccessorExtensions>();
         
