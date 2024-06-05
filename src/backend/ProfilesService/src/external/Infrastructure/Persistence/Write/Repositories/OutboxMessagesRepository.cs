@@ -1,12 +1,12 @@
-using Application.Abstractions.Repositories.OutBox;
+using Application.Abstractions.Repositories.Outbox;
 using Application.Services.TransactionalOutbox;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.Write.Repositories;
 
-public class OutboxMessagesRepository(ProfilesWriteDbContext context) : IOutboxMessagesRepository<OutboxMessage>
+public class OutboxMessagesRepository(ProfilesWriteDbContext context) : IOutboxMessagesRepository
 {
-    public Task UpdateAsync(OutboxMessage? message, CancellationToken cancellationToken)
+    public Task UpdateAsync(OutboxMessage message)
     {
         context.OutboxMessages.Update(message);
         

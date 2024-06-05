@@ -1,5 +1,4 @@
 using Application.Abstractions.CQRS;
-using Application.Abstractions.OperationResult;
 using Application.OperationResult.Builders;
 using Application.OperationResult.Results;
 using Microsoft.Extensions.Logging;

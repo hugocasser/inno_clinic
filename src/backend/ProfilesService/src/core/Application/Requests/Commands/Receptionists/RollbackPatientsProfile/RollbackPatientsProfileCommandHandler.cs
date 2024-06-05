@@ -36,7 +36,7 @@ public class RollbackPatientsProfileCommandHandler
         
         patientFromWriteRepository.IsDeleted = false;
         
-        await patientsWriteRepository.UpdateAsync(patientFromWriteRepository, cancellationToken);
+        await patientsWriteRepository.UpdateAsync(patientFromWriteRepository);
         await patientsWriteRepository.SaveChangesAsync(cancellationToken);
         
         return HttpResultBuilder.NoContent();

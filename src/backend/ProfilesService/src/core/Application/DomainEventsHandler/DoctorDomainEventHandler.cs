@@ -4,7 +4,6 @@ using Application.Abstractions.Services.ExternalServices;
 using Application.ReadModels;
 using Domain.Abstractions.DomainEvents;
 using Domain.DomainEvents;
-using Domain.Models;
 
 namespace Application.DomainEventsHandler;
 

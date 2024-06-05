@@ -1,4 +1,3 @@
-using Domain.Abstractions;
 using Domain.Abstractions.DomainEvents;
 using Domain.Models;
 using Newtonsoft.Json;

@@ -1,7 +1,4 @@
 using Application.Abstractions.TransactionalOutbox;
-using Application.ReadModels;
-using Domain.Abstractions;
-using Domain.Models;
 using Infrastructure.Options;
 using Infrastructure.Services;
 using Microsoft.Extensions.Options;
@@ -21,10 +18,9 @@ public class ProfilesReadDbContext
     }
 
 
-    public IMongoCollection<TReadModel> Collection<TReadModel, TModel>()
-        where TReadModel : class, IReadProfileModel<TModel>
-        where TModel : Profile
+    public IMongoCollection<TReadModel> Collection<TReadModel>()
+        where TReadModel : class, IReadProfileModel
     {
-        return _database.GetCollection<TReadModel>(typeof(TModel).Name);
+        return _database.GetCollection<TReadModel>(typeof(TReadModel).Name);
     }
 }

@@ -4,7 +4,7 @@ using Domain.Models;
 
 namespace Application.ReadModels;
 
-public class DoctorReadModel : IReadProfileModel<Doctor>
+public class DoctorReadModel : IReadProfileModel
 {
     public Guid Id { get; set; }
     public string FullName { get; set; } = string.Empty;

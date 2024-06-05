@@ -35,7 +35,7 @@ public class RollBackReceptionistProfileCommandHandler
             await readReceptionistsRepository.UpdateAsync(readModel, cancellationToken);
         }
         
-        await writeReceptionistsRepository.UpdateAsync(receptionist, cancellationToken);
+        await writeReceptionistsRepository.UpdateAsync(receptionist);
         await writeReceptionistsRepository.SaveChangesAsync(cancellationToken);
         
         return HttpResultBuilder.NoContent();

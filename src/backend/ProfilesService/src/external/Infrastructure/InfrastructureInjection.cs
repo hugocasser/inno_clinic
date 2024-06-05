@@ -1,4 +1,5 @@
 using System.Reflection;
+using Application.Abstractions.Repositories.Outbox;
 using Application.Abstractions.Repositories.Read;
 using Application.Abstractions.Repositories.Write;
 using Infrastructure.Interceptors;
@@ -38,6 +39,7 @@ public static class InfrastructureInjection
         services.AddScoped<IWritePatientsRepository, WritePatientsRepository>();
         services.AddScoped<IWriteReceptionistsRepository, WriteReceptionistsRepository>();
         services.AddScoped<IWriteDoctorsRepository, WriteDoctorsRepository>();
+        services.AddScoped<IOutboxMessagesRepository, OutboxMessagesRepository>();
         
         return services;
     }

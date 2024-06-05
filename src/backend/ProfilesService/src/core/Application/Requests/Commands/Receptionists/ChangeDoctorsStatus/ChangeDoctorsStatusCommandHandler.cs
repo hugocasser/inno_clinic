@@ -36,7 +36,7 @@ public class ChangeDoctorsStatusCommandHandler(
         
         doctor.Updated();
         
-        await repository.UpdateAsync(doctor, cancellationToken);
+        await repository.UpdateAsync(doctor);
         await repository.SaveChangesAsync(cancellationToken);
         
         return HttpResultBuilder.NoContent();

@@ -1,6 +1,5 @@
 using Application.Abstractions.CQRS;
 using Application.Abstractions.Repositories.Write;
-using Application.Dtos.Views;
 using Application.Dtos.Views.Patients;
 using Application.OperationResult.Builders;
 using Application.OperationResult.Results;

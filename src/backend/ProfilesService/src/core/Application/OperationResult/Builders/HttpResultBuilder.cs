@@ -14,16 +14,6 @@ public static class HttpResultBuilder
     {
         return new HttpRequestResult(204);
     }
-    
-    public static HttpRequestResult Error(HttpResponseError error)
-    {
-        return new HttpRequestResult(error);
-    }
-
-    public static HttpRequestResult Error(Exception exception)
-    {
-        return new HttpRequestResult(exception);
-    }
      
     public static HttpRequestResult Error(string message)
     {
@@ -44,11 +34,6 @@ public static class HttpResultBuilder
         return Error(message).WithStatusCode(404);
     }
     
-    public static HttpRequestResult InternalServerError()
-    {
-        return Error(HttpErrorMessages.InternalServerError).WithStatusCode(500);
-    }
-    
     public static HttpRequestResult BadRequest(string message)
     {
         return Error(message).WithStatusCode(400);
@@ -62,10 +47,5 @@ public static class HttpResultBuilder
     public static HttpRequestResult Forbidden(string message)
     {
         return Error(message).WithStatusCode(403);
-    }
-    
-    public static string FromErrors(params Error[]errors)
-    {
-        return string.Join(", ", errors.Select(x => x.Message));
     }
 }

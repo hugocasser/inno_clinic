@@ -1,9 +1,8 @@
-using Application.Abstractions.TransactionalOutbox;
 using Domain.Abstractions.DomainEvents;
 
 namespace Application.Services.TransactionalOutbox;
 
-public class OutboxMessage : IOutboxMessage
+public class OutboxMessage
 {
     public Guid Id { get;  init; }
     public SerializedEvent SerializedDomainEvent { get; init; } = null!;

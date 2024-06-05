@@ -1,6 +1,3 @@
-using Application.Abstractions.OperationResult;
-using Application.OperationResult.Results;
-
 namespace Application.Abstractions.CQRS;
 public interface IPipelineBehavior<in TRequest, TResponse> where TRequest : IRequest<TResponse> where TResponse : notnull
 {

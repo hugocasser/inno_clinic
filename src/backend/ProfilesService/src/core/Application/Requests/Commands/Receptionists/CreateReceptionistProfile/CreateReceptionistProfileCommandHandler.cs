@@ -1,9 +1,6 @@
 using Application.Abstractions.CQRS;
 using Application.Abstractions.Repositories.Write;
-using Application.Abstractions.Services.ExternalServices;
-using Application.Dtos.Views;
 using Application.Dtos.Views.Receptionists;
-using Application.OperationResult;
 using Application.OperationResult.Builders;
 using Application.OperationResult.Results;
 

@@ -3,7 +3,7 @@ using Domain.Models;
 
 namespace Application.ReadModels;
 
-public class ReceptionistReadModel : IReadProfileModel<Receptionist>
+public class ReceptionistReadModel : IReadProfileModel
 {
     public static ReceptionistReadModel MapToReadModel(Receptionist? entity)
     {

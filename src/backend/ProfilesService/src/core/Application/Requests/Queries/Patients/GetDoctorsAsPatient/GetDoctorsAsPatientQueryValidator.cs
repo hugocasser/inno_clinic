@@ -1,6 +1,8 @@
+using FluentValidation;
+
 namespace Application.Requests.Queries.Patients.GetDoctorsAsPatient;
 
-public class GetDoctorsAsPatientQueryValidator
+public class GetDoctorsAsPatientQueryValidator : AbstractValidator<GetDoctorsAsPatientQuery>
 {
     
 }

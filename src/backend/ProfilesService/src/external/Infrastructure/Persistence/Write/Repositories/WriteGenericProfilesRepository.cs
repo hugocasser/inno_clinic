@@ -24,7 +24,7 @@ public abstract class WriteGenericProfilesRepository<T>(DbContext context)
         await context.Set<T>().AddAsync(entity, cancellationToken);
     }
 
-    public Task UpdateAsync(T entity, CancellationToken cancellationToken = default)
+    public Task UpdateAsync(T entity)
     {
         context.Set<T>().Update(entity);
         

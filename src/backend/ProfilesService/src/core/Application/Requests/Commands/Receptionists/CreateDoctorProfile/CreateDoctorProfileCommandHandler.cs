@@ -1,13 +1,9 @@
 using Application.Abstractions.CQRS;
 using Application.Abstractions.Repositories.Write;
-using Application.Abstractions.Services.ExternalServices;
-using Application.Dtos.Views;
 using Application.Dtos.Views.Doctors;
-using Application.Dtos.Views.Patients;
 using Application.OperationResult;
 using Application.OperationResult.Builders;
 using Application.OperationResult.Results;
-using Domain.Models;
 
 namespace Application.Requests.Commands.Receptionists.CreateDoctorProfile;
 

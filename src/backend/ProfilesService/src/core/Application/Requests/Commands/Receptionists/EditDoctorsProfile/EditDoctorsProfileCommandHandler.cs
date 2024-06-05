@@ -1,9 +1,6 @@
 using Application.Abstractions.CQRS;
 using Application.Abstractions.Repositories.Write;
-using Application.Abstractions.Services.ExternalServices;
-using Application.Dtos.Views;
 using Application.Dtos.Views.Doctors;
-using Application.Dtos.Views.Patients;
 using Application.OperationResult;
 using Application.OperationResult.Builders;
 using Application.OperationResult.Results;
@@ -34,7 +31,7 @@ public class EditDoctorsProfileCommandHandler(
         request.MapDoctor(doctor, status);
         doctor.Updated();
         
-        await repository.UpdateAsync(doctor, cancellationToken);
+        await repository.UpdateAsync(doctor);
         await repository.SaveChangesAsync(cancellationToken);
         
         return HttpResultBuilder.Success(DoctorViewDto.MapFromModel(doctor));

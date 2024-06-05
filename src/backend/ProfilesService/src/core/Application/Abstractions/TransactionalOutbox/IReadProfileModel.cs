@@ -1,6 +1,6 @@
 namespace Application.Abstractions.TransactionalOutbox;
 
-public interface IReadProfileModel<T>
+public interface IReadProfileModel
 {
     public Guid Id { get; set; }
     public string FullName { get; set; }

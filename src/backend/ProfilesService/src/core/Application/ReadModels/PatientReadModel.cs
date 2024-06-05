@@ -3,7 +3,7 @@ using Domain.Models;
 
 namespace Application.ReadModels;
 
-public class PatientReadModel : IReadProfileModel<Patient>
+public class PatientReadModel : IReadProfileModel
 {
     public static PatientReadModel MapToReadModel(Patient entity)
     {

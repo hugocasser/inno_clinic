@@ -1,7 +1,7 @@
 using System.Collections.Frozen;
 using System.Runtime.CompilerServices;
 using Application.Abstractions.DomainEvents;
-using Application.Abstractions.Repositories.OutBox;
+using Application.Abstractions.Repositories.Outbox;
 using Application.Abstractions.TransactionalOutbox;
 using Application.OperationResult.Builders;
 using Application.OperationResult.Errors;
@@ -10,7 +10,7 @@ using Application.OperationResult.Results;
 namespace Application.Services.TransactionalOutbox;
 
 public class OutboxMessageProcessor
-    (IOutboxMessagesRepository<OutboxMessage> outboxMessagesRepository,
+    (IOutboxMessagesRepository outboxMessagesRepository,
         IDomainEventSender domainEventSender) : IOutboxMessageProcessor
 {
     public async IAsyncEnumerable<OperationResult<OutboxMessage>> ProcessAsync(FrozenSet<OutboxMessage> messages,
@@ -31,7 +31,7 @@ public class OutboxMessageProcessor
             
             await domainEventSender.SendAsync(domainEvent, cancellationToken);
             message.Processed();
-            await outboxMessagesRepository.UpdateAsync(message, cancellationToken);
+            await outboxMessagesRepository.UpdateAsync(message);
             
             yield return OperationResultBuilder.Success(message);
         }
