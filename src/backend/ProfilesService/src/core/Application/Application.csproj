@@ -35,7 +35,7 @@
         <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>ResponseMessages.Designer.cs</LastGenOutput>
       </EmbeddedResource>
-      <EmbeddedResource Update="OperationResult\Resources\ValidationErrorMessages.resx">
+      <EmbeddedResource Update="Requests\Resources\ValidationErrorMessages.resx">
         <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>ValidationErrorMessages.Designer.cs</LastGenOutput>
       </EmbeddedResource>
@@ -52,7 +52,7 @@
         <AutoGen>True</AutoGen>
         <DependentUpon>ResponseMessages.resx</DependentUpon>
       </Compile>
-      <Compile Update="OperationResult\Resources\ValidationErrorMessages.Designer.cs">
+      <Compile Update="Requests\Resources\ValidationErrorMessages.Designer.cs">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
         <DependentUpon>ValidationErrorMessages.resx</DependentUpon>

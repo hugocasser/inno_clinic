@@ -12,6 +12,7 @@ public class GetDoctorsByOfficesEndpoint(IRequestSender sender) : Endpoint<GetDo
         Verbs(Http.GET);
         Routes("api/shared/doctors/offices");
         AllowAnonymous();
+        Validator<GetDoctorsByOfficeQueryValidator>();
         
         base.Configure();
     }

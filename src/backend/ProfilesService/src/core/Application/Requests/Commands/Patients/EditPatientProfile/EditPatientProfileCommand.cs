@@ -10,7 +10,6 @@ public record EditPatientProfileCommand(
     string LastName,
     string? MiddleName,
     Guid? PhotoId,
-    string PhoneNumber,
     DateOnly BirthDate)
     : IRequest<HttpRequestResult>
 {

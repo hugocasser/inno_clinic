@@ -12,6 +12,7 @@ public class GetDoctorsBySpecializationEndpoint(IRequestSender sender) : Endpoin
         Verbs(Http.GET);
         Routes("api/shared/doctors/specialization");
         AllowAnonymous();
+        Validator<GetDoctorsBySpecializationQueryValidator>();
         
         base.Configure();
     }

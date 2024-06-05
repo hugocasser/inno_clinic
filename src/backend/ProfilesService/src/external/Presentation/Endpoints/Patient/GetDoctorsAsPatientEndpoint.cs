@@ -12,6 +12,7 @@ public class GetDoctorsAsPatientEndpoint(IRequestSender sender) : Endpoint<GetDo
         Verbs(Http.GET);
         Routes("api/patients/doctors");
         AllowAnonymous();
+        Validator<GetDoctorsAsPatientQueryValidator>();
         
         base.Configure();
     }

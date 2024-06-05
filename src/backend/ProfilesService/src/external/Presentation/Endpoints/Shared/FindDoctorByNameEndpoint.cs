@@ -12,6 +12,7 @@ public class FindDoctorByNameEndpoint(IRequestSender sender) : Endpoint<FindDoct
         Verbs(Http.GET);
         Routes("api/shared/doctors");
         AllowAnonymous();
+        Validator<FindDoctorByNameQueryValidator>();
         
         base.Configure();
     }
