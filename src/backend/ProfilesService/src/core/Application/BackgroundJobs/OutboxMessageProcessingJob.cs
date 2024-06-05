@@ -42,7 +42,7 @@ public class OutboxMessageProcessingJob
             else
             {
                 failedCount++;
-                logger.LogError(FailedToProcess + "{error}", result.GetErrors().First().Message);
+                logger.LogError(FailedToProcess + "{error}", result.ErrorsToString());
             }
         }
         

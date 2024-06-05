@@ -22,7 +22,10 @@ public class OutboxMessageProcessor
             
             if (domainEvent is null)
             {
-                yield return OperationResultBuilder.Failure<OutboxMessage>(new Error($"Message {message.Id} has no domain event"));
+                yield return OperationResultBuilder.Failure<OutboxMessage>
+                    (new Error($"Message {message.Id} has no domain event"));
+                message.Processed();
+                
                 continue;
             }
             

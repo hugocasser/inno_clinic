@@ -1,16 +1,10 @@
 namespace Application.OperationResult.Errors;
 
-public class Error
+public class Error(string message)
 {
-    public string Message { get; set; }
+    public string Message { get; set; } = message;
 
-    public Error(string message)
+    protected Error(Exception exception) : this(exception.Message)
     {
-        Message = message;
-    }
-    
-    public Error(Exception exception)
-    {
-        Message = exception.Message;
     }
 }

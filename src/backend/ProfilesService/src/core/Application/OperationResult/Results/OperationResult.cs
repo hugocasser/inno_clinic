@@ -1,3 +1,4 @@
+using System.Text;
 using Application.Abstractions.OperationResult;
 using Application.OperationResult.Errors;
 
@@ -51,5 +52,23 @@ public class OperationResult<T> : IResult
     public IEnumerable<Error> GetErrors()
     {
         return Errors ?? Enumerable.Empty<Error>();
+    }
+
+    public string ErrorsToString()
+    {
+        if (Errors is null)
+        {
+            return string.Empty;
+        }
+
+        var stringBuilder = new  StringBuilder();
+        
+        foreach (var error in Errors)
+        {
+            stringBuilder.Append(error.Message);
+            stringBuilder.Append(',');
+        }
+        
+        return stringBuilder.ToString();
     }
 }

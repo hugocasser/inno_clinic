@@ -13,7 +13,7 @@ public class HttpRequestResult : IResult
         return StatusCode;
     }
 
-    public object? GetContent()
+    public object GetContent()
     {
         return Content ?? ResponseMessages.NoContent;
     }

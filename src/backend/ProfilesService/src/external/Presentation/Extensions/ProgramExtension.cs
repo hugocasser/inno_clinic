@@ -1,5 +1,7 @@
 using Application;
+using FastEndpoints;
 using Infrastructure;
+using Presentation.Middlewares;
 
 namespace Presentation.Extensions;
 
@@ -24,6 +26,12 @@ public static class ProgramExtension
     
     public static WebApplication ConfigureApplication(this WebApplication app)
     {
+        app.UseAuthentication();
+        app.UseAuthorization();
+        app.UseMiddleware<ErrorHandlerMiddleware>();
+        app.MapControllers();
+        app.UseFastEndpoints();
+        
         return app;
     }
     
