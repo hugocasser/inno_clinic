@@ -3,7 +3,6 @@ using Application.Abstractions.Repositories.Read;
 using Application.Dtos.Views.Doctors;
 using Application.OperationResult.Builders;
 using Application.OperationResult.Results;
-using Application.ReadModels;
 using Application.Specifications;
 
 namespace Application.Requests.Queries.Patients.GetDoctorsAsPatient;
