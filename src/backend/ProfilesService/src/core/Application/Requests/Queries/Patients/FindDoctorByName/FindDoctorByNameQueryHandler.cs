@@ -12,10 +12,14 @@ public class FindDoctorByNameQueryHandler
 {
     public async Task<HttpRequestResult> HandleAsync(FindDoctorByNameQuery request, CancellationToken cancellationToken = default)
     {
-        var doctors = await repository
-            .GetByManyAsync(DoctorsSpecifications
-                .NameNotDeleted(request.Name), request.PageSettings, cancellationToken);
-
-        return HttpResultBuilder.Success(DoctorListItemViewDto.MapFromReadModels(doctors));
+        var filter = DoctorsSpecifications.NameNotDeleted(request.Name);
+        var doctors = new List<DoctorListItemViewDto>();
+        
+        await foreach (var doctor in repository.GetByManyAsync(filter, request.PageSettings, cancellationToken))
+        {
+            doctors.Add(DoctorListItemViewDto.MapFromReadModel(doctor));
+        }
+        
+        return HttpResultBuilder.Success(doctors);
     }
 }

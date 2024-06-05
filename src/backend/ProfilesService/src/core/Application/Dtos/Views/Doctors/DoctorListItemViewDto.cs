@@ -4,10 +4,8 @@ namespace Application.Dtos.Views.Doctors;
 
 public record DoctorListItemViewDto(Guid Id, string FullName, string Specialization)
 {
-    public static List<DoctorListItemViewDto> MapFromReadModels(IEnumerable<DoctorReadModel> readModels)
+    public static DoctorListItemViewDto MapFromReadModel(DoctorReadModel readModel)
     {
-        return readModels
-            .Select(x => new DoctorListItemViewDto(x.Id, x.FullName, x.Specialization))
-            .ToList();
+        return new DoctorListItemViewDto(readModel.Id, readModel.FullName, readModel.Specialization);
     }
 };

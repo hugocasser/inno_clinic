@@ -1,6 +1,5 @@
 using Application.Abstractions.TransactionalOutbox;
 using Application.Dtos.Requests;
-using Ardalis.Specification;
 using Domain.Abstractions;
 using MongoDB.Driver;
 
@@ -14,6 +13,6 @@ public interface IReadGenericProfilesRepository<TReadModel, TModel> where TReadM
     public Task DeleteAsync(TReadModel entity, CancellationToken cancellationToken = default);
     public Task<TReadModel?> GetByAsync( FilterDefinition<TReadModel> filter,
         CancellationToken cancellationToken = default);
-    public Task<List<TReadModel>> GetByManyAsync(FilterDefinition<TReadModel> filter, PageSettings pageSettings,
+    public IAsyncEnumerable<TReadModel> GetByManyAsync(FilterDefinition<TReadModel> filter, PageSettings pageSettings,
         CancellationToken cancellationToken = default);
 }

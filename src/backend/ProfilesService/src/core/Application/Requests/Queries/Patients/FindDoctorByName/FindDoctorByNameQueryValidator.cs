@@ -1,6 +1,8 @@
+using FluentValidation;
+
 namespace Application.Requests.Queries.Patients.FindDoctorByName;
 
-public class FindDoctorByNameQueryValidator
+public class FindDoctorByNameQueryValidator : AbstractValidator<FindDoctorByNameQuery>
 {
     
 }

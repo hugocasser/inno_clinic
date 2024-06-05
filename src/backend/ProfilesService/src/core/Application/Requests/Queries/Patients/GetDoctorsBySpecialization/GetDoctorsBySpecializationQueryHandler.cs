@@ -14,9 +14,13 @@ public class GetDoctorsBySpecializationQueryHandler
     public async Task<HttpRequestResult> HandleAsync(GetDoctorsBySpecializationQuery request, CancellationToken cancellationToken = default)
     {
         var filter = DoctorsSpecifications.SpecializationNotDeleted(request.Specialization);
+        var doctors = new List<DoctorListItemViewDto>();
         
-        var doctors = await repository.GetByManyAsync(filter, request.PageSettings, cancellationToken);
+        await foreach (var doctor in repository.GetByManyAsync(filter, request.PageSettings, cancellationToken))
+        {
+            doctors.Add(DoctorListItemViewDto.MapFromReadModel(doctor));
+        }
         
-        return HttpResultBuilder.Success(DoctorListItemViewDto.MapFromReadModels(doctors));
+        return HttpResultBuilder.Success(doctors);
     }
 }

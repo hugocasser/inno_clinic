@@ -31,7 +31,7 @@ public class OutboxMessageProcessingJob
 
         var successfullyCount = 0;
         var failedCount = 0;
-        
+
         await foreach (var result in messageProcessor.ProcessAsync(messages.ToFrozenSet(), token))
         {
             if (result.IsSuccess)

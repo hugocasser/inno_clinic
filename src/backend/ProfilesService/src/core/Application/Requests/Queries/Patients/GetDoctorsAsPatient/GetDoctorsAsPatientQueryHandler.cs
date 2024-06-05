@@ -13,9 +13,13 @@ public class GetDoctorsAsPatientQueryHandler
     public async Task<HttpRequestResult> HandleAsync(GetDoctorsAsPatientQuery request, CancellationToken cancellationToken = default)
     {
         var filter = DoctorsSpecifications.ByPatientNotDeleted(request.MinExperience, request.MaxExperience);
-            
-        var doctors = await repository.GetByManyAsync(filter, request.PageSettings, cancellationToken);
-
-        return HttpResultBuilder.Success(DoctorListItemViewDto.MapFromReadModels(doctors));
+        var doctors = new List<DoctorListItemViewDto>();
+        
+        await foreach(var doctor in repository.GetByManyAsync(filter, request.PageSettings, cancellationToken))
+        {
+            doctors.Add(DoctorListItemViewDto.MapFromReadModel(doctor));
+        }
+        
+        return HttpResultBuilder.Success(doctors);
     }
 }
