@@ -39,18 +39,18 @@ services:
 #    depends_on:
 #      - db-auth
 #  # offices service
-  db-offices:
+  db-postgres:
     extends:
-      file: docker-compose.offices.yaml
-      service: db-offices
+      file: docker-compose.general.yaml
+      service: db-postgres
 #    depends_on:
 #      - elastic
     ports:
       - "5432:5432"
-#  mongo:
-#    extends:
-#      file: docker-compose.offices.yaml
-#      service: mongo
+  mongo:
+    extends:
+      file: docker-compose.general.yaml
+      service: mongo
 #  offices:
 #    extends:
 #      file: docker-compose.offices.yaml
