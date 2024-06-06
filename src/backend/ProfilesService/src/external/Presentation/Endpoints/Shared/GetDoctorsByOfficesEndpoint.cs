@@ -9,12 +9,9 @@ public class GetDoctorsByOfficesEndpoint(IRequestSender sender) : Endpoint<GetDo
 {
     public override void Configure()
     {
-        Verbs(Http.GET);
-        Routes("api/shared/doctors/offices");
+        Verbs(Http.POST);
+        Routes("shared/doctors/offices");
         AllowAnonymous();
-        Validator<GetDoctorsByOfficeQueryValidator>();
-        
-        base.Configure();
     }
     
     public override async Task HandleAsync(GetDoctorsByOfficeQuery request, CancellationToken cancellationToken)

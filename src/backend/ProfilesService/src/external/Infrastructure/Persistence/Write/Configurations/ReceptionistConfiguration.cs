@@ -12,11 +12,6 @@ public class ReceptionistConfiguration : IEntityTypeConfiguration<Receptionist>
             .HasKey(receptionist => receptionist.Id);
         
         builder
-            .Property(receptionist => receptionist.Id)
-            .ValueGeneratedNever()
-            .IsRequired();
-        
-        builder
             .Property(receptionist => receptionist.FirstName)
             .HasMaxLength(100)
             .ValueGeneratedNever()

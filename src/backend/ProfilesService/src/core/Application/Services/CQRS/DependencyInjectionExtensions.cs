@@ -9,17 +9,15 @@ public static class DependencyInjectionExtensions
     public static IServiceCollection AddRequestHandlersFromAssembly
         (this IServiceCollection services, Assembly assembly)
     {
-        foreach (var handler in assembly.GetTypes()
-                     .Where(type => type.IsClass && type.IsAssignableTo(typeof(IRequestHandler<,>))))
-        {
-            var requestTypes = handler
-                .GetInterfaces()
-                .Where(type => type.IsAssignableTo(typeof(IRequestHandler<,>)));
+        var serviceTypes = assembly.GetTypes()
+            .Where(t => t.IsClass && !t.IsAbstract && !t.IsInterface)
+            .ToList();
 
-            foreach (var requestType in requestTypes)
-            {
-                services.AddScoped(requestType, handler);
-            }
+        foreach (var serviceType in serviceTypes.Where(serviceType => serviceType
+                     .GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IRequestHandler<,>))))
+        {
+            var myInterface = serviceType.GetInterfaces().First(type => type.GetGenericTypeDefinition() == typeof(IRequestHandler<,>));
+            services.AddScoped(myInterface,serviceType);
         }
 
         return services;
@@ -28,17 +26,15 @@ public static class DependencyInjectionExtensions
     public static IServiceCollection AddPipelineBehaviorsFromAssembly
         (this IServiceCollection services, Assembly assembly)
     {
-        foreach (var behavior in assembly.GetTypes()
-                     .Where(type => type.IsClass && type.IsAssignableTo(typeof(IPipelineBehavior<,>))))
-        {
-            var behaviorTypes = behavior
-                .GetInterfaces()
-                .Where(type => type.IsAssignableTo(typeof(IPipelineBehavior<,>)));
+        var serviceTypes = assembly.GetTypes()
+            .Where(t => t.IsClass && !t.IsAbstract && !t.IsInterface)
+            .ToList();
 
-            foreach (var behaviorType in behaviorTypes)
-            {
-                services.AddScoped(behaviorType, behavior);
-            }
+        foreach (var serviceType in serviceTypes.Where(serviceType => serviceType.GetInterfaces()
+                     .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IPipelineBehavior<,>))))
+        {
+            var myInterface = serviceType.GetInterfaces().First(type => type.GetGenericTypeDefinition() == typeof(IPipelineBehavior<,>));
+            services.AddScoped(myInterface,serviceType);
         }
 
         return services;

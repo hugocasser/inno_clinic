@@ -9,12 +9,9 @@ public class FindDoctorByNameEndpoint(IRequestSender sender) : Endpoint<FindDoct
 {
     public override void Configure()
     {
-        Verbs(Http.GET);
-        Routes("api/shared/doctors");
+        Verbs(Http.POST);
+        Routes("shared/doctors");
         AllowAnonymous();
-        Validator<FindDoctorByNameQueryValidator>();
-        
-        base.Configure();
     }
     
     public override async Task HandleAsync(FindDoctorByNameQuery request, CancellationToken cancellationToken)

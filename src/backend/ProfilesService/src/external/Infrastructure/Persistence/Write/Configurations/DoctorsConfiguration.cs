@@ -12,11 +12,6 @@ public class DoctorsConfiguration : IEntityTypeConfiguration<Doctor>
             doctor.Id);
         
         builder
-            .Property(doctor => doctor.Id)
-            .ValueGeneratedNever()
-            .IsRequired();
-        
-        builder
             .Property(doctor => doctor.FirstName)
             .HasMaxLength(100)
             .ValueGeneratedNever()

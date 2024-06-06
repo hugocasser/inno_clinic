@@ -1,7 +1,6 @@
 using Application.Abstractions.CQRS;
 using Application.OperationResult.Results;
 using Application.Requests.Queries.Patients.GetDoctorsBySpecialization;
-using FastEndpoints;
 
 namespace Presentation.Endpoints.Shared;
 
@@ -9,12 +8,9 @@ public class GetDoctorsBySpecializationEndpoint(IRequestSender sender) : Endpoin
 {
     public override void Configure()
     {
-        Verbs(Http.GET);
-        Routes("api/shared/doctors/specialization");
+        Verbs(Http.POST);
+        Routes("shared/doctors/specialization");
         AllowAnonymous();
-        Validator<GetDoctorsBySpecializationQueryValidator>();
-        
-        base.Configure();
     }
     
     public override async Task HandleAsync(GetDoctorsBySpecializationQuery request, CancellationToken cancellationToken)

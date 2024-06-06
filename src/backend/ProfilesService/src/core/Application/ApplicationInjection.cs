@@ -20,11 +20,11 @@ public static class ApplicationInjection
 {
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
-        var assembly = Assembly.GetExecutingAssembly();
+        var assembly = typeof(IRequestHandler<,>).Assembly;
         
         return services
             .AddCqrs(assembly)
-            .AddValidators()
+            .AddValidators(assembly)
             .AddServices()
             .AddDomainEvents(assembly)
             .AddTransactionalOutbox();
@@ -33,16 +33,16 @@ public static class ApplicationInjection
     private static IServiceCollection AddCqrs(this IServiceCollection services, Assembly assembly)
     {
         services.AddRequestHandlersFromAssembly(assembly);
-        services.AddPipelineBehaviorsFromAssembly(assembly);
+        // services.AddPipelineBehaviorsFromAssembly(assembly);
         
         services.AddScoped<IRequestSender, RequestSender>();
         
         return services;
     }
 
-    private static IServiceCollection AddValidators(this IServiceCollection services)
+    private static IServiceCollection AddValidators(this IServiceCollection services, Assembly assembly)
     {
-        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+        services.AddValidatorsFromAssembly(assembly);
         
         return services;
     }
@@ -59,7 +59,7 @@ public static class ApplicationInjection
 
     private static IServiceCollection AddDomainEvents(this IServiceCollection services, Assembly assembly)
     {
-        services.AddDomainEventHandlersFromAssembly(assembly);
+        services.AddEventHandlersFromAssembly(assembly);
         
         services.AddScoped<IDomainEventSender, DomainEventSender>();
         
@@ -72,5 +72,4 @@ public static class ApplicationInjection
         
         return services;
     }
-    
 }

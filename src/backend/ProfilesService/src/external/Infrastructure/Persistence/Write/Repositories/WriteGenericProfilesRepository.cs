@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.Write.Repositories;
 
-public abstract class WriteGenericProfilesRepository<T>(DbContext context)
+public abstract class WriteGenericProfilesRepository<T>(ProfilesWriteDbContext context)
     : IWriteGenericProfilesRepository<T> where T : Profile
 {
     public async Task<T?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)

@@ -12,19 +12,9 @@ public class OutboxMessagesConfiguration : IEntityTypeConfiguration<OutboxMessag
             .HasKey(outboxMessage => outboxMessage.Id);
         
         builder
-            .Property(outboxMessage => outboxMessage.Id)
-            .ValueGeneratedNever()
-            .IsRequired();
-        
-        builder
             .Property(outboxMessage => outboxMessage.ProcessedAt)
             .ValueGeneratedNever()
             .IsRequired(false);
-        
-        builder
-            .Property(outboxMessage => outboxMessage.SerializedDomainEvent)
-            .ValueGeneratedNever()
-            .IsRequired();
         
         builder
             .Property(outboxMessage => outboxMessage.CreatedAt)
@@ -34,13 +24,8 @@ public class OutboxMessagesConfiguration : IEntityTypeConfiguration<OutboxMessag
         builder
             .HasOne(outboxMessage => outboxMessage.SerializedDomainEvent)
             .WithOne(serializedDomainEvent => serializedDomainEvent.OutboxMessage)
-            .HasForeignKey<SerializedEvent>(serializedDomainEvent => serializedDomainEvent.OutboxMessageId)
+            .HasForeignKey<OutboxMessage>(outboxMessage => outboxMessage.SerializedDomainEventId)
             .OnDelete(DeleteBehavior.Cascade)
-            .IsRequired();
-        
-        builder
-            .Property(outboxMessage => outboxMessage.SerializedDomainEvent)
-            .ValueGeneratedNever()
             .IsRequired();
 
         builder.HasIndex(outboxMessage => outboxMessage.ProcessedAt);

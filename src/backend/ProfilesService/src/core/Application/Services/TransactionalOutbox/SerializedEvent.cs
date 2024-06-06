@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 using Domain.Abstractions.DomainEvents;
 using Newtonsoft.Json;
@@ -6,28 +7,34 @@ namespace Application.Services.TransactionalOutbox;
 
 public class SerializedEvent
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; init; }
     public Guid OutboxMessageId { get; set; }
     public OutboxMessage OutboxMessage { get; set; } = null!;
-    private readonly string _firstPart;
-    private readonly string _secondPart;
-    private readonly string _thirdPart;
-    private readonly string _fourthPart;
-    private readonly string _fifthPart;
+    [MaxLength(2000)]
+    private string FirstPart { get; init; } = string.Empty; 
+    [MaxLength(2000)]
+    private string SecondPart { get; init; } = string.Empty;
+    [MaxLength(2000)]
+    private string ThirdPart { get; init; } = string.Empty;
+    [MaxLength(2000)]
+    private string FourthPart { get; init; } = string.Empty;
+    [MaxLength(2000)]
+    private string FifthPart { get; init; } = string.Empty;
 
-    public SerializedEvent(IDomainEvent domainEvent)
+    public static SerializedEvent Create(IDomainEvent domainEvent)
     {
-        Id = Guid.NewGuid();
-        
         var chunks = domainEvent.Serialize().Chunk(5).ToList();
         
-        _firstPart = chunks[0].ToString()!;
-        _secondPart = chunks[1].ToString()!;
-        _thirdPart = chunks[2].ToString()!;
-        _fourthPart = chunks[3].ToString()!;
-        _fifthPart = chunks[4].ToString()!;
-    } 
-    
+        return new SerializedEvent()
+        {
+            Id = Guid.NewGuid(),
+            FirstPart = chunks[0].ToString()!,
+            SecondPart = chunks[1].ToString()!,
+            ThirdPart = chunks[2].ToString()!,
+            FourthPart = chunks[3].ToString()!,
+            FifthPart = chunks[4].ToString()!
+        };
+    }
     public void SetMessage(OutboxMessage message)
     {
         OutboxMessageId = message.Id;
@@ -39,11 +46,11 @@ public class SerializedEvent
         var stringBuilder = new StringBuilder();
         
         stringBuilder
-            .Append(_firstPart)
-            .Append(_secondPart)
-            .Append(_thirdPart)
-            .Append(_fourthPart)
-            .Append(_fifthPart);
+            .Append(FirstPart)
+            .Append(SecondPart)
+            .Append(ThirdPart)
+            .Append(FourthPart)
+            .Append(FifthPart);
 
         return JsonConvert.DeserializeObject<IDomainEvent>(stringBuilder.ToString());
     }

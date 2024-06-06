@@ -10,6 +10,8 @@ public class ProfilesWriteDbContext : DbContext
     public DbSet<Patient> Patients { get; set; } = null!;
     public DbSet<Receptionist> Receptionists { get; set; } = null!;
     public DbSet<OutboxMessage> OutboxMessages { get; set; } = null!;
+    public DbSet<SerializedEvent> SerializedEvents { get; set; } = null!;
+    public DbSet<DoctorsStatus> DoctorStatuses { get; set; } = null!;
 
     public ProfilesWriteDbContext(DbContextOptions<ProfilesWriteDbContext> options) : base(options){}
 

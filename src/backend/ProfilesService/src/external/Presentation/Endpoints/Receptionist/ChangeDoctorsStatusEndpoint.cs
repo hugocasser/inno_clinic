@@ -9,11 +9,9 @@ public class ChangeDoctorsStatusEndpoint(IRequestSender sender) : Endpoint<Chang
 {
     public override void Configure()
     {
-        Verbs(Http.PUT);
-        Routes("api/receptionists/doctors/status");
+        Verbs(Http.POST);
+        Routes("receptionists/doctors/status");
         AllowAnonymous();
-        
-        base.Configure();
     }
     
     public override async Task HandleAsync(ChangeDoctorsStatusCommand request, CancellationToken cancellationToken)

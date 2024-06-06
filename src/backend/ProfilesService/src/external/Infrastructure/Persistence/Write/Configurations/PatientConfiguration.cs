@@ -12,11 +12,6 @@ public class PatientConfiguration : IEntityTypeConfiguration<Patient>
             .HasKey(patient => patient.Id);
         
         builder
-            .Property(patient => patient.Id)
-            .ValueGeneratedNever()
-            .IsRequired();
-        
-        builder
             .Property(patient => patient.FirstName)
             .HasMaxLength(100)
             .ValueGeneratedNever()

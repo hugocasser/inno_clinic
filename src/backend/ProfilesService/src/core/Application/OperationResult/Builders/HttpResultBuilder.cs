@@ -7,7 +7,7 @@ public static class HttpResultBuilder
 {
     public static HttpRequestResult Success(object content)
     {
-        return new HttpRequestResult(content);
+        return new HttpRequestResult(content).WithStatusCode(200);
     }
 
     public static HttpRequestResult NoContent()

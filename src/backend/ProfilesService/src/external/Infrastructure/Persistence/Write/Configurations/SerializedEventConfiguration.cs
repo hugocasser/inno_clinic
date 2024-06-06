@@ -10,5 +10,11 @@ public class SerializedEventConfiguration : IEntityTypeConfiguration<SerializedE
     {
         builder
             .HasKey(serializedEvent => serializedEvent.Id);
+        
+        builder
+            .HasOne(evnt => evnt.OutboxMessage)
+            .WithOne(outboxMessage => outboxMessage.SerializedDomainEvent)
+            .HasForeignKey<SerializedEvent>(evnt => evnt.OutboxMessageId)
+            .IsRequired();
     }
 }
