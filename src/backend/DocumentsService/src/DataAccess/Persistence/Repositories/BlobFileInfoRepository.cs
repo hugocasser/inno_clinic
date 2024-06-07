@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using DataAccess.Abstractions.Repositories;
 using DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +22,7 @@ public class BlobFileInfoRepository(FileInfoDbContext context) : IBlobFileInfoRe
     public async Task DeleteAsync(Guid fileId, CancellationToken cancellationToken)
     {
         var fileInfo = await context.Set<BlobFileInfo>()
-            .FirstOrDefaultAsync(file => file.FileId == fileId && !file.IsDeleted, cancellationToken);
+            .FirstOrDefaultAsync(file => file.Id == fileId && !file.IsDeleted, cancellationToken);
         
         if (fileInfo != null)
         {
@@ -30,27 +31,57 @@ public class BlobFileInfoRepository(FileInfoDbContext context) : IBlobFileInfoRe
         }
     }
 
+    public async Task<bool> IsExistsAsync(Guid fileId, CancellationToken cancellationToken)
+    {
+        return await context
+            .Set<BlobFileInfo>()
+            .AnyAsync(file => file.Id == fileId && !file.IsDeleted, cancellationToken);
+    }
+
+    public async Task DeleteFromBoothStoragesAsync(Guid fileId, CancellationToken cancellationToken)
+    {
+        var fileInfo = await context
+            .Set<BlobFileInfo>()
+            .FirstOrDefaultAsync(file => file.Id == fileId, cancellationToken: cancellationToken);
+
+        if (fileInfo == null)
+        {
+            return;
+        }
+
+        fileInfo.IsDeletedFromBlobStorage = true;
+        fileInfo.IsDeleted = true;
+            
+        context.Set<BlobFileInfo>().Update(fileInfo);
+    }
+
     public async Task<BlobFileInfo?> GetByIdAsync(Guid fileId, CancellationToken cancellationToken)
     {
         return await context
             .Set<BlobFileInfo>()
-            .FirstOrDefaultAsync(file => file.FileId == fileId && !file.IsDeleted, cancellationToken);
+            .FirstOrDefaultAsync(file => file.Id == fileId && !file.IsDeleted, cancellationToken);
     }
 
     public async Task<BlobFileInfo?> GetByIdFromDeletedAsync(Guid fileId, CancellationToken cancellationToken)
     {
         return await context
             .Set<BlobFileInfo>()
-            .FirstOrDefaultAsync(file => file.FileId == fileId && file.IsDeleted, cancellationToken);
+            .FirstOrDefaultAsync(file => file.Id == fileId && file.IsDeleted, cancellationToken);
     }
 
-    public IAsyncEnumerable<BlobFileInfo> GetUnusedFilesAsync(int count, CancellationToken cancellationToken)
+    public IAsyncEnumerable<BlobFileInfo> GetUnusedFilesAsync(int count, CancellationToken cancellationToken = default)
     {
-        var dateToFind 
+        var dateToFind = DateOnly.FromDateTime(DateTime.UtcNow.AddYears(-1));
+        
         return context
             .Set<BlobFileInfo>()
-            .Where(file => !(file.LastDownloadDate))
+            .Where(file => file.LastDownloadDate < dateToFind && !file.IsDeletedFromBlobStorage)
             .Take(count)
             .AsAsyncEnumerable();
+    }
+
+    public async Task SaveChangesAsync(CancellationToken cancellationToken)
+    {
+        await context.SaveChangesAsync(cancellationToken);
     }
 }

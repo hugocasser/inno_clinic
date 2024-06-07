@@ -27,4 +27,19 @@
       <Folder Include="Abstractions\Services\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <EmbeddedResource Update="OperationResult\Resources\ResultsMessages.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>ResultsMessages.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="OperationResult\Resources\ResultsMessages.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>ResultsMessages.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
 </Project>

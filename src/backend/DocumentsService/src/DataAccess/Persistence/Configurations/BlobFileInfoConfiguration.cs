@@ -12,7 +12,7 @@ public class BlobFileInfoConfiguration : IEntityTypeConfiguration<BlobFileInfo>
             .HasKey(x => x.Id);
         
         builder
-            .Property(x => x.FileId)
+            .Property(x => x.Id)
             .ValueGeneratedNever()
             .IsRequired();
         
