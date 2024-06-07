@@ -10,7 +10,9 @@ using Microsoft.Extensions.Options;
 
 namespace Application.Services.Auth;
 
-public class ConfirmMessageSenderService(IEmailSenderService emailSenderService, IOptions<EmailSenderOptions> emailSenderOptions, UserManager<User> userManager) : IConfirmMessageSenderService
+public class ConfirmMessageSenderService(IEmailSenderService emailSenderService,
+    IOptions<EmailSenderOptions> emailSenderOptions,
+    UserManager<User> userManager) : IConfirmMessageSenderService
 {
     public async Task SendEmailConfirmMessageAsync(User user, CancellationToken cancellationToken)
     {

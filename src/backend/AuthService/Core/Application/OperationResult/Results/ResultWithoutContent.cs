@@ -7,7 +7,7 @@ public class ResultWithoutContent : IResult
 {
     public bool IsSuccess { get; set; }
     public Error? Error { get; set; }
-    public string GetResultMessage()
+    public object? GetResultMessage()
     {
         return !IsSuccess ? Error.Message : "No content";
     }
@@ -17,12 +17,12 @@ public class ResultWithoutContent : IResult
         return !IsSuccess ? Error.Code : 204;
     }
 
-    public static ResultWithoutContent Success()
+    public static IResult Success()
     {
         return new ResultWithoutContent();
     }
 
-    public static ResultWithoutContent Failure(Error error)
+    public static IResult Failure(Error error)
     {
         return new ResultWithoutContent(error: error);
     }

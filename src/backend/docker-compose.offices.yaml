@@ -1,0 +1,18 @@
+#services:
+##    networks: 
+##      - office
+##  office:
+##    image: offices:latest
+##    depends_on:
+##      - db-offices
+##      - mongo
+##    environment:
+##      - ASPNETCORE_ENVIRONMENT=Container
+##    networks:
+##      - office
+##    ports:
+##      - "5000:5000"
+##      - "5001:5001"
+#
+#volumes:
+#  database-data:

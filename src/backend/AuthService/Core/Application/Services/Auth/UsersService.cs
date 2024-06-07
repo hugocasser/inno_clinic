@@ -43,4 +43,16 @@ public class UsersService(UserManager<User> userManager, IConfirmMessageSenderSe
         
         return ResultWithoutContent.Success();
     }
+    
+    public async Task<IResult> CheckUserPassword(string email, string password)
+    {
+        var user = await userManager.FindByEmailAsync(email);
+
+        if (user is null || !await userManager.CheckPasswordAsync(user, password))
+        {
+            return ResultWithoutContent.Failure(Error.Unauthorized().WithMessage(ErrorMessages.InvalidEmailOrPassword));
+        }
+
+        return ResultWithContent<User>.Success(user);
+    }
 }

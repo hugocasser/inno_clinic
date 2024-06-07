@@ -1,0 +1,47 @@
+services: 
+  elastic:
+    container_name: elastic
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.7.1
+    ports:
+      - "9200:9200"
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    environment:
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+    networks:
+      - elastic
+  kibana:
+    container_name: kibana
+    image: docker.elastic.co/kibana/kibana:8.7.1
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elastic
+    environment:
+      - ELASTICSEARCH_URL=http://elastic:9200
+    networks:
+      - elastic
+  mongo:
+      image: mongo:latest
+      ports:
+          - "27017:27017"
+          - "28017:28017"  
+  db-postgres:
+      container_name: db-postgres
+      image: postgres:latest
+      volumes:
+          - database-data:/data/db
+      environment:
+          - POSTGRES_PASSWORD=password
+          - POSTGRES_USER=office
+          - POSTGRES_DATABASE=office-write-db
+          - POSTGRES_DATABASE=accountsDb
+
+networks:
+    elastic:
+        driver: bridge
+
+volumes: 
+  elasticsearch-data:
+  database-data:

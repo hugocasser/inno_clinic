@@ -13,7 +13,10 @@ public class RefreshTokensRepository(AuthDbContext context) : IRefreshTokensRepo
 
     public async Task<RefreshToken?> GetUserRefreshTokenAsync(Guid userId, CancellationToken cancellationToken)
     {
-        return await context.RefreshTokens.FirstOrDefaultAsync(x => x.UserId == userId, cancellationToken);
+        return await context.RefreshTokens
+            .Include(token => token.User)
+            .FirstOrDefaultAsync(x =>
+                x.UserId == userId, cancellationToken);
     }
 
     public Task RemoveTokenAsync(RefreshToken token)

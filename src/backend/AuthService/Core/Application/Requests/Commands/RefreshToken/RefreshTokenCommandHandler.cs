@@ -26,7 +26,7 @@ public class RefreshTokenCommandHandler(
 
         var roles = await accessTokensService.GetRolesAsync(success.ResultData.User);
 
-        var token = accessTokensService.CreateAccessToken(success.ResultData.User, roles, cancellationToken);
+        var token = accessTokensService.CreateAccessToken(success.ResultData.User, roles);
 
         if (string.IsNullOrEmpty(token))
         {

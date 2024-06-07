@@ -7,13 +7,15 @@ services:
           - identity
           - elasticsearch
     db-auth:
-      container_name: db-ms
+      container_name: db-auth
       image: "mcr.microsoft.com/mssql/server:2022-latest"
       environment:
         SA_PASSWORD: "Identity_Development_2024"
         ACCEPT_EULA: "Y"
       networks:
         - identity
+      ports:
+        - "1433:1433"
     redis:
         image: redis
         networks:

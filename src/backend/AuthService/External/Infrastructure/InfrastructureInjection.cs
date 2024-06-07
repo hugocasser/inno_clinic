@@ -30,6 +30,13 @@ public static class InfrastructureInjection
 
     private static IServiceCollection AddDbContext(this IServiceCollection services, IConfiguration configuration, string environment)
     {
+        var testConnection = Environment.GetEnvironmentVariable("Test_ConnectionString");
+        if (testConnection != null)
+        {
+            return services
+                .AddTestDbContext(testConnection);
+        }
+        
         var databaseOptions = new DatabaseOptions();
         configuration.GetSection(nameof(DatabaseOptions)).Bind(databaseOptions);
 
@@ -59,6 +66,12 @@ public static class InfrastructureInjection
             });
 
         return services;
+    }
+
+    private static IServiceCollection AddTestDbContext(this IServiceCollection services, string testConnectionString)
+    {
+        return services.AddDbContext<AuthDbContext>(options =>
+            options.UseSqlServer(testConnectionString));
     }
     
     private static IServiceCollection AddOptions(this IServiceCollection services)

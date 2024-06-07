@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Application.Requests.Commands.ConfirmMail;
 using Application.Requests.Commands.Login;
 using Application.Requests.Commands.RefreshToken;
@@ -16,55 +17,62 @@ namespace Presentation.Controllers;
 [ApiController]
 [Produces("application/json")]
 [Route("api/auth")]
+[ExcludeFromCodeCoverage]
 public class AuthController(ISender sender) : ApiController(sender)
 {
-    [HttpPost("/register-patient")]
+    
+    [HttpPost]
+    [Route("register-patient")]
     public async Task<IActionResult> RegisterPatientAsync([FromBody] RegisterPatientCommand command, CancellationToken cancellationToken)
     {
-        var result = await sender.Send(command, cancellationToken);
+        var result = await Sender.Send(command, cancellationToken);
         
         return ResultProcessing.FromResult(result);
     }
     
-    [HttpPost("/register-doctor")]
+    [HttpPost]
     [Authorize(Roles = nameof(Roles.Receptionist))]
+    [Route("register-doctor")]
     public async Task<IActionResult> RegisterDoctorAsync([FromBody] RegisterDoctorCommand command, CancellationToken cancellationToken)
     {
-        var result = await sender.Send(command, cancellationToken);
+        var result = await Sender.Send(command, cancellationToken);
         
         return ResultProcessing.FromResult(result);
     }
     
-    [HttpPost("/login")]
+    [HttpPost]
+    [Route("login")]
     public async Task<IActionResult> LoginAsync([FromBody] LoginUserCommand command, CancellationToken cancellationToken)
     {
-        var result = await sender.Send(command, cancellationToken);
+        var result = await Sender.Send(command, cancellationToken);
         
         return ResultProcessing.FromResult(result);
     }
     
-    [HttpPost("/logout")]
+    [HttpPost]
+    [Route("logout")]
     [Authorize]
     public async Task<IActionResult> LogoutAsync([FromBody] SingOutCommand command, CancellationToken cancellationToken)
     {
-        var result = await sender.Send(command, cancellationToken);
+        var result = await Sender.Send(command, cancellationToken);
         
         return ResultProcessing.FromResult(result);
     }
     
-    [HttpPost("/refresh-token/{token}")]
-    [Authorize]
+    [HttpPost]
+    [Route("refresh-token/{token}")]
     public async Task<IActionResult> RefreshAsync([FromRoute] string token,CancellationToken cancellationToken)
     {
-        var result = await sender.Send(new RefreshTokenCommand(token), cancellationToken);
+        var result = await Sender.Send(new RefreshTokenCommand(token), cancellationToken);
         
         return ResultProcessing.FromResult(result);
     }
     
-    [HttpPost("/confirm-mail/{userId}/{code}")]
-    public async Task<IActionResult> ConfirmMailAsync([FromRoute]Guid userId, [FromRoute] string code, CancellationToken cancellationToken)
+    [HttpPost]
+    [Route("confirm-mail")]
+    public async Task<IActionResult> ConfirmMailAsync([FromBody]ConfirmMailCommand command,  CancellationToken cancellationToken)
     {
-        var result = await sender.Send(new ConfirmMailCommand(userId,code), cancellationToken);
+        var result = await Sender.Send(command, cancellationToken);
         
         return ResultProcessing.FromResult(result);
     }
