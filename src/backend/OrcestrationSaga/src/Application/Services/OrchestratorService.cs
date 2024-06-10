@@ -5,7 +5,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Application.Services;
 
-public class OrchestratorService(IKeyedServiceProvider serviceProvider)
+public class OrchestratorService
+    (IKeyedServiceProvider serviceProvider,
+        IFailsNotifierService failsNotifierService)
     : IOrchestratorService
 {
     public async Task<IResult> StartExecuteAsync(ITransactionDto request, CancellationToken cancellationToken = default)
@@ -61,6 +63,8 @@ public class OrchestratorService(IKeyedServiceProvider serviceProvider)
             
             notRequiredFails.Add(rollbackResult);
         }
+        
+        await failsNotifierService.NotifyAsync(requiredFails, notRequiredFails, cancellationToken);
 
         return ResultBuilder.BuildFromRollbackFails(requiredFails, notRequiredFails);
     }
