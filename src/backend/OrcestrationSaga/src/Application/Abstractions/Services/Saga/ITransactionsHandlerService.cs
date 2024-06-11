@@ -2,7 +2,7 @@ using System.Collections.Frozen;
 
 namespace Application.Abstractions.Services.Saga;
 
-public interface IOrchestratorService
+public interface ITransactionsHandlerService
 {
     public Task<IResult> StartExecuteAsync(ITransactionDto request, CancellationToken cancellationToken = default);
 

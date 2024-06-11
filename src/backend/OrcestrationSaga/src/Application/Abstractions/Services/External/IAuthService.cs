@@ -4,6 +4,7 @@ namespace Application.Abstractions.Services.External;
 
 public interface IAuthService
 {
-    Task<IResult> CreateAccountAsync(string requestEmail, string requestPassword, EnumRoles role, CancellationToken cancellationToken);
-    Task<IResult> TryRollbackAsync(Guid getContent, CancellationToken cancellationToken);
+    public Task<IResult> CreateAccountAsync(string requestEmail, string requestPassword, EnumRoles role, CancellationToken cancellationToken);
+    public Task<IResult> TryRollbackAsync(Guid accountId, CancellationToken cancellationToken);
+    public Task<IResult> DeleteAccountAsync(Guid accountId, CancellationToken cancellationToken);
 }

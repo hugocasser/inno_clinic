@@ -1,12 +1,12 @@
-using Application.Abstractions.Services.Saga;
 using Application.TransactionComponents.CreateProfileComponent;
+using Application.TransactionComponents.UpdateProfileComponent;
 
 namespace Application.Abstractions.Services.External;
 
 public interface IProfilesService
 {
-    Task<IResult> CreateProfileAsync(ITransactionWithProfileCreation transaction, CancellationToken cancellationToken);
-    Task<IResult> UpdatePatientsProfileAsync(CancellationToken cancellationToken);
-    Task<IResult> UpdateDoctorsProfileAsync(CancellationToken cancellationToken);
-    Task<IResult> TryRollbackAccountAsync(Guid doctorId, CancellationToken cancellationToken);
+    public Task<IResult> CreateProfileAsync(ITransactionWithProfileCreation transaction, CancellationToken cancellationToken);
+    public Task<IResult> UpdatePatientsProfileAsync(ITransactionWithProfileUpdating transaction, CancellationToken cancellationToken);
+    public Task<IResult> DeleteProfileAsync(Guid profileId, CancellationToken cancellationToken);
+    public Task<IResult> TryRollbackAccountAsync(Guid doctorId, CancellationToken cancellationToken);
 }
