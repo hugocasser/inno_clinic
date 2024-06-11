@@ -17,7 +17,7 @@ public class FileUploaderComponentHandler(IFilesService filesService) : ITransac
             return ResultBuilder.TransactionFailed();
         }
         
-        var uploadResult = await filesService.UploadFileAsync(transaction.Photo, cancellationToken);
+        var uploadResult = await filesService.UploadFileAsync(transaction.File, cancellationToken);
 
         if (!uploadResult.IsSuccess)
         {
@@ -42,6 +42,11 @@ public class FileUploaderComponentHandler(IFilesService filesService) : ITransac
         return !rollbackResult.IsSuccess
             ? ResultBuilder.TransactionFailed()
             : ResultBuilder.TransactionSuccess();
+    }
+    
+    public string GetKey()
+    {
+        return HandlerKey;
     }
 }
     

@@ -4,7 +4,7 @@ namespace Application.TransactionComponents.UploadFileComponent;
 
 public interface ITransactionWithFileUploading
 {
-    public IFormFile Photo { get; set; }
+    public IFormFile? File { get; set; }
     public Guid FileId { get; set; }
     public void SetFileId(Guid fileId);
 }

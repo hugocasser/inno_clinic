@@ -20,15 +20,19 @@ public class CreateDoctorTransactions :
     public Guid TransactionId { get; set; } = Guid.NewGuid();
     public string Email { get; set; } = null!;
     public string Password { get; set; } = null!;
-    public EnumRoles Role { get; set; }
-    public Guid AccountId { get; set; }
-
+    public IFormFile? File { get; set; }
     public string FirstName { get; set; } = null!;
     public string LastName { get; set; } = null!;
-    public string MiddleName { get; set; } = null!;
+    public string? MiddleName { get; set; }
+    public DateOnly BirthDate { get; set; }
+    Guid SpecializationId { get; set; }
+    public DateOnly CareerStarted { get; set; }
+    public Guid StatusId { get; set; }
+    
     public Guid OfficeId { get; set; }
-    public IFormFile Photo { get; set; } = null!;
     public Guid FileId { get; set; }
+    public EnumRoles Role { get; set; } = EnumRoles.Doctor;
+    public Guid AccountId { get; set; }
     private readonly List<string> _handlersKeys =
     [
         CheckOfficeComponentHandler.HandlerKey,
@@ -44,22 +48,35 @@ public class CreateDoctorTransactions :
     {
         AccountId = accountId;
     }
-    public FrozenSet<string> GetOrderedHandlersKeys()
+    public FrozenSet<string> GetHandlersKeys()
     {
         return _handlersKeys.ToFrozenSet();
     }
 
-    public static CreateDoctorTransactions MapFromRequest(CreateDoctorsProfileDto request)
+    public static CreateDoctorTransactions MapFromRequest(CreateDoctorsUnitedDto request)
     {
-        var transaction = new CreateDoctorTransactions();
+        var transaction = new CreateDoctorTransactions()
+        {
+            Email = request.Email,
+            Password = request.Password,
+            FirstName = request.FirstName,
+            LastName = request.LastName,
+            MiddleName = request.MiddleName,
+            OfficeId = request.OfficeId,
+            File = request.File,
+            BirthDate = request.BirthDate,
+            SpecializationId = request.SpecializationId,
+            CareerStarted = request.CareerStarted,
+            StatusId = request.StatusId
+        };
         
-        if (request.Photo is null)
+        if (request.File is null)
         {
             transaction._handlersKeys.Remove(FileUploaderComponentHandler.HandlerKey);
         }
         else
         {
-            transaction.Photo = request.Photo;
+            transaction.File = request.File;
         }
         
         return transaction;
