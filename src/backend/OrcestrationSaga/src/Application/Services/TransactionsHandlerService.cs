@@ -5,33 +5,41 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Application.Services;
 
-public class OrchestratorService
+public class TransactionsHandlerService
     (IKeyedServiceProvider serviceProvider,
-        IFailsNotifierService failsNotifierService)
-    : IOrchestratorService
+        ITransactionsNotifierService transactionsNotifierService)
+    : ITransactionsHandlerService
 {
     public async Task<IResult> StartExecuteAsync(ITransactionDto request, CancellationToken cancellationToken = default)
     {
-        var handlersKeys = request.GetOrderedHandlersKeys();
+        var isHandlersSuccess = true;
+        var handlersKeys = request.GetHandlersKeys();
         var handlers = new List<ITransactionComponentHandler>();
-        var handlersResponses = new List<ITransactionResult>();
+        var handlersSuccessResponses = new List<ITransactionResult>();
 
         foreach (var handler in handlersKeys.Select(serviceProvider
                      .GetRequiredKeyedService<ITransactionComponentHandler>))
         {
             var handlingResult = await handler.HandleAsync(request, cancellationToken);
 
-            if (handlingResult.NeedRollback)
+            if (!handlingResult.IsSuccess)
             {
+                isHandlersSuccess = false;
+                
                 var rollbackResult = await TryRollbackAsync(handlers, cancellationToken);
 
                 return rollbackResult;
             }
 
             handlers.Add(handler);
+            handlersSuccessResponses.Add(handlingResult);
         }
 
-        return ResultBuilder.Failure(ResultMessages.InternalServerError);
+        await transactionsNotifierService.NotifyAsync(handlersSuccessResponses, cancellationToken: cancellationToken);
+        
+        return isHandlersSuccess 
+            ? ResultBuilder.BuildFromHandlersSuccess(handlersSuccessResponses)
+            : ResultBuilder.Failure(ResultMessages.InternalServerError);
     }
 
     public async Task<IResult> TryRollbackAsync(List<ITransactionComponentHandler> handlers,
@@ -39,7 +47,10 @@ public class OrchestratorService
     {
         var requiredFails = new List<ITransactionResult>();
         var notRequiredFails = new List<ITransactionResult>();
-
+        var rollbackResults = new List<ITransactionResult>();
+        
+        var isRollbackSuccess = true;
+        
         for (var i = handlers.Count - 1; i >= 0; i--)
         {
             var handler = handlers[i];
@@ -53,19 +64,25 @@ public class OrchestratorService
 
             if (rollbackResult.IsSuccess)
             {
+                rollbackResults.Add(rollbackResult);
                 continue;
             }
-
+            
             if (handler.RollbackRequired)
             {
+                isRollbackSuccess = false;
                 requiredFails.Add(rollbackResult);
             }
-            
-            notRequiredFails.Add(rollbackResult);
+            else
+            {
+                notRequiredFails.Add(rollbackResult);
+            }
         }
         
-        await failsNotifierService.NotifyAsync(requiredFails, notRequiredFails, cancellationToken);
+        await transactionsNotifierService.NotifyAsync(requiredFails, notRequiredFails, cancellationToken);
 
-        return ResultBuilder.BuildFromRollbackFails(requiredFails, notRequiredFails);
+        return isRollbackSuccess 
+            ? ResultBuilder.BuildFromRollbackSuccess(rollbackResults)
+            : ResultBuilder.BuildFromRollbackFails(requiredFails, notRequiredFails);
     }
 }
