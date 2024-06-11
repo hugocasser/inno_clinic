@@ -43,11 +43,8 @@ public class DeleteProfileComponentHandler(IProfilesService profilesService) : I
         
         var result = await profilesService.TryRollbackAccountAsync(_profileId, cancellationToken);
         
-        if (!result.IsSuccess)
-        {
-            return ResultBuilder.TransactionFailed();
-        }
-        
-        return ResultBuilder.TransactionSuccess();
+        return !result.IsSuccess 
+            ? ResultBuilder.TransactionFailed() 
+            : ResultBuilder.TransactionSuccess();
     }
 }

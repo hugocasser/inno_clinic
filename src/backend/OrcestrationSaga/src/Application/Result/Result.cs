@@ -15,7 +15,12 @@ public class Result : IResult
     {
         return (T)_content;
     }
-    
+
+    public int GetStatusCode()
+    {
+        return IsSuccess ? 200 : 400;
+    }
+
     public Result(bool isSuccess)
     {
         IsSuccess = isSuccess;
