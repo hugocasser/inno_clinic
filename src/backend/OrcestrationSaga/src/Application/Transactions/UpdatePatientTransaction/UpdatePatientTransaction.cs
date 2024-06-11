@@ -12,15 +12,17 @@ public class UpdatePatientTransaction
       ITransactionWithProfileUpdating,
       ITransactionWithPhotoUpdating
 {
-    public Guid TransactionId { get; set; } = Guid.NewGuid();
     public Guid ProfileId { get; set; }
-    public Guid? PhotoId { get; private set; }
     public IFormFile? Photo { get; private set; }
     public string FirstName { get; set; } = null!;
     public string LastName { get; set; } = null!;
     public string? MiddleName { get; set; }
     public DateOnly BirthDate { get; set; }
     
+    public Guid? PhotoId { get; private set; }
+    
+    private Guid TransactionId { get; set; }
+    private bool IsIdSet { get; set; } = false;
     private readonly HashSet<string> _handlersKeys = 
     [
         UpdateProfileComponentHandler.HandlerKey,
@@ -63,5 +65,21 @@ public class UpdatePatientTransaction
         }
         
         PhotoId = photoId.Value;
+    }
+    
+    public Guid GetTransactionId()
+    {
+        return TransactionId;
+    }
+
+    public void SetTransactionId(Guid transactionId)
+    {
+        if (IsIdSet)
+        {
+            return;
+        }
+        
+        TransactionId = transactionId;
+        IsIdSet = true;
     }
 }

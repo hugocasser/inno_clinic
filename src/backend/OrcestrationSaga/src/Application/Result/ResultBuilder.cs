@@ -32,6 +32,11 @@ public static class ResultBuilder
         throw new NotImplementedException();
     }
     
+    public static IResult BuildFromRollbackSuccess(List<ITransactionResult> results)
+    {
+        throw new NotImplementedException();
+    }
+    
     public static ITransactionResult TransactionNoContent()
     {
         return new TransactionResult();
@@ -50,5 +55,10 @@ public static class ResultBuilder
     public static ITransactionResult TransactionFailed()
     {
         return new TransactionResult();
+    }
+    
+    public static IResult BuildFromHandlersSuccess(List<ITransactionResult> handlersSuccessResponses)
+    {
+        throw new NotImplementedException();
     }
 }

@@ -5,5 +5,6 @@ namespace Application.Abstractions.Services.Saga;
 public interface ITransactionDto
 {
     public FrozenSet<string> GetHandlersKeys();
-    public Guid TransactionId { get; set; }
+    public Guid GetTransactionId();
+    public void SetTransactionId(Guid transactionId);
 }

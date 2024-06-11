@@ -17,7 +17,6 @@ public class CreateDoctorTransactions :
     ITransactionWithUserRegistration,
     ITransactionWithProfileCreation
 {
-    public Guid TransactionId { get; set; } = Guid.NewGuid();
     public string Email { get; set; } = null!;
     public string Password { get; set; } = null!;
     public IFormFile? File { get; set; }
@@ -33,6 +32,10 @@ public class CreateDoctorTransactions :
     public Guid FileId { get; set; }
     public EnumRoles Role { get; set; } = EnumRoles.Doctor;
     public Guid AccountId { get; set; }
+    
+    private Guid TransactionId { get; set; }
+    private bool IsIdSet { get; set; } = false;
+    
     private readonly List<string> _handlersKeys =
     [
         CheckOfficeComponentHandler.HandlerKey,
@@ -40,6 +43,7 @@ public class CreateDoctorTransactions :
         RegisterUserComponentHandler.HandlerKey,
         CreateProfileComponentHandler.HandlerKey
     ];
+    
     public void SetFileId(Guid fileId)
     {
         FileId = fileId;
@@ -51,6 +55,22 @@ public class CreateDoctorTransactions :
     public FrozenSet<string> GetHandlersKeys()
     {
         return _handlersKeys.ToFrozenSet();
+    }
+
+    public Guid GetTransactionId()
+    {
+        return TransactionId;
+    }
+
+    public void SetTransactionId(Guid transactionId)
+    {
+        if (IsIdSet)
+        {
+            return;
+        }
+        
+        TransactionId = transactionId;
+        IsIdSet = true;
     }
 
     public static CreateDoctorTransactions MapFromRequest(CreateDoctorsUnitedDto request)

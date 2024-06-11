@@ -16,12 +16,14 @@ public class TransactionsHandlerService
         var handlersKeys = request.GetHandlersKeys();
         var handlers = new List<ITransactionComponentHandler>();
         var handlersSuccessResponses = new List<ITransactionResult>();
+        var transactionId = Guid.NewGuid();
 
         foreach (var handler in handlersKeys.Select(serviceProvider
                      .GetRequiredKeyedService<ITransactionComponentHandler>))
         {
             var handlingResult = await handler.HandleAsync(request, cancellationToken);
-
+            handlingResult.TransactionId = transactionId;
+            
             if (!handlingResult.IsSuccess)
             {
                 isHandlersSuccess = false;

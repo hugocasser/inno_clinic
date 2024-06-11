@@ -14,10 +14,8 @@ public class UpdateDoctorTransaction
         ITransactionWithProfileUpdating,
         ITransactionWithPhotoUpdating
 {
-    public Guid TransactionId { get; set; } = Guid.NewGuid();
     public Guid OfficeId { get; set; }
     public Guid ProfileId { get; set; }
-    public Guid? PhotoId { get; set; }
     public IFormFile? Photo { get; set; }
     public string FirstName { get; set; } = null!;
     public string LastName { get; set; } = null!;
@@ -27,7 +25,10 @@ public class UpdateDoctorTransaction
     public Guid StatusId { get; set; }
     public Guid SpecializationId { get; set; }
     
+    public Guid? PhotoId { get; set; }
     
+    private Guid TransactionId { get; set; }
+    private bool IsIdSet { get; set; } = false;
     private readonly HashSet<string> _handlersKeys = 
     [
         CheckOfficeComponentHandler.HandlerKey,
@@ -75,5 +76,21 @@ public class UpdateDoctorTransaction
     public FrozenSet<string> GetHandlersKeys()
     {
         return _handlersKeys.ToFrozenSet();
+    }
+    
+    public Guid GetTransactionId()
+    {
+        return TransactionId;
+    }
+
+    public void SetTransactionId(Guid transactionId)
+    {
+        if (IsIdSet)
+        {
+            return;
+        }
+        
+        TransactionId = transactionId;
+        IsIdSet = true;
     }
 }

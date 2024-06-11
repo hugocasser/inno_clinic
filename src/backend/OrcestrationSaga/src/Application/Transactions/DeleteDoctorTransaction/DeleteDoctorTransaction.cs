@@ -12,21 +12,24 @@ public class DeleteDoctorTransaction
       ITransactionWithPhotoDeleting,
       ITransactionWithAccountDeleting
 {
-    public Guid TransactionId { get; set; } = Guid.NewGuid();
     public Guid? PhotoId { get; set; }
     public Guid AccountId { get; set; }
     public Guid ProfileId { get; set; }
     
+    private Guid TransactionId { get; set; }
+    private bool IsIdSet { get; set; } = false;
     private readonly List<string> _handlersKeys = 
     [
         DeleteProfileComponentHandler.HandlerKey,
         DeletePhotoComponentHandler.HandlerKey,
         DeleteAccountComponentHandler.HandlerKey
     ];
+    
     public FrozenSet<string> GetHandlersKeys()
     {
         return _handlersKeys.ToFrozenSet();
     }
+    
     public void SetAccountId(Guid accountId)
     {
         AccountId = accountId;
@@ -43,5 +46,21 @@ public class DeleteDoctorTransaction
         }
         
         PhotoId = photoId;
+    }
+    
+    public Guid GetTransactionId()
+    {
+        return TransactionId;
+    }
+
+    public void SetTransactionId(Guid transactionId)
+    {
+        if (IsIdSet)
+        {
+            return;
+        }
+        
+        TransactionId = transactionId;
+        IsIdSet = true;
     }
 }

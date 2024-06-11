@@ -15,7 +15,6 @@ public class CreatePatientTransaction
       ITransactionWithUserRegistration,
       ITransactionWithProfileCreation
 {
-    public Guid TransactionId { get; set; } = Guid.NewGuid();
     public string FirstName { get; set; } = null!;
     public string LastName { get; set; } = null!;
     public string? MiddleName { get; set; }
@@ -28,6 +27,8 @@ public class CreatePatientTransaction
     public Guid AccountId { get; set; }
     public Guid FileId { get; set; }
     
+    private Guid TransactionId { get; set; }
+    private bool IsIdSet { get; set; } = false;
     private readonly List<string> _handlersKeys =
     [
         FileUploaderComponentHandler.HandlerKey,
@@ -59,10 +60,12 @@ public class CreatePatientTransaction
         
         return transaction;
     }
+    
     public FrozenSet<string> GetHandlersKeys()
     {
         return _handlersKeys.ToFrozenSet();
     }
+    
     public void SetFileId(Guid fileId)
     {
         FileId = fileId;
@@ -70,5 +73,21 @@ public class CreatePatientTransaction
     public void SetAccountId(Guid accountId)
     {
         AccountId = accountId;
+    }
+    
+    public Guid GetTransactionId()
+    {
+        return TransactionId;
+    }
+
+    public void SetTransactionId(Guid transactionId)
+    {
+        if (IsIdSet)
+        {
+            return;
+        }
+        
+        TransactionId = transactionId;
+        IsIdSet = true;
     }
 }
