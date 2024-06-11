@@ -4,17 +4,25 @@ namespace Application.Result;
 
 public class TransactionResult : ITransactionResult
 {
-    public bool IsSuccess { get; }
+    public bool IsSuccess { get; set; }
+    public object Content { get; set; }
     public object? GetContent()
     {
-        throw new NotImplementedException();
+        return Content;
     }
 
     public T? GetContent<T>()
     {
-        throw new NotImplementedException();
+        return object.Equals(Content, null) ? default : (T) Content;
     }
 
-    public bool NeedRollback { get; set; }
-    public bool IsFinished { get; set; }
+    public int GetStatusCode()
+    {
+        return IsSuccess 
+            ? 200 
+            : 500;
+    }
+
+    public Guid TransactionId { get; set; }
+    public string ComponentName { get; set; }
 }
