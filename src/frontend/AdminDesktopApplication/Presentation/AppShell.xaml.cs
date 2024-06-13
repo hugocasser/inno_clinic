@@ -1,4 +1,7 @@
-﻿namespace Presentation;
+﻿using Presentation.Abstractions.Services;
+using Presentation.Pages;
+
+namespace Presentation;
 
 public partial class AppShell : Shell
 {

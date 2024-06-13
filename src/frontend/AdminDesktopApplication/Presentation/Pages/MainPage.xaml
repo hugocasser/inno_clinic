@@ -4,6 +4,7 @@
              x:Class="Presentation.Pages.MainPage">
     
     <ScrollView>
+        <Label Text="asdadasdsa"></Label>
     </ScrollView>
 
 </ContentPage>

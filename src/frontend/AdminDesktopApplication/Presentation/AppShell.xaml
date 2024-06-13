@@ -9,8 +9,8 @@
     Title="Inno clinic admin">
 
     <ShellContent
-        Title="Home"
         ContentTemplate="{DataTemplate pages:MainPage}"
-        Route="MainPage" />
-
+        Route="MainPage"
+        Title="Home" Shell.BackgroundColor="MistyRose"
+        Shell.TitleColor="Black"/>
 </Shell>
