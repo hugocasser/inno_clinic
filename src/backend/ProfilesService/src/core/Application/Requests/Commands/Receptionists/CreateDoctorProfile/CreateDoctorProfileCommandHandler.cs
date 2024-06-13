@@ -28,7 +28,6 @@ public class CreateDoctorProfileCommandHandler
         await repository.AddAsync(doctor, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);
         
-        
         return HttpResultBuilder.Success(DoctorViewDto.MapFromModel(doctor));
     }
 }
