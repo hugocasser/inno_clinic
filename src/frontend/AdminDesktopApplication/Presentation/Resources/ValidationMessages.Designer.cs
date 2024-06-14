@@ -50,5 +50,11 @@ namespace Presentation.Resources {
                 return ResourceManager.GetString("EmailNotValid", resourceCulture);
             }
         }
+        
+        internal static string PasswordsAreNotEquals {
+            get {
+                return ResourceManager.GetString("PasswordsAreNotEquals", resourceCulture);
+            }
+        }
     }
 }

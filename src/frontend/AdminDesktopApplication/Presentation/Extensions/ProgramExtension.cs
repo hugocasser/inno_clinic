@@ -57,15 +57,13 @@ public static class ProgramExtension
     {
         Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
         Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
-        Routing.RegisterRoute(nameof(RegisterPage), typeof(RegisterPage));
     }
     
     private static IServiceCollection ConfigurePages(this IServiceCollection services)
     {
         services
             .AddTransient<MainPage>()
-            .AddTransient<LoginPage>()
-            .AddTransient<RegisterPage>();
+            .AddTransient<LoginPage>();
         
         return services;
     }

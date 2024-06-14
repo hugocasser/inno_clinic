@@ -4,5 +4,5 @@ namespace Application.Results;
 
 public class Result : IResult
 {
-    public bool IsSuccess { get; set; } = false;
+    public bool IsSuccess { get; set; } = true;
 }

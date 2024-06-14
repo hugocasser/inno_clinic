@@ -25,12 +25,6 @@ public partial class LoginViewModel(ICredentialsService credentialsService, Emai
     private List<string> _emailValidationErrors = [];
     [ObservableProperty]
     private List<string> _passwordValidationErrors = [];
-   
-    [RelayCommand]
-    private async Task RedirectToRegisterAsync()
-    {
-        await Shell.Current.GoToAsync(nameof(RegisterPage), true);
-    }
     
     [RelayCommand]
     private async Task LoginAsync()
@@ -39,11 +33,12 @@ public partial class LoginViewModel(ICredentialsService credentialsService, Emai
 
         if (result.IsSuccess)
         {
+            await Shell.Current.DisplayAlert(Language.LoginFailed, Language.LoginSuccessed, "Ok");
             await Shell.Current.GoToAsync(nameof(MainPage), true);
             return;
         }
 
-        await Shell.Current.DisplayAlert(Language.LoginFailed, Language.IncorrectCredentials + " "+ Email + " " + Password, "Ok");
+        await Shell.Current.DisplayAlert(Language.LoginFailed, Language.IncorrectCredentials, "Ok");
     }
     
     public void EmailChanged(object? sender, TextChangedEventArgs e)

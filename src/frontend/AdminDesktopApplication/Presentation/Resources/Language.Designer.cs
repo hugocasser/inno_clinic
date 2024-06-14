@@ -140,5 +140,11 @@ namespace Presentation.Resources {
                 return ResourceManager.GetString("Register", resourceCulture);
             }
         }
+        
+        internal static string LoginSuccessed {
+            get {
+                return ResourceManager.GetString("LoginSuccessed", resourceCulture);
+            }
+        }
     }
 }

@@ -21,4 +21,7 @@
     <data name="EmailNotValid" xml:space="preserve">
         <value>Email not valid. Example: example@email.com</value>
     </data>
+    <data name="PasswordsAreNotEquals" xml:space="preserve">
+        <value>Password are not equal.</value>
+    </data>
 </root>

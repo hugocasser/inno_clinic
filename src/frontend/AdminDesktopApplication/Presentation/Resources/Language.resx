@@ -66,4 +66,7 @@
     <data name="Register" xml:space="preserve">
         <value>Register</value>
     </data>
+    <data name="LoginSuccessed" xml:space="preserve">
+        <value>Login passed! Enjoy your work!</value>
+    </data>
 </root>

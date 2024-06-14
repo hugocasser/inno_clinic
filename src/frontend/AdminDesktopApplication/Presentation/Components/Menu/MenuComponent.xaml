@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:resources="clr-namespace:Presentation.Resources"
+             x:Class="Presentation.Components.Menu.MenuComponent"
+    x:Name="MenuSliderComponent">
+    <VerticalStackLayout BindingContext="{Binding 
+    Source = {x:Reference MenuSliderComponent}}" BackgroundColor="PaleVioletRed">
+        <Button Style="{StaticResource MenuButton}" ImageSource="menu.png" Clicked="Button_OnClicked"></Button>
+        <ScrollView VerticalScrollBarVisibility="Never"
+                    HorizontalScrollBarVisibility="Never"
+                    IsVisible="{Binding IsMenuVisible}">
+            <VerticalStackLayout IsVisible="True">
+                <Button Text="Settings" Style="{StaticResource MenuItemButton}"></Button>
+                <Button Text="Logout" Style="{StaticResource MenuItemButton}"></Button>
+                <Button Text="Exit" Style="{StaticResource MenuItemButton}"></Button>
+            </VerticalStackLayout>
+        </ScrollView>
+    </VerticalStackLayout>
+</ContentView>

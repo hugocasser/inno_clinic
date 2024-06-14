@@ -8,7 +8,7 @@ public class CredentialsService : ICredentialsService
 {
     public Task<bool> CheckLoginAsync()
     {
-        return Task.FromResult(false);
+        return Task.FromResult(true);
     }
 
     public Task<IResult> TryLoginAsync(string loginModelEmail, string loginModelPassword)

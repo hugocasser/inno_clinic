@@ -28,15 +28,6 @@
                                                         Command="{Binding LoginCommand}"
                                                         x:DataType="viewModels:LoginViewModel"
                                                         IsEnabled="{Binding IsLoginButtonEnabled}"></Button>
-            <Button Style ="{StaticResource  AuthRedirectButton}"
-                    VerticalOptions= "End"
-                    MaximumHeightRequest="100"
-                    MinimumHeightRequest="20"
-                    MaximumWidthRequest="300"
-                    Margin="0, 50, 0, 20"
-                    MinimumWidthRequest="70" 
-                    Text="{x:Static resources:Language.GoToRegister}"
-                    Command="{Binding RedirectToRegisterCommand}"></Button>
         </VerticalStackLayout>
     </ContentPage.Content>
 </ContentPage>
