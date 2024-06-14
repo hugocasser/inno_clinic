@@ -3,14 +3,12 @@
     x:Class="Presentation.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:Presentation"
     xmlns:pages="clr-namespace:Presentation.Pages"
     Shell.FlyoutBehavior="Disabled"
     Title="Inno clinic admin">
 
     <ShellContent
         ContentTemplate="{DataTemplate pages:MainPage}"
-        Route="MainPage"
         Title="Home" Shell.BackgroundColor="MistyRose"
         Shell.TitleColor="Black"/>
 </Shell>

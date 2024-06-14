@@ -63,7 +63,6 @@
     <Style TargetType="Button" x:Key="MenuButton">
         <Setter Property="HeightRequest" Value="50"></Setter>
         <Setter Property="WidthRequest" Value="80"></Setter>
-        <Setter Property="CornerRadius" Value="0"></Setter>
         <Setter Property="FontSize" Value="20"></Setter>
         <Setter Property="FontFamily" Value="JetBrainsMono"></Setter>
         <Setter Property="Margin" Value="0, 0, 0, 10"></Setter>

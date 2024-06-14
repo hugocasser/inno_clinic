@@ -14,21 +14,21 @@ namespace Presentation.Resources {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Language {
+    internal class NavigationResources {
         
         private static System.Resources.ResourceManager resourceMan;
         
         private static System.Globalization.CultureInfo resourceCulture;
         
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Language() {
+        internal NavigationResources() {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         internal static System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.Equals(null, resourceMan)) {
-                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("Presentation.Resources.Language", typeof(Language).Assembly);
+                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("Presentation.Resources.NavigationResources", typeof(NavigationResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -51,69 +51,57 @@ namespace Presentation.Resources {
             }
         }
         
-        internal static string GoToRegister {
+        internal static string Email_ {
             get {
-                return ResourceManager.GetString("GoToRegister", resourceCulture);
+                return ResourceManager.GetString("Email:", resourceCulture);
             }
         }
         
-        internal static string GoToLogin {
+        internal static string Password_ {
             get {
-                return ResourceManager.GetString("GoToLogin", resourceCulture);
+                return ResourceManager.GetString("Password:", resourceCulture);
             }
         }
         
-        internal static string IncorrectCredentials {
+        internal static string Settings {
             get {
-                return ResourceManager.GetString("IncorrectCredentials", resourceCulture);
+                return ResourceManager.GetString("Settings", resourceCulture);
             }
         }
         
-        internal static string EmalNotValid {
+        internal static string Logout {
             get {
-                return ResourceManager.GetString("EmalNotValid", resourceCulture);
+                return ResourceManager.GetString("Logout", resourceCulture);
             }
         }
         
-        internal static string PasswordMinLenght {
+        internal static string Patients {
             get {
-                return ResourceManager.GetString("PasswordMinLenght", resourceCulture);
+                return ResourceManager.GetString("Patients", resourceCulture);
             }
         }
         
-        internal static string PasswordMaxLenght {
+        internal static string Doctors {
             get {
-                return ResourceManager.GetString("PasswordMaxLenght", resourceCulture);
+                return ResourceManager.GetString("Doctors", resourceCulture);
             }
         }
         
-        internal static string PassordSymbols {
+        internal static string Receptionists {
             get {
-                return ResourceManager.GetString("PassordSymbols", resourceCulture);
+                return ResourceManager.GetString("Receptionists", resourceCulture);
             }
         }
         
-        internal static string InputEmail {
+        internal static string Home {
             get {
-                return ResourceManager.GetString("InputEmail", resourceCulture);
+                return ResourceManager.GetString("Home", resourceCulture);
             }
         }
         
-        internal static string Email {
+        internal static string ShowProfile {
             get {
-                return ResourceManager.GetString("Email", resourceCulture);
-            }
-        }
-        
-        internal static string Password {
-            get {
-                return ResourceManager.GetString("Password", resourceCulture);
-            }
-        }
-        
-        internal static string ConfirmPassword {
-            get {
-                return ResourceManager.GetString("ConfirmPassword", resourceCulture);
+                return ResourceManager.GetString("ShowProfile", resourceCulture);
             }
         }
         
@@ -123,27 +111,9 @@ namespace Presentation.Resources {
             }
         }
         
-        internal static string InputConfirmPassword {
+        internal static string InputEmail {
             get {
-                return ResourceManager.GetString("InputConfirmPassword", resourceCulture);
-            }
-        }
-        
-        internal static string LoginFailed {
-            get {
-                return ResourceManager.GetString("LoginFailed", resourceCulture);
-            }
-        }
-        
-        internal static string Register {
-            get {
-                return ResourceManager.GetString("Register", resourceCulture);
-            }
-        }
-        
-        internal static string LoginSuccessed {
-            get {
-                return ResourceManager.GetString("LoginSuccessed", resourceCulture);
+                return ResourceManager.GetString("InputEmail", resourceCulture);
             }
         }
     }

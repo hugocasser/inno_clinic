@@ -7,13 +7,13 @@
              x:Class="Presentation.Components.Auth.EmailInput"
              x:Name="EmailInputComponent">
     <VerticalStackLayout HorizontalOptions="Center" BindingContext="{Binding Source = {x:Reference EmailInputComponent}}">
-        <Label Text="{x:Static resources:Language.Email}"
+        <Label Text="{x:Static resources:NavigationResources.Email_}"
                Margin="0, 100, 0, 10"
                FontSize="20"
                TextColor="Navy" FontFamily="JetBrainsMono"></Label>
         <Entry  Keyboard="Email" 
                IsReadOnly="False"
-               Placeholder="{x:Static resources:Language.InputEmail}"
+               Placeholder="{x:Static resources:NavigationResources.InputEmail}"
                Background="Pink" TextColor="Black"
                MaximumHeightRequest="150" MinimumHeightRequest="50"
                MaximumWidthRequest="300" MinimumWidthRequest="300"

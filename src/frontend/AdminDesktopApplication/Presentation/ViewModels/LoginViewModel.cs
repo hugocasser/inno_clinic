@@ -33,12 +33,13 @@ public partial class LoginViewModel(ICredentialsService credentialsService, Emai
 
         if (result.IsSuccess)
         {
-            await Shell.Current.DisplayAlert(Language.LoginFailed, Language.LoginSuccessed, "Ok");
+            // await Shell.Current.DisplayAlert(InformMessages.LoginSuccessed, InformMessages.LoginSuccessed, "Ok");
             await Shell.Current.GoToAsync(nameof(MainPage), true);
-            return;
         }
-
-        await Shell.Current.DisplayAlert(Language.LoginFailed, Language.IncorrectCredentials, "Ok");
+        else
+        {
+            await Shell.Current.DisplayAlert(InformMessages.LoginFailed, InformMessages.IncorrectCredentials, "Ok");
+        }
     }
     
     public void EmailChanged(object? sender, TextChangedEventArgs e)

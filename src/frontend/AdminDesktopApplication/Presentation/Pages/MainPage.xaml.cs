@@ -1,4 +1,5 @@
 ﻿using Presentation.Abstractions.Services;
+using Presentation.Components.Menu;
 
 namespace Presentation.Pages;
 
@@ -11,7 +12,7 @@ public partial class MainPage : ContentPage
         if (!credentialsService.CheckLoginAsync().GetAwaiter().GetResult())
         {
             Shell.Current.GoToAsync(nameof(LoginPage), true)
-                .ContinueWith(async _ => await Shell.Current.GoToAsync(nameof(MainPage), true));
+                .ContinueWith(async _ => await Shell.Current.GoToAsync(nameof(LoginPage), true));
         }
     }
 }

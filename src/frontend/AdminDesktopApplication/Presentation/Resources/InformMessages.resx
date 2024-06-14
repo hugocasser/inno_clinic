@@ -18,22 +18,13 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-    <data name="EmailNotValid" xml:space="preserve">
-        <value>Email not valid. Example: example@email.com</value>
+    <data name="LoginSuccessed" xml:space="preserve">
+        <value>Login passed! Enjoy your work!</value>
     </data>
-    <data name="PasswordsAreNotEquals" xml:space="preserve">
-        <value>Password are not equal.</value>
+    <data name="LoginFailed" xml:space="preserve">
+        <value>Login failed!</value>
     </data>
-    <data name="PasswordMinLenght" xml:space="preserve">
-        <value>Password min lenght is 8</value>
-    </data>
-    <data name="PasswordMaxLenght" xml:space="preserve">
-        <value>Password max lenght is 32</value>
-    </data>
-    <data name="PassordSymbols" xml:space="preserve">
-        <value>Password must include one apper case letter, one lovew case letter, one number and one special symbol</value>
-    </data>
-    <data name="EmalNotValid" xml:space="preserve">
-        <value>Email not valid. example: email@email.com</value>
+    <data name="IncorrectCredentials" xml:space="preserve">
+        <value>Ops! Email or password are incorrect</value>
     </data>
 </root>

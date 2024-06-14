@@ -14,21 +14,21 @@ namespace Presentation.Resources {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class ValidationMessages {
+    internal class InformMessages {
         
         private static System.Resources.ResourceManager resourceMan;
         
         private static System.Globalization.CultureInfo resourceCulture;
         
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ValidationMessages() {
+        internal InformMessages() {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         internal static System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.Equals(null, resourceMan)) {
-                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("Presentation.Resources.ValidationMessages", typeof(ValidationMessages).Assembly);
+                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("Presentation.Resources.InformMessages", typeof(InformMessages).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -45,39 +45,21 @@ namespace Presentation.Resources {
             }
         }
         
-        internal static string EmailNotValid {
+        internal static string LoginSuccessed {
             get {
-                return ResourceManager.GetString("EmailNotValid", resourceCulture);
+                return ResourceManager.GetString("LoginSuccessed", resourceCulture);
             }
         }
         
-        internal static string PasswordsAreNotEquals {
+        internal static string LoginFailed {
             get {
-                return ResourceManager.GetString("PasswordsAreNotEquals", resourceCulture);
+                return ResourceManager.GetString("LoginFailed", resourceCulture);
             }
         }
         
-        internal static string PasswordMinLenght {
+        internal static string IncorrectCredentials {
             get {
-                return ResourceManager.GetString("PasswordMinLenght", resourceCulture);
-            }
-        }
-        
-        internal static string PasswordMaxLenght {
-            get {
-                return ResourceManager.GetString("PasswordMaxLenght", resourceCulture);
-            }
-        }
-        
-        internal static string PassordSymbols {
-            get {
-                return ResourceManager.GetString("PassordSymbols", resourceCulture);
-            }
-        }
-        
-        internal static string EmalNotValid {
-            get {
-                return ResourceManager.GetString("EmalNotValid", resourceCulture);
+                return ResourceManager.GetString("IncorrectCredentials", resourceCulture);
             }
         }
     }

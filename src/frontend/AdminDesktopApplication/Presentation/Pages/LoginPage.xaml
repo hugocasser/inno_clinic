@@ -19,7 +19,7 @@
                                 x:DataType="viewModels:LoginViewModel"
                                 IsPasswordValid="{Binding PasswordIsValid}"/>
             <Button Style="{StaticResource AuthApplyButton}"
-                                                        Text ="{x:Static resources:Language.Login}"
+                                                        Text ="{x:Static resources:NavigationResources.Login}"
                                                         MaximumHeightRequest="100"
                                                         MinimumHeightRequest="20"
                                                         VerticalOptions="Center"
