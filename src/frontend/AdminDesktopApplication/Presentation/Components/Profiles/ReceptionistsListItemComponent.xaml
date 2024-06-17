@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:resources="clr-namespace:Presentation.Resources"
+             x:Class="Presentation.Components.Profiles.ReceptionistsListItemComponent"
+             x:Name="ReceptionistsItemComponent">
+    <Frame CornerRadius="10" BorderColor="Black">
+        <HorizontalStackLayout 
+            BindingContext="{Binding Source = {x:Reference ReceptionistsItemComponent}}"
+            HeightRequest="100">
+            <Frame BorderColor="Black" CornerRadius="45">
+                <Image Source="{Binding ReceptionistListItem.Photo }"></Image>
+            </Frame>
+            <VerticalStackLayout Margin="90, 0 , 0,0">
+                <Label Text="{Binding ReceptionistListItem.FullName}"
+                       FontFamily="JetBrainsMono" FontSize="16"
+                       LineBreakMode="NoWrap"
+                       Margin="0, 5, 0, 15"></Label>
+                <Button Text="{x:Static resources:NavigationResources.ShowProfile}" 
+                        MaximumHeightRequest="25" Height="25" MaximumWidthRequest="100" WidthRequest="100" BackgroundColor="LightSkyBlue"
+                        Margin="0, 10, 40, 5" Clicked="GoToProfile_OnClicked"
+                        Padding="0, 0, 0, 0"
+                        VerticalOptions="End"
+                        HorizontalOptions="Center"></Button>
+            </VerticalStackLayout>
+        </HorizontalStackLayout>
+    </Frame>
+</ContentView>

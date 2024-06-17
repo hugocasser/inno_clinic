@@ -1,15 +1,19 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Presentation.ViewModels;
 
 namespace Presentation.Pages.Profiles.Receptionists;
 
 public partial class ReceptionistsPage : ContentPage
 {
-    public ReceptionistsPage()
+    private readonly ReceptionistListItemViewModel _receptionistListItemViewModel;
+    public ReceptionistsPage(ReceptionistListItemViewModel receptionistListItemViewModel)
     {
         InitializeComponent();
+        BindingContext = _receptionistListItemViewModel = receptionistListItemViewModel;
+        
+    }
+
+    private void InputView_OnTextChanged(object? sender, TextChangedEventArgs e)
+    {
+        _receptionistListItemViewModel.SearchCommand.Execute(e.NewTextValue);
     }
 }
