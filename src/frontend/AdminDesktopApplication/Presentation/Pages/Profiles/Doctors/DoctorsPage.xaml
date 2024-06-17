@@ -18,7 +18,6 @@
                 <CollectionView ItemsSource="{Binding DoctorListItems}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="models:DoctorListItem">
-                            <!-- <profiles:DoctorListItemComponent DoctorListItem="{Binding .}"/> -->
                             <profiles:DoctorListItemComponent DoctorListItem="{Binding .}"></profiles:DoctorListItemComponent>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>

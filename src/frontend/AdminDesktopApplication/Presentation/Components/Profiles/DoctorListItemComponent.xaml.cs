@@ -22,6 +22,6 @@ public partial class DoctorListItemComponent : ContentView
     
     private async void GoToProfile_OnClicked(object? sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync(nameof(DoctorPage), true);
+        await Shell.Current.GoToAsync(nameof(DoctorSelfView), true);
     }
 }

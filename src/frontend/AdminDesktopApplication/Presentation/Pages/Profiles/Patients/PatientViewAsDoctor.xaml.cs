@@ -7,10 +7,10 @@ using Presentation.ViewModels;
 
 namespace Presentation.Pages.Profiles.Patients;
 
-public partial class PatientPage : ContentPage
+public partial class PatientViewAsDoctor : ContentPage
 {
     private readonly PatientListItemViewModel _patientListItemViewModel;
-    public PatientPage(PatientListItemViewModel patientListItemViewModel)
+    public PatientViewAsDoctor(PatientListItemViewModel patientListItemViewModel)
     {
         InitializeComponent();
 

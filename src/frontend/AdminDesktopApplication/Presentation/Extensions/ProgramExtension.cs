@@ -63,9 +63,9 @@ public static class ProgramExtension
         Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
         Routing.RegisterRoute(nameof(SettingsPage), typeof(SettingsPage));
         Routing.RegisterRoute(nameof(DoctorsPage), typeof(DoctorsPage));
-        Routing.RegisterRoute(nameof(DoctorPage), typeof(DoctorPage));
+        Routing.RegisterRoute(nameof(DoctorSelfView), typeof(DoctorSelfView));
         Routing.RegisterRoute(nameof(PatientsPage), typeof(PatientsPage));
-        Routing.RegisterRoute(nameof(PatientPage), typeof(PatientPage));
+        Routing.RegisterRoute(nameof(PatientViewAsDoctor), typeof(PatientViewAsDoctor));
         Routing.RegisterRoute(nameof(ReceptionistsPage), typeof(ReceptionistsPage));
         Routing.RegisterRoute(nameof(ReceptionistPage), typeof(ReceptionistPage));
     }
@@ -78,8 +78,8 @@ public static class ProgramExtension
             .AddTransient<SettingsPage>()
             .AddTransient<MenuComponent>()
             .AddTransient<DoctorsPage>()
-            .AddTransient<DoctorPage>()
-            .AddTransient<PatientPage>()
+            .AddTransient<DoctorSelfView>()
+            .AddTransient<PatientViewAsDoctor>()
             .AddTransient<PatientsPage>()
             .AddTransient<ReceptionistPage>()
             .AddTransient<ReceptionistsPage>();

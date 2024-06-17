@@ -23,6 +23,6 @@ public partial class PatientListItemComponent : ContentView
 
     private async void GoToProfile_OnClicked(object? sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync(nameof(PatientPage), true);
+        await Shell.Current.GoToAsync(nameof(PatientViewAsDoctor), true);
     }
 }

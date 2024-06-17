@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Presentation.Pages.Profiles.Doctors;
 
-public partial class DoctorPage : ContentPage
+public partial class DoctorViewAsReceptionist : ContentPage
 {
-    public DoctorPage()
+    public DoctorViewAsReceptionist()
     {
         InitializeComponent();
     }
