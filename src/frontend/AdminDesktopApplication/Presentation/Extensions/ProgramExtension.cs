@@ -90,7 +90,8 @@ public static class ProgramExtension
     private static IServiceCollection AddModels(this IServiceCollection services)
     {
         services
-            .AddTransient<LoginModel>();
+            .AddTransient<LoginModel>()
+            .AddTransient<PatientListItem>();
         
         return services;
     }
@@ -99,6 +100,7 @@ public static class ProgramExtension
     {
         services
             .AddTransient<LoginViewModel>()
-            .AddTransient<MenuViewModel>();
+            .AddTransient<MenuViewModel>()
+            .AddTransient<PatientListItemViewModel>();
     }
 }

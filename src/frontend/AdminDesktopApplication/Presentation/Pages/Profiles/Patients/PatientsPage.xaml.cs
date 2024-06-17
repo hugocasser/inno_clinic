@@ -1,15 +1,22 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.ObjectModel;
+using Presentation.Models;
+using Presentation.ViewModels;
 
 namespace Presentation.Pages.Profiles.Patients;
 
 public partial class PatientsPage : ContentPage
 {
-    public PatientsPage()
+    private readonly PatientListItemViewModel _patientListItemViewModel;
+
+    public PatientsPage(PatientListItemViewModel patientListItemViewModel)
     {
         InitializeComponent();
+
+        BindingContext = _patientListItemViewModel = patientListItemViewModel;
+    }
+
+    private void InputView_OnTextChanged(object? sender, TextChangedEventArgs e)
+    {
+        _patientListItemViewModel.SearchCommand.Execute(e.NewTextValue);
     }
 }

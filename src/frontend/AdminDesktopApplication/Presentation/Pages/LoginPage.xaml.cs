@@ -1,4 +1,3 @@
-using CommunityToolkit.Mvvm.Input;
 using Presentation.ViewModels;
 
 namespace Presentation.Pages;
@@ -10,6 +9,7 @@ public partial class LoginPage : ContentPage
     {
         BindingContext = loginViewModel;
         _loginViewModel = loginViewModel;
+        
         InitializeComponent();
         
         if (Shell.Current.Window != null)
