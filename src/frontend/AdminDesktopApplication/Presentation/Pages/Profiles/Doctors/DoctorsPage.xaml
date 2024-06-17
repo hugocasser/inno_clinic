@@ -3,9 +3,27 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:resources="clr-namespace:Presentation.Resources"
+             xmlns:models="clr-namespace:Presentation.Models"
+             xmlns:profiles="clr-namespace:Presentation.Components.Profiles"
+             xmlns:viewModels="clr-namespace:Presentation.ViewModels"
              x:Class="Presentation.Pages.Profiles.Doctors.DoctorsPage"
+             x:DataType="viewModels:DoctorListItemViewModel"
              Title="{x:Static resources:NavigationResources.Doctors}">
     <ContentPage.Content>
-        
+        <Grid RowDefinitions="Auto,*">
+            <VerticalStackLayout Grid.Row="0">
+                <SearchBar Placeholder="Search doctors..." TextChanged="InputView_OnTextChanged"  BackgroundColor="Azure"/>
+            </VerticalStackLayout>
+            <ScrollView VerticalOptions="FillAndExpand" VerticalScrollBarVisibility="Always" Grid.Row="1">
+                <CollectionView ItemsSource="{Binding DoctorListItems}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:DoctorListItem">
+                            <!-- <profiles:DoctorListItemComponent DoctorListItem="{Binding .}"/> -->
+                            <profiles:DoctorListItemComponent DoctorListItem="{Binding .}"></profiles:DoctorListItemComponent>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </ScrollView>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

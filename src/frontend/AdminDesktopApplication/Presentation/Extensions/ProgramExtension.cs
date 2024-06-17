@@ -91,7 +91,8 @@ public static class ProgramExtension
     {
         services
             .AddTransient<LoginModel>()
-            .AddTransient<PatientListItem>();
+            .AddTransient<PatientListItem>()
+            .AddTransient<DoctorListItem>();
         
         return services;
     }
@@ -101,6 +102,7 @@ public static class ProgramExtension
         services
             .AddTransient<LoginViewModel>()
             .AddTransient<MenuViewModel>()
-            .AddTransient<PatientListItemViewModel>();
+            .AddTransient<PatientListItemViewModel>()
+            .AddTransient<DoctorListItemViewModel>();
     }
 }

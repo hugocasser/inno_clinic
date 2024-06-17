@@ -85,26 +85,19 @@ public partial class PatientListItemViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private async Task NavigateToPatientPage()
-    {
-        await Shell.Current.GoToAsync($"{nameof(PatientPage)}", true);
-    }
-    
-    [RelayCommand]
     private void Search(string filter)
     {
         FilterList(filter);
     }
+
     private void FilterList(string filter)
     {
         if (string.IsNullOrWhiteSpace(filter))
         {
             return;
         }
-        else
-        {
-            PatientListItems = new ObservableCollection<PatientListItem>(PatientListItems
-                .Where(patient => patient.FullName.Contains(filter, StringComparison.CurrentCultureIgnoreCase)));
-        }
+
+        PatientListItems = new ObservableCollection<PatientListItem>(PatientListItems
+            .Where(patient => patient.FullName.Contains(filter, StringComparison.CurrentCultureIgnoreCase)));
     }
 }

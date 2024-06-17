@@ -14,7 +14,7 @@ public partial class PatientListItemComponent : ContentView
 
     public static readonly BindableProperty PatientListItemProperty =
         BindableProperty.Create(nameof(PatientListItem), typeof(PatientListItem),
-            typeof(PatientListItemComponent));
+            typeof(PatientListItemComponent), defaultValue: default(PatientListItem));
 
     public PatientListItemComponent()
     {

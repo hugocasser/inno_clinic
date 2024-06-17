@@ -1,5 +1,4 @@
-using System.Collections.ObjectModel;
-using Presentation.Models;
+
 using Presentation.ViewModels;
 
 namespace Presentation.Pages.Profiles.Patients;

@@ -33,7 +33,7 @@ public partial class LoginViewModel(ICredentialsService credentialsService, Emai
 
         if (result.IsSuccess)
         {
-            // await Shell.Current.DisplayAlert(InformMessages.LoginSuccessed, InformMessages.LoginSuccessed, "Ok");
+            await Shell.Current.DisplayAlert(InformMessages.LoginSuccessed, InformMessages.LoginSuccessed, "Ok");
             await Shell.Current.GoToAsync(nameof(MainPage), true);
         }
         else
