@@ -6,6 +6,9 @@ public partial class App
     {
         InitializeComponent();
         
-        MainPage = new AppShell();
+        MainPage = new AppShell()
+        {
+            FlyoutBehavior = FlyoutBehavior.Disabled,
+        };
     }
 }

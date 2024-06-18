@@ -21,7 +21,7 @@ public static class ProgramExtension
     {
         builder.UseMauiApp<App>();
         builder.ConfigureFonts();
-
+        
         builder.Services
             .ConfigurePages()
             .AddServices()
