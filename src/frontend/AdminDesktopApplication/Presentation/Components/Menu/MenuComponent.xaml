@@ -2,8 +2,8 @@
 
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:resources="clr-namespace:Presentation.Resources"
              xmlns:viewModels="clr-namespace:Presentation.ViewModels"
+             xmlns:models="clr-namespace:Presentation.Models"
              x:Class="Presentation.Components.Menu.MenuComponent"
              x:DataType="viewModels:MenuViewModel">
     <VerticalStackLayout  BackgroundColor="PaleVioletRed">
@@ -12,28 +12,17 @@
                 x:DataType="viewModels:MenuViewModel"></Button>
         <ScrollView VerticalScrollBarVisibility="Never"
                     HorizontalScrollBarVisibility="Never"
-                    IsVisible="{Binding IsMenuVisible}" x:DataType="viewModels:MenuViewModel">
-            <VerticalStackLayout IsVisible="True">
-                <Button Text="{x:Static resources:NavigationResources.Patients}"
-                        Style="{StaticResource MenuItemButton}"
-                        Command="{Binding NavigateToPatientsPageCommand}"
-                        x:DataType="viewModels:MenuViewModel"></Button>
-                <Button Text="{x:Static resources:NavigationResources.Doctors}"
-                        Style="{StaticResource MenuItemButton}"
-                        Command="{Binding NavigateToDoctorsPageCommand}"
-                        x:DataType="viewModels:MenuViewModel"></Button>
-                <Button Text="{x:Static resources:NavigationResources.Receptionists}"
-                        Style="{StaticResource MenuItemButton}"
-                        Command="{Binding NavigateToReceptionistsPageCommand}"
-                        x:DataType="viewModels:MenuViewModel"></Button>
-                <Button Text="{x:Static resources:NavigationResources.Settings}"
-                        Command="{Binding NavigateToSettingsPageCommand}"
-                        Style="{StaticResource MenuItemButton}"
-                        x:DataType="viewModels:MenuViewModel"></Button>
-                <Button Text="{x:Static resources:NavigationResources.Logout}"
-                        Command="{Binding LogoutCommand}"
-                        Style="{StaticResource MenuItemButton}"
-                        x:DataType="viewModels:MenuViewModel"></Button>
+                    IsVisible="{Binding IsMenuVisible}" x:DataType="viewModels:MenuViewModel" WidthRequest="300">
+            <VerticalStackLayout IsVisible="True" WidthRequest="300">
+                <CollectionView ItemsSource="{Binding MenuItems}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:CustomMenuItem">
+                            <Button Text="{Binding Name}"
+                                    Style="{StaticResource MenuItemButton}"
+                                    Command="{Binding Command}"></Button>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
             </VerticalStackLayout>
         </ScrollView>
     </VerticalStackLayout>

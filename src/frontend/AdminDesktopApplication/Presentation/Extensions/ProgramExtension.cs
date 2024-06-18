@@ -98,6 +98,7 @@ public static class ProgramExtension
             .AddTransient<LoginModel>()
             .AddTransient<PatientListItem>()
             .AddTransient<DoctorListItem>()
+            .AddTransient<CustomMenuItem>()
             .AddTransient<ReceptionistListItem>();
         
         return services;

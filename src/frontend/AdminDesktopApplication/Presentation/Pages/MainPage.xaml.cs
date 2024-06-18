@@ -1,10 +1,12 @@
 ﻿using Presentation.Abstractions.Services;
 using Presentation.Components.Menu;
+using Presentation.ViewModels;
 
 namespace Presentation.Pages;
 
 public partial class MainPage : ContentPage
 {
+
     public MainPage(ICredentialsService credentialsService)
     { 
         InitializeComponent();

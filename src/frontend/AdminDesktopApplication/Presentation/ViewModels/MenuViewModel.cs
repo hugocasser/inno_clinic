@@ -1,46 +1,19 @@
+using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Presentation.Pages;
-using Presentation.Pages.Profiles.Doctors;
-using Presentation.Pages.Profiles.Patients;
-using Presentation.Pages.Profiles.Receptionists;
+using Presentation.Common;
+using Presentation.Models;
 
 namespace Presentation.ViewModels;
 
+[QueryProperty(nameof(CustomMenuItem), nameof(IsMenuVisible))]
 public partial class MenuViewModel : ObservableObject
 {
     [ObservableProperty]
-    private bool _isMenuVisible = true;
-    
-    [RelayCommand]
-    private async Task NavigateToDoctorsPage()
-    {
-        await Shell.Current.GoToAsync(nameof(DoctorsPage), true);
-    }
-    
-    [RelayCommand]
-    private async Task NavigateToReceptionistsPage()
-    {
-        await Shell.Current.GoToAsync(nameof(ReceptionistsPage), true);
-    }
-    
-    [RelayCommand]
-    private async Task NavigateToSettingsPage()
-    {
-        await Shell.Current.GoToAsync(nameof(SettingsPage), true);
-    }
-    
-    [RelayCommand]
-    private async Task Logout()
-    {
-        await Shell.Current.GoToAsync(nameof(LoginPage), true);
-    }
-    
-    [RelayCommand]
-    private async Task NavigateToPatientsPage()
-    {
-        await Shell.Current.GoToAsync(nameof(PatientsPage), true);
-    }
+    private bool _isMenuVisible = false;
+
+    [ObservableProperty] 
+    private ObservableCollection<CustomMenuItem> _menuItems = MenuConfiguratorService.Configure("");
     
     [RelayCommand]
     private void ToggleMenu()
