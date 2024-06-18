@@ -4,6 +4,10 @@ namespace Presentation.Abstractions.Services;
 
 public interface ICredentialsService
 {
-    public Task<bool> CheckLoginAsync();
+    public Task<IResult> CheckLoginAsync();
     public Task<IResult> TryLoginAsync(string loginModelEmail, string loginModelPassword);
+    public Task<IResult> LogoutAsync();
+    public Task<IResult> GetCurrentUserAsync(CancellationToken cancellationToken);
+    
+    public Task<IResult> TryRefreshTokenAsync(string accessToken);
 }

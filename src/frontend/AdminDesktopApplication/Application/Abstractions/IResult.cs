@@ -2,5 +2,5 @@ namespace Application.Abstractions;
 
 public interface IResult
 {
-    public bool IsSuccess { get; }
+    public bool IsSuccess { get; init; }
 }

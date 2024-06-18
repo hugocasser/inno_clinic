@@ -10,6 +10,8 @@ using Presentation.Pages.Profiles.Patients;
 using Presentation.Pages.Profiles.Receptionists;
 using Presentation.Services;
 using Presentation.ViewModels;
+using Application;
+using Infrastructure;
 
 namespace Presentation.Extensions;
 
@@ -19,22 +21,21 @@ public static class ProgramExtension
     {
         builder.UseMauiApp<App>();
         builder.ConfigureFonts();
-        
+
         builder.Services
             .ConfigurePages()
             .AddServices()
             .AddModels()
+            .AddApplication()
+            .AddInfrastructure()
             .AddViewModels();
-
+        
         builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         
         ConfigureRouting();
-        
-        
 #if DEBUG
         builder.Logging.AddDebug();
 #endif
-
         return builder;
     }
 
@@ -54,6 +55,10 @@ public static class ProgramExtension
     {
         services
             .AddSingleton<ICredentialsService, CredentialsService>();
+        
+        services
+            .AddSingleton<IStatusesMapperService, StatusesMapperService>()
+            .AddSingleton<ISpecializationsMapperService, SpecializationsMapperService>();
         
         return services;
     }
