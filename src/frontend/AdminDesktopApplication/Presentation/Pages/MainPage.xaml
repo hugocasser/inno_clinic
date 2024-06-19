@@ -3,14 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:menu="clr-namespace:Presentation.Components.Menu"
              xmlns:resources="clr-namespace:Presentation.Resources"
-             xmlns:pages="clr-namespace:Presentation.Pages"
-             xmlns:common="clr-namespace:Presentation.Common"
              x:Class="Presentation.Pages.MainPage"
              Title="{x:Static resources:NavigationResources.Home}"
              x:Name="MainPageComponent"
              Shell.NavBarIsVisible="false">
-    
-    <ScrollView BackgroundColor="Beige" x:Name="Page">
+    <ScrollView x:Name="Page">
         <HorizontalStackLayout  x:Name="Container">
             <menu:MenuComponent></menu:MenuComponent>
         </HorizontalStackLayout>

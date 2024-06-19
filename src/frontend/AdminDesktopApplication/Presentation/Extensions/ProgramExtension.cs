@@ -11,6 +11,7 @@ using Presentation.Pages.Profiles.Receptionists;
 using Presentation.Services;
 using Presentation.ViewModels;
 using Application;
+using CommunityToolkit.Maui;
 using Infrastructure;
 
 namespace Presentation.Extensions;
@@ -19,6 +20,7 @@ public static class ProgramExtension
 {
     public static MauiAppBuilder ConfigureAppBuilder(this MauiAppBuilder builder)
     {
+        builder.UseMauiCommunityToolkit();
         builder.UseMauiApp<App>();
         builder.ConfigureFonts();
         

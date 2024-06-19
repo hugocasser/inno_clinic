@@ -2,6 +2,7 @@
 
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:viewModels="clr-namespace:Presentation.ViewModels"
              xmlns:models="clr-namespace:Presentation.Models"
              x:Class="Presentation.Components.Menu.MenuComponent"
@@ -12,8 +13,16 @@
                 x:DataType="viewModels:MenuViewModel"></Button>
         <ScrollView VerticalScrollBarVisibility="Never"
                     HorizontalScrollBarVisibility="Never"
-                    IsVisible="{Binding IsMenuVisible}" x:DataType="viewModels:MenuViewModel" WidthRequest="300">
-            <VerticalStackLayout IsVisible="True" WidthRequest="300">
+                    IsVisible="{Binding IsMenuVisible}" x:DataType="viewModels:MenuViewModel" WidthRequest="400">
+            <VerticalStackLayout IsVisible="True" WidthRequest="400" 
+                                 x:Name="VerticalStackLayoutComponent">
+                <VerticalStackLayout.Behaviors>
+                    <toolkit:AnimationBehavior>
+                        <toolkit:AnimationBehavior.AnimationType>
+                            <toolkit:FadeAnimation Opacity="0.1" Length="400000"></toolkit:FadeAnimation>
+                        </toolkit:AnimationBehavior.AnimationType>
+                    </toolkit:AnimationBehavior>
+                </VerticalStackLayout.Behaviors>
                 <CollectionView ItemsSource="{Binding MenuItems}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="models:CustomMenuItem">

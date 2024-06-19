@@ -52,4 +52,9 @@ public class CredentialsService : ICredentialsService
     {
         return Task.FromResult<IResult>(new Result());
     }
+
+    public string GetRoleFromToken()
+    {
+        return nameof(EnumRoles.Receptionist);
+    }
 }

@@ -8,6 +8,6 @@ public interface ICredentialsService
     public Task<IResult> TryLoginAsync(string loginModelEmail, string loginModelPassword);
     public Task<IResult> LogoutAsync();
     public Task<IResult> GetCurrentUserAsync(CancellationToken cancellationToken);
-    
     public Task<IResult> TryRefreshTokenAsync(string accessToken);
+    public string GetRoleFromToken();
 }

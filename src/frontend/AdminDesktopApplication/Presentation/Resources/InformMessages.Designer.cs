@@ -62,5 +62,35 @@ namespace Presentation.Resources {
                 return ResourceManager.GetString("IncorrectCredentials", resourceCulture);
             }
         }
+        
+        internal static string ProfileNotFound {
+            get {
+                return ResourceManager.GetString("ProfileNotFound", resourceCulture);
+            }
+        }
+        
+        internal static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        internal static string Ok {
+            get {
+                return ResourceManager.GetString("Ok", resourceCulture);
+            }
+        }
+        
+        internal static string StatusNotFound {
+            get {
+                return ResourceManager.GetString("StatusNotFound", resourceCulture);
+            }
+        }
+        
+        internal static string SpecializationNotFound {
+            get {
+                return ResourceManager.GetString("SpecializationNotFound", resourceCulture);
+            }
+        }
     }
 }
