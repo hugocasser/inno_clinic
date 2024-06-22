@@ -1,14 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Presentation.Models;
 using Presentation.Pages.Profiles.Receptionists;
 
 namespace Presentation.Components.Profiles;
 
-public partial class ReceptionistsListItemComponent : ContentView
+public partial class ReceptionistsListItemComponent
 {
     public ReceptionistsListItemComponent()
     {

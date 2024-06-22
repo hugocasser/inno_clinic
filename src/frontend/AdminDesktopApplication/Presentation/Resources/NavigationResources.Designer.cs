@@ -116,5 +116,95 @@ namespace Presentation.Resources {
                 return ResourceManager.GetString("InputEmail", resourceCulture);
             }
         }
+        
+        internal static string Edit {
+            get {
+                return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        internal static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        internal static string Doctor {
+            get {
+                return ResourceManager.GetString("Doctor", resourceCulture);
+            }
+        }
+        
+        internal static string SearchDoctors {
+            get {
+                return ResourceManager.GetString("SearchDoctors", resourceCulture);
+            }
+        }
+        
+        internal static string SearchPatients {
+            get {
+                return ResourceManager.GetString("SearchPatients", resourceCulture);
+            }
+        }
+        
+        internal static string SearchReceptionists {
+            get {
+                return ResourceManager.GetString("SearchReceptionists", resourceCulture);
+            }
+        }
+        
+        internal static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        internal static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        internal static string FirstName_ {
+            get {
+                return ResourceManager.GetString("FirstName_", resourceCulture);
+            }
+        }
+        
+        internal static string LastName_ {
+            get {
+                return ResourceManager.GetString("LastName_", resourceCulture);
+            }
+        }
+        
+        internal static string MiddleName_ {
+            get {
+                return ResourceManager.GetString("MiddleName_", resourceCulture);
+            }
+        }
+        
+        internal static string BirthDate_ {
+            get {
+                return ResourceManager.GetString("BirthDate_", resourceCulture);
+            }
+        }
+        
+        internal static string CareerStartedDate_ {
+            get {
+                return ResourceManager.GetString("CareerStartedDate_", resourceCulture);
+            }
+        }
+        
+        internal static string Specialization_ {
+            get {
+                return ResourceManager.GetString("Specialization_", resourceCulture);
+            }
+        }
+        
+        internal static string Status_ {
+            get {
+                return ResourceManager.GetString("Status_", resourceCulture);
+            }
+        }
     }
 }

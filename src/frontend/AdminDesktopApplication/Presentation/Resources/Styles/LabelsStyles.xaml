@@ -1,0 +1,19 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <Style TargetType="Label" x:Key="InfoLabel">
+        <Setter Property="FontFamily" Value="JetBrainsMono"></Setter>
+        <Setter Property="FontSize" Value="20"></Setter>
+        <Setter Property="TextColor" Value="Black"></Setter>
+        <Setter Property="FontAttributes" Value="Bold"></Setter>
+        <Setter Property="Margin" Value="30,10,0,0"></Setter>
+        <Setter Property="HorizontalTextAlignment" Value="Start"></Setter>
+        <Setter Property="VerticalTextAlignment" Value="Center"></Setter>
+    </Style>
+    <Style TargetType="Label" x:Key="InputLabel">
+        <Setter Property="FontFamily" Value="JetBrainsMono"></Setter>
+        <Setter Property="FontSize" Value="18"></Setter>
+        <Setter Property="TextColor" Value="DarkBlue"></Setter>
+        <Setter Property="FontAttributes" Value="Bold"></Setter>
+        <Setter Property="Margin" Value="37,11,0,10"></Setter>
+    </Style>
+</ResourceDictionary>

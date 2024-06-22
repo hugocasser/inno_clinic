@@ -2,7 +2,7 @@ using Presentation.ViewModels;
 
 namespace Presentation.Pages.Profiles.Receptionists;
 
-public partial class ReceptionistsPage : ContentPage
+public partial class ReceptionistsPage
 {
     private readonly ReceptionistListItemViewModel _receptionistListItemViewModel;
     public ReceptionistsPage(ReceptionistListItemViewModel receptionistListItemViewModel)

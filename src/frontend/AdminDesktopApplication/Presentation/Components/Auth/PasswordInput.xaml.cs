@@ -1,6 +1,6 @@
 namespace Presentation.Components.Auth;
 
-public partial class PasswordInput : ContentView
+public partial class PasswordInput
 {
     public static readonly BindableProperty PasswordProperty = BindableProperty.Create(nameof(Password), typeof(string), typeof(PasswordInput));
     public string Password

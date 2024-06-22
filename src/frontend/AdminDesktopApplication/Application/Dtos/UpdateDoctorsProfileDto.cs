@@ -1,11 +1,9 @@
-using Microsoft.AspNetCore.Http;
-
 namespace Application.Dtos;
 
-public record UpdateDoctorsProfile
+public record UpdateDoctorsProfileDto
     (
         Guid Id,
-        IFormFile? Image,
+        byte[]? Image,
         string FirstName,
         string LastName,
         string? MiddleName,

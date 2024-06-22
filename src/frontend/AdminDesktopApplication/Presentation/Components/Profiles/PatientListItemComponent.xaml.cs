@@ -1,10 +1,9 @@
-using System.Windows.Input;
 using Presentation.Models;
 using Presentation.Pages.Profiles.Patients;
 
 namespace Presentation.Components.Profiles;
 
-public partial class PatientListItemComponent : ContentView
+public partial class PatientListItemComponent
 {
     public PatientListItem PatientListItem
     {

@@ -54,4 +54,49 @@
     <data name="InputEmail" xml:space="preserve">
         <value>example@email.com</value>
     </data>
+    <data name="Edit" xml:space="preserve">
+        <value>Edit</value>
+    </data>
+    <data name="Delete" xml:space="preserve">
+        <value>Delete</value>
+    </data>
+    <data name="Doctor" xml:space="preserve">
+        <value>Doctor</value>
+    </data>
+    <data name="SearchDoctors" xml:space="preserve">
+        <value>Search doctors...</value>
+    </data>
+    <data name="SearchPatients" xml:space="preserve">
+        <value>Search patients...</value>
+    </data>
+    <data name="SearchReceptionists" xml:space="preserve">
+        <value>Search receptionists...</value>
+    </data>
+    <data name="Save" xml:space="preserve">
+        <value>Save</value>
+    </data>
+    <data name="Cancel" xml:space="preserve">
+        <value>Cancel</value>
+    </data>
+    <data name="FirstName_" xml:space="preserve">
+        <value>Firstname:</value>
+    </data>
+    <data name="LastName_" xml:space="preserve">
+        <value>Lastname:</value>
+    </data>
+    <data name="MiddleName_" xml:space="preserve">
+        <value>MiddleName:</value>
+    </data>
+    <data name="BirthDate_" xml:space="preserve">
+        <value>Birth date:</value>
+    </data>
+    <data name="CareerStartedDate_" xml:space="preserve">
+        <value>Career started date</value>
+    </data>
+    <data name="Specialization_" xml:space="preserve">
+        <value>Specialization:</value>
+    </data>
+    <data name="Status_" xml:space="preserve">
+        <value>Status:</value>
+    </data>
 </root>

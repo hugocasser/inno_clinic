@@ -1,9 +1,8 @@
 using System.Windows.Input;
-using Presentation.ViewModels;
 
 namespace Presentation.Components.Auth;
 
-public partial class EmailInput : ContentView
+public partial class EmailInput
 {
     public EmailInput()
     {
@@ -27,13 +26,13 @@ public partial class EmailInput : ContentView
     
     public ICommand EmailChangedCommand
     {
-        get => (ICommand)GetValue(EmailChangedCommandProperty);
-        set => SetValue(EmailChangedCommandProperty, value);
+        get => (ICommand)GetValue(_emailChangedCommandProperty);
+        init => SetValue(_emailChangedCommandProperty, value);
     }
 
     public event EventHandler? EmailChanged ;
 
-    public static readonly BindableProperty EmailChangedCommandProperty = BindableProperty.Create(nameof(EmailChanged), typeof(EventHandler), typeof(EmailInput)); 
+    private static readonly BindableProperty _emailChangedCommandProperty = BindableProperty.Create(nameof(EmailChanged), typeof(EventHandler), typeof(EmailInput)); 
     
     private void InputView_OnTextChanged(object? sender, TextChangedEventArgs e)
     {

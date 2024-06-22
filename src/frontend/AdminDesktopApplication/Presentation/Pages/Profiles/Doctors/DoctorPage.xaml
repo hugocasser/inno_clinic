@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:resources="clr-namespace:Presentation.Resources"
+             xmlns:viewModels="clr-namespace:Presentation.ViewModels"
+             x:Class="Presentation.Pages.Profiles.Doctors.DoctorPage"
+             x:DataType="viewModels:DoctorViewModel"
+             Title="{Binding FullName}">
+    <ContentPage.Content>
+        <Grid RowDefinitions="*,50">
+            <Frame Grid.Row="0" CornerRadius="5" BorderColor="Black"
+                   Margin="10,20,10,50" Padding="0,0,0,0">
+            <ScrollView VerticalOptions="FillAndExpand"
+                        VerticalScrollBarVisibility="Always"
+                        BackgroundColor="Azure">
+                <VerticalStackLayout>
+                    <Button ImageSource="{Binding DoctorEditModel.Image}"
+                            Command="{Binding UploadPhotoCommand}"
+                            BackgroundColor="White"
+                            BorderWidth="0"
+                            CornerRadius="45"
+                            MaximumWidthRequest="200"
+                            MaximumHeightRequest="200"
+                            Margin="0,20,0,0"></Button>
+                    <HorizontalStackLayout Margin="0,40,0,0"
+                                           IsVisible="{Binding IsInEditMode}">
+                        <Label Text="{x:Static resources:NavigationResources.FirstName_}"
+                               Style="{StaticResource InfoLabel}">
+                        </Label>
+                        <Entry Text="{Binding DoctorEditModel.FirstName}"
+                               Style="{StaticResource EditableEntry}"
+                               MinimumWidthRequest="250">
+                        </Entry>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout
+                                           IsVisible="{Binding IsInEditMode}">
+                        <Label Text="{x:Static resources:NavigationResources.LastName_}" Style="{StaticResource InfoLabel}"></Label>
+                        <Entry Text="{Binding DoctorEditModel.LastName}"
+                               Style="{StaticResource EditableEntry}"
+                               Margin="0,0,0,5">
+                        </Entry>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout
+                                           IsVisible="{Binding IsMiddleNameVisible}">
+                        <Label Text="{x:Static resources:NavigationResources.MiddleName_}"
+                               Style="{StaticResource InfoLabel}"></Label>
+                        <Entry Text="{Binding DoctorEditModel.MiddleName}"
+                               Style="{StaticResource EditableEntry}"
+                               IsReadOnly="{Binding IsInViewMode}">
+                        </Entry>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout MinimumHeightRequest="60"
+                                           MaximumHeightRequest="60">
+                        <Label Text="{x:Static resources:NavigationResources.BirthDate_}" Style="{StaticResource InfoLabel}"></Label>
+                        <DatePicker Date="{Binding DoctorEditModel.BirthDate}"
+                                    IsEnabled="{Binding IsInEditMode}"
+                                    MinimumDate="1900-01-01"
+                                    Margin="20,35,0,0"
+                                    VerticalOptions="Center">
+                        </DatePicker>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout MinimumHeightRequest="40"
+                                           MaximumHeightRequest="40"
+                                           Margin="0,0,0,5">
+                        <Label Text="{x:Static resources:NavigationResources.CareerStartedDate_}"
+                               Style="{StaticResource InfoLabel}"></Label>
+                        <DatePicker Date="{Binding DoctorEditModel.CareerStartDate}"
+                                    IsEnabled="{Binding IsInEditMode}"
+                                    VerticalOptions="Center"
+                                    HorizontalOptions="End"
+                                    Margin="20,35,0,0"
+                                    MinimumDate="1960-01-01">
+                        </DatePicker>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout MinimumHeightRequest="40"
+                                           MaximumHeightRequest="40"
+                                           Margin="0,0,0,5">
+                        <Label Text="{x:Static resources:NavigationResources.Specialization_}" Style="{StaticResource InfoLabel}"></Label>
+                        <Picker ItemsSource="{Binding SpecializationsToDisplay}"
+                                SelectedItem="{Binding DoctorEditModel.Specialization}"
+                                IsEnabled="{Binding IsInEditMode}"
+                                VerticalOptions="Center"
+                                HorizontalOptions="End">
+                        </Picker>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout MinimumHeightRequest="40"
+                                           MaximumHeightRequest="40"
+                                           Margin="0,0,0,5">
+                        <Label Text="{x:Static resources:NavigationResources.Status_}" Style="{StaticResource InfoLabel}"></Label>
+                        <Picker ItemsSource="{Binding StatusesToDisplay}"
+                                SelectedItem="{Binding DoctorEditModel.Status}"
+                                SelectedIndex="{Binding SelectedStatusIndex}"
+                                IsEnabled="{Binding IsInEditMode}"
+                                VerticalOptions="Center"
+                                HorizontalOptions="EndAndExpand">
+                        </Picker>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </ScrollView>
+            </Frame>
+            <HorizontalStackLayout Grid.Row="1" HorizontalOptions="Center" VerticalOptions="End"
+                                   MaximumHeightRequest="60">
+                <Button Text="{x:Static resources:NavigationResources.Edit}"
+                        Style="{StaticResource ManipulationButton}"
+                        Margin="0,0,10,20"
+                        IsVisible="{Binding IsInViewMode}"
+                        Command="{Binding StartEditCommand}">
+                </Button>
+                <Button Text="{x:Static resources:NavigationResources.Delete}"
+                        Margin="0,0,0,20"
+                        Style="{StaticResource ManipulationButton}"
+                        IsVisible="{Binding IsInViewMode}"
+                        Command="{Binding DeleteCommand}">
+                </Button>
+                <Button Text="{x:Static resources:NavigationResources.Save}"
+                        Style="{StaticResource ManipulationButton}"
+                        IsVisible="{Binding IsInEditMode}"
+                        Margin="0,0,10,20"
+                        Command="{Binding SaveEditCommand}">
+                </Button>
+                <Button Text="{x:Static resources:NavigationResources.Cancel}"
+                        Style="{StaticResource ManipulationButton}"
+                        Margin="0,0,0,20"
+                        IsVisible="{Binding IsInEditMode}"
+                        Command="{Binding CancelEditCommand}">
+                </Button>
+            </HorizontalStackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

@@ -8,9 +8,8 @@ public static class InfrastructureInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services)
     {
-        services.AddExternalServices();
-        
-        return services;
+        return services
+            .AddExternalServices();
     }
     
     private static IServiceCollection AddExternalServices(this IServiceCollection services)

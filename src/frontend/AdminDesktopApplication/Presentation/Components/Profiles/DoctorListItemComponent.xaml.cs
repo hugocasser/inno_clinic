@@ -3,7 +3,7 @@ using Presentation.Pages.Profiles.Doctors;
 
 namespace Presentation.Components.Profiles;
 
-public partial class DoctorListItemComponent : ContentView
+public partial class DoctorListItemComponent
 {
     public DoctorListItem DoctorListItem
     {
@@ -22,6 +22,6 @@ public partial class DoctorListItemComponent : ContentView
     
     private async void GoToProfile_OnClicked(object? sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync(nameof(DoctorSelfView), true);
+        await Shell.Current.GoToAsync(nameof(DoctorPage), true);
     }
 }

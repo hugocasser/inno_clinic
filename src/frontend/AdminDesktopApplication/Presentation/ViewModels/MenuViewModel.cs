@@ -10,7 +10,7 @@ namespace Presentation.ViewModels;
 public partial class MenuViewModel : ObservableObject
 {
     [ObservableProperty]
-    private bool _isMenuVisible = false;
+    private bool _isMenuVisible;
 
     [ObservableProperty] 
     private ObservableCollection<CustomMenuItem> _menuItems = MenuConfiguratorService.Configure("");

@@ -17,7 +17,7 @@ public class Result : IResult
         Data = data;
     }
     
-    public void SetResultData<T>(T? data) where T : class
+    public void SetResultData<T>(T? data) where T : class 
     {
         Data = data;
     }

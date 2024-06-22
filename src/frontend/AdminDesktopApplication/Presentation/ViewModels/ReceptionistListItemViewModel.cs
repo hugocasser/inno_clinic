@@ -9,75 +9,70 @@ namespace Presentation.ViewModels;
 public partial class ReceptionistListItemViewModel : ObservableObject
 {
     [ObservableProperty] 
-    private ObservableCollection<ReceptionistListItem> _receptionistListItems;
-    
-    public ReceptionistListItemViewModel()
+    private ObservableCollection<ReceptionistListItem> _receptionistListItems = new(new[]
     {
-        _receptionistListItems = new ObservableCollection<ReceptionistListItem>(new[]
+        new ReceptionistListItem()
         {
-            new ReceptionistListItem()
-            {
-                Id = Guid.NewGuid(),
-                FullName = "John Smith",
-                Photo = "empty_profile_photo.png",
-            },
-            new ReceptionistListItem()
-            {
-                Id = Guid.NewGuid(),
-                FullName = "John  Williams",
-                Photo = "empty_profile_photo.png",
-            },
-            new ReceptionistListItem()
-            {
-                Id = Guid.NewGuid(),
-                FullName = "Jeff Smith",
-                Photo = "empty_profile_photo.png",
-            },
-            new ReceptionistListItem()
-            {
-                Id = Guid.NewGuid(),
-                FullName = "David Smith",
-                Photo = "empty_profile_photo.png",
-            },
-            new ReceptionistListItem()
-            {
-                Id = Guid.NewGuid(),
-                FullName = "Normal Smith",
-                Photo = "empty_profile_photo.png",
-            },
-            new ReceptionistListItem()
-            {
-                Id = Guid.NewGuid(),
-                FullName = "John Smith",
-                Photo = "empty_profile_photo.png",
-            },
-            new ReceptionistListItem()
-            {
-                Id = Guid.NewGuid(),
-                FullName = "John  Williams",
-                Photo = "empty_profile_photo.png",
-            },
-            new ReceptionistListItem()
-            {
-                Id = Guid.NewGuid(),
-                FullName = "Jeff Smith",
-                Photo = "empty_profile_photo.png",
-            },
-            new ReceptionistListItem()
-            {
-                Id = Guid.NewGuid(),
-                FullName = "David Smith",
-                Photo = "empty_profile_photo.png",
-            },
-            new ReceptionistListItem()
-            {
-                Id = Guid.NewGuid(),
-                FullName = "Normal Smith",
-                Photo = "empty_profile_photo.png",
-            }
-        });
-    }
-    
+            Id = Guid.NewGuid(),
+            FullName = "John Smith",
+            Photo = "empty_profile_photo.png",
+        },
+        new ReceptionistListItem()
+        {
+            Id = Guid.NewGuid(),
+            FullName = "John  Williams",
+            Photo = "empty_profile_photo.png",
+        },
+        new ReceptionistListItem()
+        {
+            Id = Guid.NewGuid(),
+            FullName = "Jeff Smith",
+            Photo = "empty_profile_photo.png",
+        },
+        new ReceptionistListItem()
+        {
+            Id = Guid.NewGuid(),
+            FullName = "David Smith",
+            Photo = "empty_profile_photo.png",
+        },
+        new ReceptionistListItem()
+        {
+            Id = Guid.NewGuid(),
+            FullName = "Normal Smith",
+            Photo = "empty_profile_photo.png",
+        },
+        new ReceptionistListItem()
+        {
+            Id = Guid.NewGuid(),
+            FullName = "John Smith",
+            Photo = "empty_profile_photo.png",
+        },
+        new ReceptionistListItem()
+        {
+            Id = Guid.NewGuid(),
+            FullName = "John  Williams",
+            Photo = "empty_profile_photo.png",
+        },
+        new ReceptionistListItem()
+        {
+            Id = Guid.NewGuid(),
+            FullName = "Jeff Smith",
+            Photo = "empty_profile_photo.png",
+        },
+        new ReceptionistListItem()
+        {
+            Id = Guid.NewGuid(),
+            FullName = "David Smith",
+            Photo = "empty_profile_photo.png",
+        },
+        new ReceptionistListItem()
+        {
+            Id = Guid.NewGuid(),
+            FullName = "Normal Smith",
+            Photo = "empty_profile_photo.png",
+        }
+    });
+
     [RelayCommand]
     private void Search(string filter)
     {

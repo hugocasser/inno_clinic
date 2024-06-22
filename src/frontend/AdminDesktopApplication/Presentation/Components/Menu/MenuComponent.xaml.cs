@@ -3,7 +3,7 @@ using Presentation.ViewModels;
 
 namespace Presentation.Components.Menu;
 
-public partial class MenuComponent : ContentView
+public partial class MenuComponent
 {
     private readonly MenuViewModel _menuViewModel = new();
     private readonly Animation _menuAnimation;

@@ -92,5 +92,53 @@ namespace Presentation.Resources {
                 return ResourceManager.GetString("SpecializationNotFound", resourceCulture);
             }
         }
+        
+        internal static string SpecializationsNotFound {
+            get {
+                return ResourceManager.GetString("SpecializationsNotFound", resourceCulture);
+            }
+        }
+        
+        internal static string StatusesNotFound {
+            get {
+                return ResourceManager.GetString("StatusesNotFound", resourceCulture);
+            }
+        }
+        
+        internal static string Cancel_ {
+            get {
+                return ResourceManager.GetString("Cancel_", resourceCulture);
+            }
+        }
+        
+        internal static string AreYouSure {
+            get {
+                return ResourceManager.GetString("AreYouSure", resourceCulture);
+            }
+        }
+        
+        internal static string Save_ {
+            get {
+                return ResourceManager.GetString("Save_", resourceCulture);
+            }
+        }
+        
+        internal static string Back {
+            get {
+                return ResourceManager.GetString("Back", resourceCulture);
+            }
+        }
+        
+        internal static string Continue {
+            get {
+                return ResourceManager.GetString("Continue", resourceCulture);
+            }
+        }
+        
+        internal static string WontCanRollbackProfile {
+            get {
+                return ResourceManager.GetString("WontCanRollbackProfile", resourceCulture);
+            }
+        }
     }
 }

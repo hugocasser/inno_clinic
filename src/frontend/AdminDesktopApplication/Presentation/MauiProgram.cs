@@ -16,8 +16,15 @@ public static class MauiProgram
         {
 #if MACCATALYST
             var size = new CoreGraphics.CGSize(550, 800);
+
+            if (handler.PlatformView.WindowScene is not { SizeRestrictions: not null })
+            {
+                return;
+            }
+
             handler.PlatformView.WindowScene.SizeRestrictions.MinimumSize = size;
             handler.PlatformView.WindowScene.SizeRestrictions.MaximumSize = size;
+
 #endif
         });
         

@@ -9,7 +9,10 @@ using Presentation.Validators;
 namespace Presentation.ViewModels;
 
 [QueryProperty(nameof(LoginModel), "LoginModel")]
-public partial class LoginViewModel(ICredentialsService credentialsService, EmailValidator emailValidator, PasswordValidator passwordValidator) : ObservableObject
+public partial class LoginViewModel
+    (ICredentialsService credentialsService,
+        EmailValidator emailValidator,
+        PasswordValidator passwordValidator) : ObservableObject
 {
     [ObservableProperty]
     private string _password  =string.Empty;
@@ -33,12 +36,12 @@ public partial class LoginViewModel(ICredentialsService credentialsService, Emai
 
         if (result.IsSuccess)
         {
-            await Shell.Current.DisplayAlert(InformMessages.LoginSuccessed, InformMessages.LoginSuccessed, "Ok");
+            await Shell.Current.DisplayAlert(InformMessages.LoginSuccessed, InformMessages.LoginSuccessed, InformMessages.Ok);
             await Shell.Current.GoToAsync(nameof(MainPage), true);
         }
         else
         {
-            await Shell.Current.DisplayAlert(InformMessages.LoginFailed, InformMessages.IncorrectCredentials, "Ok");
+            await Shell.Current.DisplayAlert(InformMessages.LoginFailed, InformMessages.IncorrectCredentials, InformMessages.Ok);
         }
     }
     

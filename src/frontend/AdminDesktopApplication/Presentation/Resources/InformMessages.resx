@@ -42,4 +42,28 @@
     <data name="SpecializationNotFound" xml:space="preserve">
         <value>Specialization not found</value>
     </data>
+    <data name="SpecializationsNotFound" xml:space="preserve">
+        <value>Specializations not found</value>
+    </data>
+    <data name="StatusesNotFound" xml:space="preserve">
+        <value>Statuses not found</value>
+    </data>
+    <data name="Cancel_" xml:space="preserve">
+        <value>You will be lose all unsaved changes</value>
+    </data>
+    <data name="AreYouSure" xml:space="preserve">
+        <value>Are you sure?</value>
+    </data>
+    <data name="Save_" xml:space="preserve">
+        <value>If you save changes, you can't rollback changes</value>
+    </data>
+    <data name="Back" xml:space="preserve">
+        <value>Back</value>
+    </data>
+    <data name="Continue" xml:space="preserve">
+        <value>Continue</value>
+    </data>
+    <data name="WontCanRollbackProfile" xml:space="preserve">
+        <value>You won't can rollback profile</value>
+    </data>
 </root>

@@ -3,7 +3,7 @@ using Presentation.ViewModels;
 
 namespace Presentation.Pages.Profiles.Patients;
 
-public partial class PatientsPage : ContentPage
+public partial class PatientsPage
 {
     private readonly PatientListItemViewModel _patientListItemViewModel;
 

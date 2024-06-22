@@ -12,7 +12,7 @@
     <ContentPage.Content>
         <Grid RowDefinitions="Auto,*">
             <VerticalStackLayout Grid.Row="0">
-                <SearchBar Placeholder="Search receptionists..." TextChanged="InputView_OnTextChanged"  BackgroundColor="Azure"/>
+                <SearchBar Placeholder="{x:Static resources:NavigationResources.SearchDoctors}" TextChanged="InputView_OnTextChanged"  BackgroundColor="Azure"/>
             </VerticalStackLayout>
             <ScrollView VerticalOptions="FillAndExpand" VerticalScrollBarVisibility="Always" Grid.Row="1">
                 <CollectionView ItemsSource="{Binding ReceptionistListItems }">

@@ -2,7 +2,7 @@ using Presentation.ViewModels;
 
 namespace Presentation.Pages.Profiles.Doctors;
 
-public partial class DoctorsPage : ContentPage
+public partial class DoctorsPage
 {
     private readonly DoctorListItemViewModel _doctorListItemViewModel;
     public DoctorsPage(DoctorListItemViewModel doctorListItemViewModel)
