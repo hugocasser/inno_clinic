@@ -206,5 +206,11 @@ namespace Presentation.Resources {
                 return ResourceManager.GetString("Status_", resourceCulture);
             }
         }
+        
+        internal static string Patient {
+            get {
+                return ResourceManager.GetString("Patient", resourceCulture);
+            }
+        }
     }
 }

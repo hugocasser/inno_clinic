@@ -1,10 +1,10 @@
-using Application.Abstractions;
 using Application.Abstractions.Services;
 using Application.Dtos;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Maui.Graphics.Platform;
 using Presentation.Abstractions.Services;
+using Presentation.Common;
 using Presentation.Models;
 using Presentation.Pages;
 using Presentation.Pages.Profiles.Doctors;
@@ -12,7 +12,7 @@ using Presentation.Resources;
 
 namespace Presentation.ViewModels;
 
-[QueryProperty(nameof(DoctorViewModel), "DoctorViewModel")]
+[QueryProperty(nameof(DoctorModel), "DoctorModel")]
 public partial class DoctorViewModel(
     IStatusesMapperService statusesMapperService,
     ISpecializationsMapperService specializationsMapperService,
@@ -38,7 +38,7 @@ public partial class DoctorViewModel(
     {
         var requestResult = await profilesService.GetDoctorProfileAsync(id);
 
-        await CheckResultAndShowAlertWhenFails<DoctorViewDto>(requestResult, InformMessages.ProfileNotFound, out var doctor);
+        await Utilities.CheckResultAndShowAlertWhenFails<DoctorViewDto>(requestResult, InformMessages.ProfileNotFound, out var doctor);
 
         if (doctor is null)
         {
@@ -49,7 +49,7 @@ public partial class DoctorViewModel(
         var model = DoctorModel.MapFromResponse(doctor);
 
         var statusResult = await statusesMapperService.GetStatusNameByIdAsync(doctor.StatusId);
-        await CheckResultAndShowAlertWhenFails<string>(statusResult, InformMessages.StatusNotFound, out var statusName);
+        await Utilities.CheckResultAndShowAlertWhenFails<string>(statusResult, InformMessages.StatusNotFound, out var statusName);
 
         if (statusName is null)
         {
@@ -61,7 +61,7 @@ public partial class DoctorViewModel(
         var specializationResult =
             await specializationsMapperService.GetSpecializationNameByIdAsync(doctor.SpecializationId);
 
-        await CheckResultAndShowAlertWhenFails<string>(specializationResult,
+        await Utilities.CheckResultAndShowAlertWhenFails<string>(specializationResult,
             InformMessages.SpecializationNotFound, out var specializationName);
 
         if (specializationName is null)
@@ -74,14 +74,9 @@ public partial class DoctorViewModel(
         model.Status = statusName;
         model.Specialization = specializationName;
 
-        if (!string.IsNullOrEmpty(doctor.MiddleName))
-        {
-            IsMiddleNameVisible = true;
-        }
-
         var specializations = await specializationsMapperService.GetAllSpecializationsAsync();
 
-        await CheckResultAndShowAlertWhenFails<Dictionary<Guid, string>>(specializations,
+        await Utilities.CheckResultAndShowAlertWhenFails<Dictionary<Guid, string>>(specializations,
             InformMessages.SpecializationsNotFound, out var specializationsDictionary);
 
         if (specializationsDictionary is null)
@@ -96,7 +91,7 @@ public partial class DoctorViewModel(
 
         var statuses = await statusesMapperService.GetAllStatusesAsync();
 
-        await CheckResultAndShowAlertWhenFails<Dictionary<Guid, string>>(statuses, InformMessages.StatusesNotFound,
+        await Utilities.CheckResultAndShowAlertWhenFails<Dictionary<Guid, string>>(statuses, InformMessages.StatusesNotFound,
             out var statusesDictionary);
 
         if (!statuses.IsSuccess || statusesDictionary is null)
@@ -116,6 +111,11 @@ public partial class DoctorViewModel(
 
         DoctorEditModel = Doctor.Copy();
         FullName = NavigationResources.Doctor + $": {Doctor.FirstName} {Doctor.LastName}";
+        
+        if (!string.IsNullOrEmpty(Doctor.MiddleName))
+        {
+            IsMiddleNameVisible = true;
+        }
     }
 
     [RelayCommand]
@@ -134,10 +134,11 @@ public partial class DoctorViewModel(
             {
                 return;
             }
-
-            if (pickResult.FullPath.EndsWith("png")
-                || pickResult.FullPath.EndsWith("jpg")
-                || pickResult.FullPath.EndsWith("jpeg"))
+    
+            if (pickResult.FullPath.ToLower().EndsWith(nameof(FilesTypes.png))
+                || pickResult.FullPath.ToLower().EndsWith(nameof(FilesTypes.jpg))
+                || pickResult.FullPath.ToLower().EndsWith(nameof(FilesTypes.jpeg))
+                || pickResult.FullPath.ToLower().EndsWith(nameof(FilesTypes.webp)))
             {
                 await using var readStream = await pickResult.OpenReadAsync();
 
@@ -259,18 +260,5 @@ public partial class DoctorViewModel(
         }
 
         Doctor = DoctorEditModel.Copy();
-    }
-
-    private static Task CheckResultAndShowAlertWhenFails<T>(IResult result, string message, out T? value)
-        where T : class
-    {
-        value = result.GetResultData<T>();
-
-        if (result.IsSuccess && result.GetResultData<T>() is not null)
-        {
-            return Task.CompletedTask;
-        }
-
-        return Shell.Current.DisplayAlert(InformMessages.Error, message, InformMessages.Ok);
     }
 }

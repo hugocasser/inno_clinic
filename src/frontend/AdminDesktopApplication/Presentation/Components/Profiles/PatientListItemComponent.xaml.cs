@@ -22,6 +22,6 @@ public partial class PatientListItemComponent
 
     private async void GoToProfile_OnClicked(object? sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync(nameof(PatientViewAsDoctor), true);
+        await Shell.Current.GoToAsync(nameof(PatientPage), true);
     }
 }

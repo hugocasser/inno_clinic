@@ -72,7 +72,7 @@ public static class ProgramExtension
         Routing.RegisterRoute(nameof(DoctorsPage), typeof(DoctorsPage));
         Routing.RegisterRoute(nameof(DoctorPage), typeof(DoctorPage));
         Routing.RegisterRoute(nameof(PatientsPage), typeof(PatientsPage));
-        Routing.RegisterRoute(nameof(PatientViewAsDoctor), typeof(PatientViewAsDoctor));
+        Routing.RegisterRoute(nameof(PatientPage), typeof(PatientPage));
         Routing.RegisterRoute(nameof(ReceptionistsPage), typeof(ReceptionistsPage));
         Routing.RegisterRoute(nameof(ReceptionistPage), typeof(ReceptionistPage));
     }
@@ -86,8 +86,8 @@ public static class ProgramExtension
             .AddTransient<MenuComponent>()
             .AddTransient<DoctorsPage>()
             .AddTransient<DoctorPage>()
-            .AddTransient<PatientViewAsDoctor>()
             .AddTransient<PatientsPage>()
+            .AddTransient<PatientPage>()
             .AddTransient<ReceptionistPage>()
             .AddTransient<ReceptionistsPage>();
         
@@ -102,7 +102,9 @@ public static class ProgramExtension
             .AddTransient<DoctorListItem>()
             .AddTransient<CustomMenuItem>()
             .AddTransient<ReceptionistListItem>()
-            .AddTransient<DoctorModel>();
+            .AddTransient<DoctorModel>()
+            .AddTransient<PatientModel>()
+            .AddTransient<ReceptionistModel>();
         
         return services;
     }
@@ -115,6 +117,8 @@ public static class ProgramExtension
             .AddTransient<PatientListItemViewModel>()
             .AddTransient<DoctorListItemViewModel>()
             .AddTransient<ReceptionistListItemViewModel>()
-            .AddTransient<DoctorViewModel>();
+            .AddTransient<DoctorViewModel>()
+            .AddTransient<PatientViewModel>()
+            .AddTransient<ReceptionistViewModel>();
     }
 }

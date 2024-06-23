@@ -5,35 +5,26 @@ namespace Presentation.Models;
 
 public partial class DoctorModel : ObservableObject
 {
-    [ObservableProperty]
-    private Guid _id;
-    [ObservableProperty]
-    private string _firstName = string.Empty;
-    [ObservableProperty]
-    private string _lastName = string.Empty;
-    [ObservableProperty]
-    private string? _middleName;
-    [ObservableProperty]
-    private DateOnly _birthDate;
-    [ObservableProperty]
-    private DateOnly _careerStartDate;
-    [ObservableProperty]
-    private string _specialization = string.Empty;
-    [ObservableProperty]
-    private Guid _officeId;
-    [ObservableProperty]
-    private string _status = string.Empty;
-    [ObservableProperty]
-    private ImageSource? _image;
+    [ObservableProperty] private Guid _id;
+    [ObservableProperty] private string _firstName = string.Empty;
+    [ObservableProperty] private string _lastName = string.Empty;
+    [ObservableProperty] private string? _middleName;
+    [ObservableProperty] private DateOnly _birthDate;
+    [ObservableProperty] private DateOnly _careerStartDate;
+    [ObservableProperty] private string _specialization = string.Empty;
+    [ObservableProperty] private Guid _officeId;
+    [ObservableProperty] private string _status = string.Empty;
+    [ObservableProperty] private ImageSource? _image;
 
     public static DoctorModel MapFromResponse(DoctorViewDto response)
     {
+        var names = response.FullName.Split(" ");
         var doctor = new DoctorModel
         {
             Id = response.Id,
-            FirstName = response.FirstName,
-            LastName = response.LastName,
-            MiddleName = response.MiddleName,
+            FirstName = names[0],
+            LastName = names[1],
+            MiddleName = names.Length > 2 ? names[2] : null,
             BirthDate = response.BirthDate,
             CareerStartDate = response.CareerStartDate,
             OfficeId = response.OfficeId,

@@ -4,5 +4,6 @@ public enum SecureStorageItemsNames
 {
     AccessToken,
     RefreshToken,
-    Id
+    Id,
+    Role
 }

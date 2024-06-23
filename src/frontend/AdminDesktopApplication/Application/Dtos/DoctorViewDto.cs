@@ -3,9 +3,7 @@ namespace Application.Dtos;
 public record DoctorViewDto(
     Guid Id,
     byte[]? Image,
-    string FirstName,
-    string LastName,
-    string? MiddleName,
+    string FullName,
     DateOnly BirthDate,
     DateOnly CareerStartDate,
     Guid SpecializationId,

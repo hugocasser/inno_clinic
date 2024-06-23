@@ -14,9 +14,7 @@ public class ProfilesService : IProfilesService
         var doctor = new DoctorViewDto(
             id,
             null,
-            "John",
-            "Doe",
-            null,
+            "John Doe",
             DateOnly.FromDateTime(DateTime.Now),
             DateOnly.FromDateTime(DateTime.Now),
             Guid.NewGuid(),
@@ -30,7 +28,16 @@ public class ProfilesService : IProfilesService
 
     public Task<IResult> GetPatientProfileAsync(Guid id)
     {
-        return Task.FromResult<IResult>(new Result());
+        var result = new Result();
+        
+        var patient = new PatientViewDto(
+            id,
+            null,
+            "John Doe Doe",
+            DateOnly.FromDateTime(DateTime.Now));
+        
+        result.SetResultData(patient);
+        return Task.FromResult<IResult>(result);
     }
 
     public Task<IResult> GetReceptionistProfileAsync(Guid id)

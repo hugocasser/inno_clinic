@@ -15,6 +15,7 @@ public static class InfrastructureInjection
     private static IServiceCollection AddExternalServices(this IServiceCollection services)
     {
         services.AddScoped<IProfilesService, ProfilesService>();
+        services.AddScoped<IAuthService, AuthService>();
         
         return services;
     }

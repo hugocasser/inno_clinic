@@ -99,4 +99,7 @@
     <data name="Status_" xml:space="preserve">
         <value>Status:</value>
     </data>
+    <data name="Patient" xml:space="preserve">
+        <value>Patient</value>
+    </data>
 </root>
