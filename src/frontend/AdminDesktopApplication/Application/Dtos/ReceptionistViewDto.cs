@@ -1,8 +1,3 @@
 namespace Application.Dtos;
 
-public class ReceptionistViewDto
-{
-    public Guid Id { get; set; }
-    public string FullName { get; set; } = null!;
-    public Guid OfficeId { get; set; }
-}
+public record ReceptionistViewDto(Guid Id, string FullName, Guid OfficeId, byte[]? Photo);

@@ -2,13 +2,63 @@
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:menu="clr-namespace:Presentation.Components.Menu"
-             x:Class="Presentation.Pages.Profiles.Receptionists.ReceptionistPage">
+             xmlns:resources="clr-namespace:Presentation.Resources"
+             xmlns:viewModels="clr-namespace:Presentation.ViewModels"
+             x:Class="Presentation.Pages.Profiles.Receptionists.ReceptionistPage"
+             x:DataType="viewModels:ReceptionistViewModel"
+             Title="{Binding FullName}">
     <ContentPage.Content>
-        <ScrollView BackgroundColor="Beige" x:Name="Page">
-            <HorizontalStackLayout  x:Name="Container">
-                <menu:MenuComponent></menu:MenuComponent>
+        <Grid RowDefinitions="*,50">
+            <Frame Grid.Row="0" CornerRadius="5" BorderColor="Black"
+                   Margin="10,20,10,50" Padding="0,0,0,0">
+                <ScrollView VerticalOptions="FillAndExpand"
+                            VerticalScrollBarVisibility="Always"
+                            BackgroundColor="Azure">
+                    <VerticalStackLayout>
+                        <Frame MaximumWidthRequest="200"
+                               MaximumHeightRequest="200"
+                               CornerRadius="45"
+                               Margin="0,20,0,0">
+                            <Image Source="{Binding Receptionist.Image}"/>
+                        </Frame>
+                        <HorizontalStackLayout Margin="0,40,0,0">
+                            <Label Text="{x:Static resources:NavigationResources.FirstName_}"
+                                   Style="{StaticResource InfoLabel}">
+                            </Label>
+                            <Label Text="{Binding Receptionist.FirstName}"
+                                   Style="{StaticResource EditableEntry}"
+                                   MinimumWidthRequest="250">
+                            </Label>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout>
+                            <Label Text="{x:Static resources:NavigationResources.LastName_}"
+                                   Style="{StaticResource InfoLabel}">
+                            </Label>
+                            <Label Text="{Binding Receptionist.LastName}"
+                                   Style="{StaticResource EditableEntry}"
+                                   MinimumWidthRequest="250">
+                            </Label>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout
+                            IsVisible="{Binding IsMiddleNameVisible}">
+                            <Label Text="{x:Static resources:NavigationResources.MiddleName_}"
+                                   Style="{StaticResource InfoLabel}">
+                            </Label>
+                            <Label Text="{Binding Receptionist.MiddleName}"
+                                   Style="{StaticResource EditableEntry}">
+                            </Label>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </ScrollView>
+            </Frame>
+            <HorizontalStackLayout Grid.Row="1" HorizontalOptions="Center" VerticalOptions="End"
+                                   MaximumHeightRequest="60">
+                <Button Text="{x:Static resources:NavigationResources.Delete}"
+                        Margin="0,0,0,20"
+                        Style="{StaticResource ManipulationButton}"
+                        Command="{Binding DeleteCommand}">
+                </Button>
             </HorizontalStackLayout>
-        </ScrollView>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

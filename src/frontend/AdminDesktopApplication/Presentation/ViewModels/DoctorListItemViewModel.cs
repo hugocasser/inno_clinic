@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Presentation.Models;
+using Presentation.Pages.Profiles.Doctors;
 
 namespace Presentation.ViewModels;
 
@@ -107,6 +108,12 @@ public partial class DoctorListItemViewModel : ObservableObject
     private void Search(string filter)
     {
         FilterList(filter);
+    }
+    
+    [RelayCommand]
+    private async Task GoToProfileCreation()
+    {
+        await Shell.Current.GoToAsync(nameof(DoctorCreationPage), true);
     }
 
     private void FilterList(string filter)

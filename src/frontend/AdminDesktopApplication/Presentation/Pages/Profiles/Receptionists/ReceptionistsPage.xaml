@@ -10,7 +10,7 @@
              x:DataType="viewModels:ReceptionistListItemViewModel"
              Title="{x:Static resources:NavigationResources.Receptionists}">
     <ContentPage.Content>
-        <Grid RowDefinitions="Auto,*">
+        <Grid RowDefinitions="Auto,*,50">
             <VerticalStackLayout Grid.Row="0">
                 <SearchBar Placeholder="{x:Static resources:NavigationResources.SearchDoctors}" TextChanged="InputView_OnTextChanged"  BackgroundColor="Azure"/>
             </VerticalStackLayout>
@@ -24,6 +24,13 @@
                     </CollectionView.ItemTemplate>
                 </CollectionView>
             </ScrollView>
+            <HorizontalStackLayout Grid.Row="2" HorizontalOptions="Center">
+                <Button Text="{x:Static resources:NavigationResources.CreateProfile}"
+                        Margin="0,5,0,5"
+                        Style="{StaticResource LongManipulationButton}"
+                        Command="{Binding GoToProfileCreationCommand}">
+                </Button>
+            </HorizontalStackLayout>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

@@ -102,4 +102,10 @@
     <data name="Patient" xml:space="preserve">
         <value>Patient</value>
     </data>
+    <data name="Receptionist" xml:space="preserve">
+        <value>Receptionist</value>
+    </data>
+    <data name="CreateProfile" xml:space="preserve">
+        <value>Create profile</value>
+    </data>
 </root>

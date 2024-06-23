@@ -75,6 +75,9 @@ public static class ProgramExtension
         Routing.RegisterRoute(nameof(PatientPage), typeof(PatientPage));
         Routing.RegisterRoute(nameof(ReceptionistsPage), typeof(ReceptionistsPage));
         Routing.RegisterRoute(nameof(ReceptionistPage), typeof(ReceptionistPage));
+        Routing.RegisterRoute(nameof(ReceptionistCreationPage), typeof(ReceptionistCreationPage));
+        Routing.RegisterRoute(nameof(PatientCreationPage), typeof(PatientCreationPage));
+        Routing.RegisterRoute(nameof(DoctorCreationPage), typeof(DoctorCreationPage));
     }
     
     private static IServiceCollection ConfigurePages(this IServiceCollection services)
@@ -89,7 +92,10 @@ public static class ProgramExtension
             .AddTransient<PatientsPage>()
             .AddTransient<PatientPage>()
             .AddTransient<ReceptionistPage>()
-            .AddTransient<ReceptionistsPage>();
+            .AddTransient<ReceptionistsPage>()
+            .AddTransient<ReceptionistCreationPage>()
+            .AddTransient<PatientCreationPage>()
+            .AddTransient<DoctorCreationPage>();
         
         return services;
     }
@@ -104,7 +110,10 @@ public static class ProgramExtension
             .AddTransient<ReceptionistListItem>()
             .AddTransient<DoctorModel>()
             .AddTransient<PatientModel>()
-            .AddTransient<ReceptionistModel>();
+            .AddTransient<ReceptionistModel>()
+            .AddTransient<CreateDoctorModel>()
+            .AddTransient<CreatePatientModel>()
+            .AddTransient<CreateReceptionistModel>();
         
         return services;
     }
@@ -119,6 +128,9 @@ public static class ProgramExtension
             .AddTransient<ReceptionistListItemViewModel>()
             .AddTransient<DoctorViewModel>()
             .AddTransient<PatientViewModel>()
-            .AddTransient<ReceptionistViewModel>();
+            .AddTransient<ReceptionistViewModel>()
+            .AddTransient<CreateReceptionistViewModel>()
+            .AddTransient<CreateDoctorViewModel>()
+            .AddTransient<CreatePatientViewModel>();
     }
 }

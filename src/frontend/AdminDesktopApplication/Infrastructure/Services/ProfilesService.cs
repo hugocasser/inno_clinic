@@ -37,12 +37,23 @@ public class ProfilesService : IProfilesService
             DateOnly.FromDateTime(DateTime.Now));
         
         result.SetResultData(patient);
+        
         return Task.FromResult<IResult>(result);
     }
 
     public Task<IResult> GetReceptionistProfileAsync(Guid id)
     {
-        return Task.FromResult<IResult>(new Result());
+        var result = new Result();
+        
+        var receptionist = new ReceptionistViewDto(
+            id,
+            "John Doe Doe",
+            Guid.NewGuid(),
+            null);
+        
+        result.SetResultData(receptionist);
+        
+        return Task.FromResult<IResult>(result);
     }
 
     public Task<IResult> DeleteProfileAsync(Guid id)

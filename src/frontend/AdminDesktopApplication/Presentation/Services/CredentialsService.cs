@@ -7,7 +7,7 @@ using Presentation.Common;
 
 namespace Presentation.Services;
 
-public class CredentialsService(IAuthService authService, IProfilesService profilesService) : ICredentialsService
+public class CredentialsService(IAuthService authService) : ICredentialsService
 {
     public Task<IResult> CheckLoginAsync()
     {

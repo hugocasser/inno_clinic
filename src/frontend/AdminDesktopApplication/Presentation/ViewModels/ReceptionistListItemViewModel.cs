@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Presentation.Models;
+using Presentation.Pages.Profiles.Receptionists;
 
 namespace Presentation.ViewModels;
 
@@ -77,6 +78,12 @@ public partial class ReceptionistListItemViewModel : ObservableObject
     private void Search(string filter)
     {
         FilterList(filter);
+    }
+    
+    [RelayCommand]
+    private async Task GoToProfileCreation()
+    {
+        await Shell.Current.GoToAsync(nameof(ReceptionistCreationPage), true);
     }
 
     private void FilterList(string filter)

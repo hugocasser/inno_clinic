@@ -212,5 +212,17 @@ namespace Presentation.Resources {
                 return ResourceManager.GetString("Patient", resourceCulture);
             }
         }
+        
+        internal static string Receptionist {
+            get {
+                return ResourceManager.GetString("Receptionist", resourceCulture);
+            }
+        }
+        
+        internal static string CreateProfile {
+            get {
+                return ResourceManager.GetString("CreateProfile", resourceCulture);
+            }
+        }
     }
 }
