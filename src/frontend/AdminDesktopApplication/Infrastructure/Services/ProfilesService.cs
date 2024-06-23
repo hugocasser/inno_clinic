@@ -1,6 +1,8 @@
 using Application.Abstractions;
 using Application.Abstractions.Services;
-using Application.Dtos;
+using Application.Dtos.Doctor;
+using Application.Dtos.Patient;
+using Application.Dtos.Receptionist;
 using Application.Results;
 
 namespace Infrastructure.Services;
@@ -62,6 +64,11 @@ public class ProfilesService : IProfilesService
     }
 
     public Task<IResult> UpdateDoctorProfileAsync(UpdateDoctorsProfileDto doctorEditModel)
+    {
+        return Task.FromResult<IResult>(new Result());
+    }
+
+    public Task<IResult> CreatePatientProfileAsync(CreatePatientDto request)
     {
         return Task.FromResult<IResult>(new Result());
     }

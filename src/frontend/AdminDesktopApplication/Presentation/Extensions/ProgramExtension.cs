@@ -2,14 +2,11 @@ using System.Reflection;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
 using Presentation.Abstractions.Services;
-using Presentation.Components.Menu;
-using Presentation.Models;
 using Presentation.Pages;
 using Presentation.Pages.Profiles.Doctors;
 using Presentation.Pages.Profiles.Patients;
 using Presentation.Pages.Profiles.Receptionists;
 using Presentation.Services;
-using Presentation.ViewModels;
 using Application;
 using CommunityToolkit.Maui;
 using Infrastructure;
@@ -25,16 +22,14 @@ public static class ProgramExtension
         builder.ConfigureFonts();
         
         builder.Services
-            .ConfigurePages()
             .AddServices()
-            .AddModels()
             .AddApplication()
             .AddInfrastructure()
-            .AddViewModels();
+            .AddMvvm();
         
         builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         
-        ConfigureRouting();
+        RegisterRoutes();
 #if DEBUG
         builder.Logging.AddDebug();
 #endif
@@ -56,15 +51,13 @@ public static class ProgramExtension
     private static IServiceCollection AddServices(this IServiceCollection services)
     {
         services
-            .AddSingleton<ICredentialsService, CredentialsService>();
-        
-        services
+            .AddSingleton<ICredentialsService, CredentialsService>()
             .AddSingleton<IStatusesMapperService, StatusesMapperService>()
             .AddSingleton<ISpecializationsMapperService, SpecializationsMapperService>();
         
         return services;
     }
-    private static void ConfigureRouting() 
+    private static void RegisterRoutes() 
     {
         Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
         Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
@@ -78,59 +71,5 @@ public static class ProgramExtension
         Routing.RegisterRoute(nameof(ReceptionistCreationPage), typeof(ReceptionistCreationPage));
         Routing.RegisterRoute(nameof(PatientCreationPage), typeof(PatientCreationPage));
         Routing.RegisterRoute(nameof(DoctorCreationPage), typeof(DoctorCreationPage));
-    }
-    
-    private static IServiceCollection ConfigurePages(this IServiceCollection services)
-    {
-        services
-            .AddTransient<MainPage>()
-            .AddTransient<LoginPage>()
-            .AddTransient<SettingsPage>()
-            .AddTransient<MenuComponent>()
-            .AddTransient<DoctorsPage>()
-            .AddTransient<DoctorPage>()
-            .AddTransient<PatientsPage>()
-            .AddTransient<PatientPage>()
-            .AddTransient<ReceptionistPage>()
-            .AddTransient<ReceptionistsPage>()
-            .AddTransient<ReceptionistCreationPage>()
-            .AddTransient<PatientCreationPage>()
-            .AddTransient<DoctorCreationPage>();
-        
-        return services;
-    }
-    
-    private static IServiceCollection AddModels(this IServiceCollection services)
-    {
-        services
-            .AddTransient<LoginModel>()
-            .AddTransient<PatientListItem>()
-            .AddTransient<DoctorListItem>()
-            .AddTransient<CustomMenuItem>()
-            .AddTransient<ReceptionistListItem>()
-            .AddTransient<DoctorModel>()
-            .AddTransient<PatientModel>()
-            .AddTransient<ReceptionistModel>()
-            .AddTransient<CreateDoctorModel>()
-            .AddTransient<CreatePatientModel>()
-            .AddTransient<CreateReceptionistModel>();
-        
-        return services;
-    }
-    
-    private static void AddViewModels(this IServiceCollection services)
-    {
-        services
-            .AddTransient<LoginViewModel>()
-            .AddTransient<MenuViewModel>()
-            .AddTransient<PatientListItemViewModel>()
-            .AddTransient<DoctorListItemViewModel>()
-            .AddTransient<ReceptionistListItemViewModel>()
-            .AddTransient<DoctorViewModel>()
-            .AddTransient<PatientViewModel>()
-            .AddTransient<ReceptionistViewModel>()
-            .AddTransient<CreateReceptionistViewModel>()
-            .AddTransient<CreateDoctorViewModel>()
-            .AddTransient<CreatePatientViewModel>();
     }
 }

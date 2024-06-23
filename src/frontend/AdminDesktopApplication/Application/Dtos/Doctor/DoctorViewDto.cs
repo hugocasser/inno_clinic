@@ -1,4 +1,4 @@
-namespace Application.Dtos;
+namespace Application.Dtos.Doctor;
 
 public record DoctorViewDto(
     Guid Id,

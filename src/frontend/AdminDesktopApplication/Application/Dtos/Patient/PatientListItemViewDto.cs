@@ -1,4 +1,4 @@
-namespace Application.Dtos.ListItems;
+namespace Application.Dtos.Patient;
 
 public class PatientListItemViewDto
 {

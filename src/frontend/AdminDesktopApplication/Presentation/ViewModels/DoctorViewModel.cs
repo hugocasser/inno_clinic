@@ -1,5 +1,6 @@
 using Application.Abstractions.Services;
 using Application.Dtos;
+using Application.Dtos.Doctor;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Maui.Graphics.Platform;

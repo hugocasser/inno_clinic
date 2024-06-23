@@ -1,5 +1,6 @@
 using Application.Abstractions.Services;
 using Application.Dtos;
+using Application.Dtos.Receptionist;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Presentation.Common;

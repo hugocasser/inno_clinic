@@ -1,4 +1,5 @@
 using Application.Dtos;
+using Application.Dtos.Patient;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Presentation.Models;
