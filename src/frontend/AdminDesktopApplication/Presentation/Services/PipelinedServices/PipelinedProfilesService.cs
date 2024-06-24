@@ -317,4 +317,50 @@ public class PipelinedProfilesService(
 
         return result;
     }
+
+    public async Task<IResult> CreateDoctorProfileAsync(CreateDoctorsProfileDto request)
+    {
+        var result = new Result();
+        var requestResult = await profilesService.CreateDoctorProfileAsync(request);
+
+        if (requestResult.IsSuccess)
+        {
+            return result;
+        }
+
+        var response = requestResult.GetResultData<string>();
+
+        switch (response)
+        {
+            case TextResponses.Unauthorized:
+            {
+                var refreshResult = await credentialsService.TryRefreshTokenAsync();
+
+                if (!refreshResult.IsSuccess)
+                {
+                    result.SetResultData(TextResponses.Unauthorized);
+
+                    return result;
+                }
+
+                requestResult = await profilesService.CreateDoctorProfileAsync(request);
+                break;
+            }
+            case TextResponses.EmailAlreadyExists:
+            {
+                result.SetResultData(TextResponses.EmailAlreadyExists);
+
+                return result;
+            }
+        }
+
+        if (requestResult.IsSuccess)
+        {
+            return result;
+        }
+
+        result.SetResultData(TextResponses.SomethingWentWrong);
+
+        return result;
+    }
 }

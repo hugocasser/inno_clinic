@@ -13,4 +13,5 @@ public interface IProfilesService
     public Task<IResult> UpdateDoctorProfileAsync(UpdateDoctorsProfileDto request);
     public Task<IResult> CreatePatientProfileAsync(CreatePatientDto request);
     public Task<IResult> CreateReceptionistAsync(CreateReceptionistDto request);
+    public Task<IResult> CreateDoctorProfileAsync(CreateDoctorsProfileDto request);
 }

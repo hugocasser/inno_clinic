@@ -77,4 +77,9 @@ public class ProfilesService : IProfilesService
     {
         return Task.FromResult<IResult>(new Result());
     }
+
+    public Task<IResult> CreateDoctorProfileAsync(CreateDoctorsProfileDto request)
+    {
+        return Task.FromResult<IResult>(new Result());
+    }
 }
