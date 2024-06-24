@@ -1,14 +1,11 @@
 ﻿using Presentation.Abstractions.Services;
-using Presentation.Common;
-using Presentation.Components.Menu;
-using Presentation.ViewModels;
 
 namespace Presentation.Pages;
 
-public partial class MainPage : ContentPage
+public partial class MainPage
 {
 
-    public MainPage(ICredentialsService credentialsService) : base()
+    public MainPage(ICredentialsService credentialsService)
     { 
         InitializeComponent();
         

@@ -108,4 +108,7 @@
     <data name="CreateProfile" xml:space="preserve">
         <value>Create profile</value>
     </data>
+    <data name="Office_" xml:space="preserve">
+        <value>Office:</value>
+    </data>
 </root>

@@ -2,8 +2,86 @@
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:resources="clr-namespace:Presentation.Resources"
+             xmlns:viewModels="clr-namespace:Presentation.ViewModels"
+             x:DataType="viewModels:CreateDoctorViewModel"
              x:Class="Presentation.Pages.Profiles.Doctors.DoctorCreationPage">
     <ContentPage.Content>
-        
+        <ScrollView>
+            <VerticalStackLayout>
+                <HorizontalStackLayout Margin="0,40,0,0">
+                    <Label Style="{StaticResource InfoLabel}"
+                           Text="{x:Static resources:NavigationResources.FirstName_}">
+                    </Label>
+                    <Entry Text="{Binding CreateDoctorModel.FirstName}"
+                           Style="{StaticResource EditableEntry}"
+                           MinimumWidthRequest="250">
+                    </Entry>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Margin="0,40,0,0">
+                    <Label Style="{StaticResource InfoLabel}"
+                           Text="{x:Static resources:NavigationResources.LastName_}">
+                    </Label>
+                    <Entry Text="{Binding CreateDoctorModel.LastName}"
+                           Style="{StaticResource EditableEntry}"
+                           MinimumWidthRequest="250">
+                    </Entry>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Margin="0,40,0,0">
+                    <Label Style="{StaticResource InfoLabel}"
+                           Text="{x:Static resources:NavigationResources.MiddleName_}">
+                    </Label>
+                    <Entry Text="{Binding CreateDoctorModel.MiddleName }"
+                           Style="{StaticResource EditableEntry}"
+                           MinimumWidthRequest="250">
+                    </Entry>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Margin="0,40,0,0">
+                    <Label Style="{StaticResource InfoLabel}"
+                           Text="{x:Static resources:NavigationResources.Office_}">
+                    </Label>
+                    <Picker ItemsSource="{Binding OfficesAddresses}"
+                            SelectedItem="{Binding .SelectedOfficeAddress}"></Picker>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Margin="0,40,0,0">
+                    <Label Style="{StaticResource InfoLabel}"
+                           Text="{x:Static resources:NavigationResources.Specialization_}">
+                    </Label>
+                    <Picker ItemsSource="{Binding SpecializationsNames}"
+                            SelectedItem="{Binding .SelectedSpecialization}"></Picker>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Margin="0,40,0,0">
+                    <Label Style="{StaticResource InfoLabel}"
+                           Text="{x:Static resources:NavigationResources.Status_}">
+                    </Label>
+                    <Picker ItemsSource="{Binding StatusesNames}"
+                            SelectedItem="{Binding .SelectedStatus}"></Picker>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Margin="0,40,0,0">
+                    <Label Style="{StaticResource InfoLabel}"
+                           Text="{x:Static resources:NavigationResources.BirthDate_}">
+                    </Label>
+                    <DatePicker Date="{Binding CreateDoctorModel.BirthDate}"
+                                VerticalOptions="Center"
+                                HorizontalOptions="End"
+                                Margin="20,35,0,0"
+                                MinimumDate="1960-01-01" />
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Margin="0,40,0,0">
+                    <Label Style="{StaticResource InfoLabel}"
+                           Text="{x:Static resources:NavigationResources.CareerStartedDate_}">
+                    </Label>
+                    <DatePicker Date="{Binding CreateDoctorModel.CareerStartDate}"
+                                VerticalOptions="Center"
+                                HorizontalOptions="End"
+                                Margin="20,35,0,0"
+                                MinimumDate="1960-01-01" />
+                </HorizontalStackLayout>
+                <Button
+                    Style="{StaticResource ManipulationButton}"
+                    Command="{Binding CreateProfileCommand}"
+                    Text="{x:Static resources:NavigationResources.CreateProfile}"></Button>
+            </VerticalStackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

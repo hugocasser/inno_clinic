@@ -6,7 +6,7 @@ namespace Presentation.Common;
 
 public static class Utilities
 {
-    public static bool IsUnauthorized = false;
+    [field: ThreadStatic] public static bool IsUnauthorized { get; set; }
     public static Task CheckResultAndShowAlertWhenFails<T>(IResult result, string message, out T? value) where T : class
     {
         value = null;

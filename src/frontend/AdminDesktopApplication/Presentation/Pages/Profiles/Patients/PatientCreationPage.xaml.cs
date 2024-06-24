@@ -2,7 +2,7 @@ using Presentation.ViewModels;
 
 namespace Presentation.Pages.Profiles.Patients;
 
-public partial class PatientCreationPage : ContentPage
+public partial class PatientCreationPage
 {
     public PatientCreationPage(CreatePatientViewModel createDoctorViewModel)
     {

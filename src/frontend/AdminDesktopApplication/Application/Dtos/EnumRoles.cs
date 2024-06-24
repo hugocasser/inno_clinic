@@ -1,4 +1,4 @@
-namespace Presentation.Common;
+namespace Application.Dtos;
 
 public enum EnumRoles
 {

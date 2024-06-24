@@ -224,5 +224,11 @@ namespace Presentation.Resources {
                 return ResourceManager.GetString("CreateProfile", resourceCulture);
             }
         }
+        
+        internal static string Office_ {
+            get {
+                return ResourceManager.GetString("Office_", resourceCulture);
+            }
+        }
     }
 }

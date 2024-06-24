@@ -1,4 +1,3 @@
-using Application.Abstractions.Services;
 using Application.Dtos;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -15,8 +14,8 @@ namespace Presentation.ViewModels;
 public partial class CreateReceptionistViewModel : ObservableObject
 {
     [ObservableProperty] private CreateReceptionistModel _createReceptionistModel = new();
-    [ObservableProperty] private List<OfficeViewDto> _offices = new();
-    [ObservableProperty] private List<string> _officesAddresses = new();
+    [ObservableProperty] private List<OfficeViewDto> _offices = [];
+    [ObservableProperty] private List<string> _officesAddresses = [];
     [ObservableProperty] private string _selectedOfficeAddress = null!;
 
     private readonly IPipelinedProfilesService _profilesService;

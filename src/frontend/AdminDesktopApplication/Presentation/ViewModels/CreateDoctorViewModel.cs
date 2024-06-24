@@ -14,15 +14,15 @@ namespace Presentation.ViewModels;
 public partial class CreateDoctorViewModel : ObservableObject
 {
     [ObservableProperty] private CreateDoctorModel _createDoctorModel = new();
-    [ObservableProperty] private List<OfficeViewDto> _offices = new();
-    [ObservableProperty] private List<string> _officesAddresses = new();
+    [ObservableProperty] private List<OfficeViewDto> _offices = [];
+    [ObservableProperty] private List<string> _officesAddresses = [];
     [ObservableProperty] private string _selectedOfficeAddress = null!;
     [ObservableProperty] private string _selectedSpecialization = string.Empty;
-    [ObservableProperty] private List<string> _specializationsNames = new();
-    [ObservableProperty] private List<SpecializationViewDto> _specializations = new();
+    [ObservableProperty] private List<string> _specializationsNames = [];
+    [ObservableProperty] private List<SpecializationViewDto> _specializations = [];
     [ObservableProperty] private string _selectedStatus = string.Empty;
-    [ObservableProperty] private List<string> _statusesNames = new();
-    [ObservableProperty] private List<StatusViewDto> _statuses = new();
+    [ObservableProperty] private List<string> _statusesNames = [];
+    [ObservableProperty] private List<StatusViewDto> _statuses = [];
 
     private readonly IPipelinedProfilesService _profilesService;
     private readonly ICredentialsService _credentialsService;

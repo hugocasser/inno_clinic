@@ -1,5 +1,3 @@
-using Application.Abstractions.Services;
-using Application.Dtos;
 using Application.Dtos.Patient;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;

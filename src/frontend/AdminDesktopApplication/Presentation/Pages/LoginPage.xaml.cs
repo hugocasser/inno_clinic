@@ -2,7 +2,7 @@ using Presentation.ViewModels;
 
 namespace Presentation.Pages;
 
-public partial class LoginPage : ContentPage
+public partial class LoginPage
 {
     private readonly LoginViewModel _loginViewModel;
     public LoginPage(LoginViewModel loginViewModel)
