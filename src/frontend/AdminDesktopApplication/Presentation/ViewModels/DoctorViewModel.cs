@@ -1,10 +1,10 @@
 using Application.Abstractions.Services;
-using Application.Dtos;
 using Application.Dtos.Doctor;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Maui.Graphics.Platform;
 using Presentation.Abstractions.Services;
+using Presentation.Abstractions.Services.PipelinedService;
 using Presentation.Common;
 using Presentation.Models;
 using Presentation.Pages;
@@ -15,9 +15,10 @@ namespace Presentation.ViewModels;
 
 [QueryProperty(nameof(DoctorModel), "DoctorModel")]
 public partial class DoctorViewModel(
-    IStatusesMapperService statusesMapperService,
-    ISpecializationsMapperService specializationsMapperService,
-    IProfilesService profilesService)
+    IPipelinedStatusesService statusesMapperService,
+    IPipelinedSpecializationsService specializationsMapperService,
+    IProfilesService profilesService,
+    ICredentialsService credentialsService)
     : ObservableObject
 {
     [ObservableProperty] private DoctorModel _doctor = null!;
@@ -43,7 +44,15 @@ public partial class DoctorViewModel(
 
         if (doctor is null)
         {
-            await Shell.Current.GoToAsync(nameof(MainPage));
+            if (Utilities.IsUnauthorized)
+            {
+                await Shell.Current.GoToAsync(nameof(LoginPage));
+                return;
+            }
+            
+            await Shell.Current.GoToAsync(nameof(DoctorsPage));
+            await credentialsService.LogoutAsync();
+            
             return;
         }
 
@@ -54,8 +63,15 @@ public partial class DoctorViewModel(
 
         if (statusName is null)
         {
-            await Shell.Current.GoToAsync(nameof(MainPage));
-
+            if (Utilities.IsUnauthorized)
+            {
+                await Shell.Current.GoToAsync(nameof(LoginPage));
+                return;
+            }
+            
+            await Shell.Current.GoToAsync(nameof(DoctorsPage));
+            await credentialsService.LogoutAsync();
+            
             return;
         }
 
@@ -67,7 +83,14 @@ public partial class DoctorViewModel(
 
         if (specializationName is null)
         {
-            await Shell.Current.GoToAsync(nameof(MainPage));
+            if (Utilities.IsUnauthorized)
+            {
+                await Shell.Current.GoToAsync(nameof(LoginPage));
+                return;
+            }
+            
+            await Shell.Current.GoToAsync(nameof(DoctorsPage));
+            await credentialsService.LogoutAsync();
 
             return;
         }
@@ -82,8 +105,15 @@ public partial class DoctorViewModel(
 
         if (specializationsDictionary is null)
         {
-            await Shell.Current.GoToAsync(nameof(MainPage));
-
+            if (Utilities.IsUnauthorized)
+            {
+                await Shell.Current.GoToAsync(nameof(LoginPage));
+                return;
+            }
+            
+            await Shell.Current.GoToAsync(nameof(DoctorsPage));
+            await credentialsService.LogoutAsync();
+            
             return;
         }
 
@@ -97,8 +127,15 @@ public partial class DoctorViewModel(
 
         if (!statuses.IsSuccess || statusesDictionary is null)
         {
-            await Shell.Current.GoToAsync(nameof(MainPage));
-
+            if (Utilities.IsUnauthorized)
+            {
+                await Shell.Current.GoToAsync(nameof(LoginPage));
+                return;
+            }
+            
+            await Shell.Current.GoToAsync(nameof(DoctorsPage));
+            await credentialsService.LogoutAsync();
+            
             return;
         }
 

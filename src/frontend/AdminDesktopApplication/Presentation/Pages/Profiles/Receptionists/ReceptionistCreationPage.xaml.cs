@@ -2,7 +2,7 @@ using Presentation.ViewModels;
 
 namespace Presentation.Pages.Profiles.Receptionists;
 
-public partial class ReceptionistCreationPage : ContentPage
+public partial class ReceptionistCreationPage
 {
     public ReceptionistCreationPage(CreateReceptionistViewModel createReceptionistViewModel)
     {

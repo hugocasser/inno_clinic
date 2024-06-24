@@ -66,4 +66,19 @@
     <data name="WontCanRollbackProfile" xml:space="preserve">
         <value>You won't can rollback profile</value>
     </data>
+    <data name="Success" xml:space="preserve">
+        <value>Success</value>
+    </data>
+    <data name="ProfileCreated" xml:space="preserve">
+        <value>Profile created</value>
+    </data>
+    <data name="EmailAlreadyExists" xml:space="preserve">
+        <value>Email already exists</value>
+    </data>
+    <data name="SomethingWentWrong" xml:space="preserve">
+        <value>Something went wrong</value>
+    </data>
+    <data name="Unathorized" xml:space="preserve">
+        <value>Unathorized</value>
+    </data>
 </root>

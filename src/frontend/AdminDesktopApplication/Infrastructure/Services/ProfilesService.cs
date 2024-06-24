@@ -63,12 +63,17 @@ public class ProfilesService : IProfilesService
         return Task.FromResult<IResult>(new Result());
     }
 
-    public Task<IResult> UpdateDoctorProfileAsync(UpdateDoctorsProfileDto doctorEditModel)
+    public Task<IResult> UpdateDoctorProfileAsync(UpdateDoctorsProfileDto request)
     {
         return Task.FromResult<IResult>(new Result());
     }
 
     public Task<IResult> CreatePatientProfileAsync(CreatePatientDto request)
+    {
+        return Task.FromResult<IResult>(new Result());
+    }
+
+    public Task<IResult> CreateReceptionistAsync(CreateReceptionistDto request)
     {
         return Task.FromResult<IResult>(new Result());
     }

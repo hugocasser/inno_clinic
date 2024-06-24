@@ -140,5 +140,35 @@ namespace Presentation.Resources {
                 return ResourceManager.GetString("WontCanRollbackProfile", resourceCulture);
             }
         }
+        
+        internal static string Success {
+            get {
+                return ResourceManager.GetString("Success", resourceCulture);
+            }
+        }
+        
+        internal static string ProfileCreated {
+            get {
+                return ResourceManager.GetString("ProfileCreated", resourceCulture);
+            }
+        }
+        
+        internal static string EmailAlreadyExists {
+            get {
+                return ResourceManager.GetString("EmailAlreadyExists", resourceCulture);
+            }
+        }
+        
+        internal static string SomethingWentWrong {
+            get {
+                return ResourceManager.GetString("SomethingWentWrong", resourceCulture);
+            }
+        }
+        
+        internal static string Unathorized {
+            get {
+                return ResourceManager.GetString("Unathorized", resourceCulture);
+            }
+        }
     }
 }

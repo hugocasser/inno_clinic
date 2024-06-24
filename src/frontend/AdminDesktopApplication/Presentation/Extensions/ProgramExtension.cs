@@ -10,6 +10,8 @@ using Presentation.Services;
 using Application;
 using CommunityToolkit.Maui;
 using Infrastructure;
+using Presentation.Abstractions.Services.PipelinedService;
+using Presentation.Services.PipelinedServices;
 
 namespace Presentation.Extensions;
 
@@ -30,6 +32,7 @@ public static class ProgramExtension
         builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         
         RegisterRoutes();
+        
 #if DEBUG
         builder.Logging.AddDebug();
 #endif
@@ -52,8 +55,10 @@ public static class ProgramExtension
     {
         services
             .AddSingleton<ICredentialsService, CredentialsService>()
-            .AddSingleton<IStatusesMapperService, StatusesMapperService>()
-            .AddSingleton<ISpecializationsMapperService, SpecializationsMapperService>();
+            .AddSingleton<IPipelinedOfficesService, PipelinedOfficesService>()
+            .AddSingleton<IPipelinedProfilesService, PipelinedProfilesService>()
+            .AddSingleton<IPipelinedSpecializationsService, PipelinedSpecializationsService>()
+            .AddSingleton<IPipelinedStatusesService, PipelinedStatusesService>();
         
         return services;
     }

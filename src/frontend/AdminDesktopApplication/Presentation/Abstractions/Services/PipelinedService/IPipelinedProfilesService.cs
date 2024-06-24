@@ -1,10 +1,11 @@
+using Application.Abstractions;
 using Application.Dtos.Doctor;
 using Application.Dtos.Patient;
 using Application.Dtos.Receptionist;
 
-namespace Application.Abstractions.Services;
+namespace Presentation.Abstractions.Services.PipelinedService;
 
-public interface IProfilesService
+public interface IPipelinedProfilesService
 {
     public Task<IResult> GetDoctorProfileAsync(Guid id);
     public Task<IResult> GetPatientProfileAsync(Guid id);

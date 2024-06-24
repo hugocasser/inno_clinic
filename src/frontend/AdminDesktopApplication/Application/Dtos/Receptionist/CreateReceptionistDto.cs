@@ -1,6 +1,10 @@
-namespace Application.Dtos.Patient;
+namespace Application.Dtos.Receptionist;
 
-public class CreateReceptionistDto
-{
-    
-}
+public record CreateReceptionistDto(
+    string FirstName,
+    string LastName,
+    string? MiddleName,
+    string Email,
+    string Password,
+    Guid OfficeId,
+    byte[]? Photo);
