@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="Login" xml:space="preserve">
+        <value>Login</value>
+    </data>
+    <data name="Email:" xml:space="preserve">
+        <value>Email:</value>
+    </data>
+    <data name="Password:" xml:space="preserve">
+        <value>Password:</value>
+    </data>
+    <data name="Settings" xml:space="preserve">
+        <value>Settings</value>
+    </data>
+    <data name="Logout" xml:space="preserve">
+        <value>Logout</value>
+    </data>
+    <data name="Patients" xml:space="preserve">
+        <value>Patients</value>
+    </data>
+    <data name="Doctors" xml:space="preserve">
+        <value>Doctors</value>
+    </data>
+    <data name="Receptionists" xml:space="preserve">
+        <value>Receptionists</value>
+    </data>
+    <data name="Home" xml:space="preserve">
+        <value>Home</value>
+    </data>
+    <data name="ShowProfile" xml:space="preserve">
+        <value>ShowProfile</value>
+    </data>
+    <data name="InputPassword" xml:space="preserve">
+        <value>password</value>
+    </data>
+    <data name="InputEmail" xml:space="preserve">
+        <value>example@email.com</value>
+    </data>
+    <data name="Edit" xml:space="preserve">
+        <value>Edit</value>
+    </data>
+    <data name="Delete" xml:space="preserve">
+        <value>Delete</value>
+    </data>
+    <data name="Doctor" xml:space="preserve">
+        <value>Doctor</value>
+    </data>
+    <data name="SearchDoctors" xml:space="preserve">
+        <value>Search doctors...</value>
+    </data>
+    <data name="SearchPatients" xml:space="preserve">
+        <value>Search patients...</value>
+    </data>
+    <data name="SearchReceptionists" xml:space="preserve">
+        <value>Search receptionists...</value>
+    </data>
+    <data name="Save" xml:space="preserve">
+        <value>Save</value>
+    </data>
+    <data name="Cancel" xml:space="preserve">
+        <value>Cancel</value>
+    </data>
+    <data name="FirstName_" xml:space="preserve">
+        <value>Firstname:</value>
+    </data>
+    <data name="LastName_" xml:space="preserve">
+        <value>Lastname:</value>
+    </data>
+    <data name="MiddleName_" xml:space="preserve">
+        <value>MiddleName:</value>
+    </data>
+    <data name="BirthDate_" xml:space="preserve">
+        <value>Birth date:</value>
+    </data>
+    <data name="CareerStartedDate_" xml:space="preserve">
+        <value>Career started date</value>
+    </data>
+    <data name="Specialization_" xml:space="preserve">
+        <value>Specialization:</value>
+    </data>
+    <data name="Status_" xml:space="preserve">
+        <value>Status:</value>
+    </data>
+    <data name="Patient" xml:space="preserve">
+        <value>Patient</value>
+    </data>
+    <data name="Receptionist" xml:space="preserve">
+        <value>Receptionist</value>
+    </data>
+    <data name="CreateProfile" xml:space="preserve">
+        <value>Create profile</value>
+    </data>
+    <data name="Office_" xml:space="preserve">
+        <value>Office:</value>
+    </data>
+</root>

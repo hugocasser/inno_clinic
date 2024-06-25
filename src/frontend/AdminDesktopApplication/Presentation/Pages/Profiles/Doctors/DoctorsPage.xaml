@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:resources="clr-namespace:Presentation.Resources"
+             xmlns:models="clr-namespace:Presentation.Models"
+             xmlns:profiles="clr-namespace:Presentation.Components.Profiles"
+             xmlns:viewModels="clr-namespace:Presentation.ViewModels"
+             x:Class="Presentation.Pages.Profiles.Doctors.DoctorsPage"
+             x:DataType="viewModels:DoctorListItemViewModel"
+             Title="{x:Static resources:NavigationResources.Doctors}">
+    <ContentPage.Content>
+        <Grid RowDefinitions="Auto,*,50">
+            <VerticalStackLayout Grid.Row="0">
+                <SearchBar Placeholder="{x:Static resources:NavigationResources.SearchDoctors}" TextChanged="InputView_OnTextChanged"  BackgroundColor="Azure"/>
+            </VerticalStackLayout>
+            <ScrollView VerticalOptions="FillAndExpand" VerticalScrollBarVisibility="Always" Grid.Row="1">
+                <CollectionView ItemsSource="{Binding DoctorListItems}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:DoctorListItem">
+                            <profiles:DoctorListItemComponent DoctorListItem="{Binding .}"></profiles:DoctorListItemComponent>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </ScrollView>
+            <HorizontalStackLayout Grid.Row="2" HorizontalOptions="Center">
+                <Button Text="{x:Static resources:NavigationResources.CreateProfile}"
+                        Margin="0,5,0,5"
+                        Style="{StaticResource LongManipulationButton}"
+                        Command="{Binding GoToProfileCreationCommand}">
+                </Button>
+            </HorizontalStackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

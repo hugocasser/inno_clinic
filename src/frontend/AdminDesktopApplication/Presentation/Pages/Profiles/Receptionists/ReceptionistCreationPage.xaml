@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:resources="clr-namespace:Presentation.Resources"
+             xmlns:viewModels="clr-namespace:Presentation.ViewModels"
+             x:DataType="viewModels:CreateReceptionistViewModel"
+             x:Class="Presentation.Pages.Profiles.Receptionists.ReceptionistCreationPage">
+    <ContentPage.Content>
+        <ScrollView>
+            <VerticalStackLayout>
+                <HorizontalStackLayout Margin="0,40,0,0">
+                    <Label Style="{StaticResource InfoLabel}"
+                           Text="{x:Static resources:NavigationResources.FirstName_}">
+                    </Label>
+                    <Entry Text="{Binding CreateReceptionistModel.FirstName}"
+                           Style="{StaticResource EditableEntry}"
+                           MinimumWidthRequest="250">
+                    </Entry>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Margin="0,40,0,0">
+                    <Label Style="{StaticResource InfoLabel}"
+                           Text="{x:Static resources:NavigationResources.LastName_}">
+                    </Label>
+                    <Entry Text="{Binding CreateReceptionistModel.LastName}"
+                           Style="{StaticResource EditableEntry}"
+                           MinimumWidthRequest="250">
+                    </Entry>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Margin="0,40,0,0">
+                    <Label Style="{StaticResource InfoLabel}"
+                           Text="{x:Static resources:NavigationResources.MiddleName_}">
+                    </Label>
+                    <Entry Text="{Binding CreateReceptionistModel.MiddleName }"
+                           Style="{StaticResource EditableEntry}"
+                           MinimumWidthRequest="250">
+                    </Entry>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Margin="0,40,0,0">
+                    <Label Style="{StaticResource InfoLabel}"
+                           Text="{x:Static resources:NavigationResources.Email_}">
+                    </Label>
+                    <Entry Text="{Binding  CreateReceptionistModel.Email }"
+                           Style="{StaticResource EditableEntry}"
+                           MinimumWidthRequest="250">
+                    </Entry>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Margin="0,40,0,0">
+                    <Label Style="{StaticResource InfoLabel}"
+                           Text="{x:Static resources:NavigationResources.Office_}">
+                    </Label>
+                    <Picker ItemsSource="{Binding OfficesAddresses}"
+                            SelectedItem="{Binding .SelectedOfficeAddress}"></Picker>
+                </HorizontalStackLayout>
+                <Button
+                    Style="{StaticResource ManipulationButton}"
+                    Command="{Binding CreateProfileCommand}"
+                    Text="{x:Static resources:NavigationResources.CreateProfile}"></Button>
+            </VerticalStackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

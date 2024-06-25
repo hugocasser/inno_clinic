@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="LoginSuccessed" xml:space="preserve">
+        <value>Login passed! Enjoy your work!</value>
+    </data>
+    <data name="LoginFailed" xml:space="preserve">
+        <value>Login failed!</value>
+    </data>
+    <data name="IncorrectCredentials" xml:space="preserve">
+        <value>Ops! Email or password are incorrect</value>
+    </data>
+    <data name="ProfileNotFound" xml:space="preserve">
+        <value>Profile not found</value>
+    </data>
+    <data name="Error" xml:space="preserve">
+        <value>Ops! Some error occured :(</value>
+    </data>
+    <data name="Ok" xml:space="preserve">
+        <value>Ok</value>
+    </data>
+    <data name="StatusNotFound" xml:space="preserve">
+        <value>Status not found</value>
+    </data>
+    <data name="SpecializationNotFound" xml:space="preserve">
+        <value>Specialization not found</value>
+    </data>
+    <data name="SpecializationsNotFound" xml:space="preserve">
+        <value>Specializations not found</value>
+    </data>
+    <data name="StatusesNotFound" xml:space="preserve">
+        <value>Statuses not found</value>
+    </data>
+    <data name="Cancel_" xml:space="preserve">
+        <value>You will be lose all unsaved changes</value>
+    </data>
+    <data name="AreYouSure" xml:space="preserve">
+        <value>Are you sure?</value>
+    </data>
+    <data name="Save_" xml:space="preserve">
+        <value>If you save changes, you can't rollback changes</value>
+    </data>
+    <data name="Back" xml:space="preserve">
+        <value>Back</value>
+    </data>
+    <data name="Continue" xml:space="preserve">
+        <value>Continue</value>
+    </data>
+    <data name="WontCanRollbackProfile" xml:space="preserve">
+        <value>You won't can rollback profile</value>
+    </data>
+    <data name="Success" xml:space="preserve">
+        <value>Success</value>
+    </data>
+    <data name="ProfileCreated" xml:space="preserve">
+        <value>Profile created</value>
+    </data>
+    <data name="EmailAlreadyExists" xml:space="preserve">
+        <value>Email already exists</value>
+    </data>
+    <data name="SomethingWentWrong" xml:space="preserve">
+        <value>Something went wrong</value>
+    </data>
+    <data name="Unathorized" xml:space="preserve">
+        <value>Unathorized</value>
+    </data>
+</root>

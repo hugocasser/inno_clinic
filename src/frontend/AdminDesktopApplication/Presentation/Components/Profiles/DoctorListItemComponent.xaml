@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:resources="clr-namespace:Presentation.Resources"
+             x:Class="Presentation.Components.Profiles.DoctorListItemComponent"
+             x:Name="DoctorItemComponent">
+        <Frame CornerRadius="10" BorderColor="Black" >
+            <HorizontalStackLayout
+                BindingContext="{Binding Source = {x:Reference DoctorItemComponent}}"
+                HeightRequest="150">
+                <Frame BorderColor="Black" CornerRadius="45" HeightRequest="100" Width="100">
+                    <Image Source="{Binding DoctorListItem.Photo }"></Image>
+                </Frame>
+                <VerticalStackLayout Margin="90, 0 , 0,0">
+                    <Label Text="{Binding DoctorListItem.FullName}"
+                           FontFamily="JetBrainsMono" FontSize="16"
+                           LineBreakMode="NoWrap"
+                           Margin="0, 5, 0, 15"></Label>
+                    <Label Text="{Binding DoctorListItem.DateOfBirth}"
+                           FontFamily="JetBrainsMono"
+                           FontSize="12"></Label>
+                    <Label Text="{Binding DoctorListItem.Specialization}"
+                           FontFamily="JetBrainsMono"
+                           FontSize="12"></Label>
+                    <Label Text="{Binding DoctorListItem.Status}"
+                           FontFamily="JetBrainsMono"
+                           FontSize="12"></Label>
+                    <Button Text="{x:Static resources:NavigationResources.ShowProfile}"
+                            MaximumHeightRequest="25" MaximumWidthRequest="100" WidthRequest="100" BackgroundColor="LightSkyBlue"
+                            Margin="0, 10, 40, 5" Clicked="GoToProfile_OnClicked"
+                            Padding="0, 0, 0, 0"
+                            VerticalOptions="End"
+                            HorizontalOptions="Center"></Button>
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
+        </Frame>
+</ContentView>

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:menu="clr-namespace:Presentation.Components.Menu"
+             xmlns:resources="clr-namespace:Presentation.Resources"
+             x:Class="Presentation.Pages.MainPage"
+             Title="{x:Static resources:NavigationResources.Home}"
+             x:Name="MainPageComponent"
+             Shell.NavBarIsVisible="false">
+    <ScrollView x:Name="Page">
+        <HorizontalStackLayout  x:Name="Container">
+            <menu:MenuComponent></menu:MenuComponent>
+        </HorizontalStackLayout>
+    </ScrollView>
+
+</ContentPage>

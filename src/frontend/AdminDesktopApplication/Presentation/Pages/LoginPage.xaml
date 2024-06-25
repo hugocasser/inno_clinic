@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:resources="clr-namespace:Presentation.Resources"
+             xmlns:auth="clr-namespace:Presentation.Components.Auth"
+             xmlns:viewModels="clr-namespace:Presentation.ViewModels"
+             x:Class="Presentation.Pages.LoginPage"
+             x:DataType="viewModels:LoginViewModel"
+             Title="Login" Shell.NavBarIsVisible="false">
+    <ContentPage.Content>
+        <VerticalStackLayout Background="Beige">
+            <auth:EmailInput Email="{Binding Email}"
+                             EmailChanged="InputEmailView_OnEmailChanged"
+                             IsEmailValid="{Binding EmailIsValid}"
+                             x:DataType="viewModels:LoginViewModel" />
+            <auth:PasswordInput Password="{Binding Password}"
+                                PasswordChanged="InputPasswordView_OnPasswordChanged"
+                                x:DataType="viewModels:LoginViewModel"
+                                IsPasswordValid="{Binding PasswordIsValid}"/>
+            <Button Style="{StaticResource AuthApplyButton}"
+                                                        Text ="{x:Static resources:NavigationResources.Login}"
+                                                        MaximumHeightRequest="100"
+                                                        MinimumHeightRequest="20"
+                                                        VerticalOptions="Center"
+                                                        MaximumWidthRequest="300"
+                                                        MinimumWidthRequest="70" Margin="0, 80, 0, 20"
+                                                        Command="{Binding LoginCommand}"
+                                                        x:DataType="viewModels:LoginViewModel"
+                                                        IsEnabled="{Binding IsLoginButtonEnabled}"></Button>
+        </VerticalStackLayout>
+    </ContentPage.Content>
+</ContentPage>
