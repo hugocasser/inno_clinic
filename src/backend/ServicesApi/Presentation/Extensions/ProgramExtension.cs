@@ -1,13 +1,7 @@
-using System.Net.Mime;
-using System.Reflection;
-using Application;
-using FastEndpoints;
-using FastEndpoints.Swagger;
-using Infrastructure;
-using Infrastructure.Persistence.Write;
+using BLL;
+using DLL;
 using Microsoft.AspNetCore.Cors.Infrastructure;
-using Microsoft.EntityFrameworkCore;
-using Presentation.Common;
+using Presentation.Endpoints;
 using Presentation.Middlewares;
 
 namespace Presentation.Extensions;
@@ -21,28 +15,28 @@ public static class ProgramExtension
             .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)
             .AddEnvironmentVariables()
             .Build();
-        
+
         builder
             .Services
-            .AddApplication()
-            .AddInfrastructure()
-            .AddIdentity()
-            .AddLogging()
+            .AddDataLayer()
+            .AddBusinessLayer()
+            .AddCors(options => options.ConfigureAllowAllCors())
             .AddEndpointsApiExplorer()
-            .AddSwaggerGen()
-            .AddFastEndpoints()
-            .SwaggerDocument()
-            .AddControllers();
+            .AddSwaggerGen();
+            // .AddAuthorization()
+            // .AddAuthentication();
 
         builder.AddLoggingServices();
         
         return builder;
     }
-    
+
     public static WebApplication ConfigureApplication(this WebApplication app)
     {
-        app.UseMiddleware<ErrorHandlerMiddleware>();
-        app.UseLogging();
+        app
+            .UseMiddleware<ExceptionHandlerMiddleware>()
+            .UseLogging()
+            .UseMiddleware<ValidationMiddleware>();
         
         if (app.Environment.IsDevelopment())
         {
@@ -53,32 +47,21 @@ public static class ProgramExtension
                 c.RoutePrefix = "swagger";
             });
         }
-        
-        app.UseAuthentication();
-        app.UseAuthorization();
+        // app.UseAuthentication();
+        // app.UseAuthorization();
         app.UseCors("AllowAll");
-        app.UseFastEndpoints(config =>
-        {
-            config.Endpoints.RoutePrefix = "api";
-            config.Endpoints.ShortNames = true;
-        });
-
-        app.MapControllers();
+        
+        app
+            .MapServicesEndpoints()
+            .MapSpecializationsEndpoints()
+            .MapCategoriesEndpoints();
         
         return app;
     }
-    
-    public static async Task RunApplicationAsync(this WebApplication app)
-    {
-        using var scope = app.Services.CreateScope();
-        var services = scope.ServiceProvider;
-        
-        var context = services.GetRequiredService<ProfilesWriteDbContext>();
-        await context.Database.MigrateAsync();
 
-        await DataSeeder.SeedStatuses(context);
-        
-        await app.RunAsync();
+    public static Task RunApplicationAsync(this WebApplication app)
+    {
+        return app.RunAsync();
     }
     
     private static CorsOptions ConfigureAllowAllCors(this CorsOptions options)
