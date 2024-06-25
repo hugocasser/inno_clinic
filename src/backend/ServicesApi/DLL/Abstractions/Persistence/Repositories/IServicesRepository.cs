@@ -1,4 +1,5 @@
 using System.Data;
+using DLL.Dtos;
 using DLL.Models;
 
 namespace DLL.Abstractions.Persistence.Repositories;
@@ -12,4 +13,5 @@ public interface IServicesRepository : IBaseRepository
     public Task<bool> IsExistsAsync(Guid id);
     public Task<Service?> GetByIdAsync(Guid id);
     public Task<int> DeleteAsync(Guid serviceId);
+    public Task<ServiceFullDto?> GetFullByIdAsync(Guid id);
 };

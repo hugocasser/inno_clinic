@@ -1,13 +1,16 @@
+using System.ComponentModel.DataAnnotations;
+using BLL.Abstractions;
 using DLL.Models;
+using ValidationResult = FluentValidation.Results.ValidationResult;
 
-namespace BLL.Dtos.Requests;
+namespace BLL.Dtos.Requests.CreateService;
 
 public record CreateServiceDto(
     string Name,
     Guid SpecializationId,
     Guid CategoryId,
     bool IsActive,
-    int Price)
+    int Price) : IRequestDto
 {
     public Service MapToModel()
     {
@@ -20,5 +23,10 @@ public record CreateServiceDto(
             IsActive = IsActive,
             Price = Price
         };
+    }
+
+    public ValidationResult Validate()
+    {
+        return new CreateServiceDtoValidator().Validate(this);
     }
 };

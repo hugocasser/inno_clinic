@@ -1,12 +1,12 @@
+using System.ComponentModel.DataAnnotations;
+using BLL.Abstractions;
 using DLL.Models;
+using ValidationResult = FluentValidation.Results.ValidationResult;
 
 namespace BLL.Dtos.Requests.CreateSpecialization;
 
-public class CreateSpecializationDto
-{
-    public string Name { get; set; } = string.Empty;
-    public bool IsActive { get; set; }
-    
+public record CreateSpecializationDto(string Name, bool IsActive) : IRequestDto
+{ 
     public  Specialization MapToModel()
     {
         return new Specialization
@@ -15,5 +15,10 @@ public class CreateSpecializationDto
             Name = Name,
             IsActive = IsActive
         };
+    }
+
+    public ValidationResult Validate()
+    {
+        return new CreateSpecializationDtoValidator().Validate(this);
     }
 }

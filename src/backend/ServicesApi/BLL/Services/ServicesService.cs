@@ -1,5 +1,6 @@
 using BLL.Abstractions.Services;
 using BLL.Dtos.Requests;
+using BLL.Dtos.Requests.CreateService;
 using BLL.Dtos.Requests.PageSettings;
 using BLL.Dtos.Requests.ServiceUpdate;
 using BLL.Dtos.Views;
@@ -83,7 +84,7 @@ public class ServicesService
 
     public async Task<OperationResult> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        var service = await servicesRepository.GetByIdAsync(id);
+        var service = await servicesRepository.GetFullByIdAsync(id);
 
         if (service is null)
         {
@@ -92,7 +93,7 @@ public class ServicesService
         
         servicesRepository.Commit();
 
-        return ResultBuilder.Success(ServiceViewDto.FromModel(service));
+        return ResultBuilder.Success(service);
     }
 
     public async Task<OperationResult> UpdateAsync(ServiceUpdateDto request, CancellationToken cancellationToken = default)

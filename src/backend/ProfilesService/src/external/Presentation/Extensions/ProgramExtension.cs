@@ -30,7 +30,6 @@ public static class ProgramExtension
             .AddLogging()
             .AddEndpointsApiExplorer()
             .AddSwaggerGen()
-            .AddCors(options => options.ConfigureAllowAllCors())
             .AddFastEndpoints()
             .SwaggerDocument()
             .AddControllers();

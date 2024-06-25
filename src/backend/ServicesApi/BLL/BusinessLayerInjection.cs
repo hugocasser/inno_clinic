@@ -16,6 +16,7 @@ public static class BusinessLayerInjection
     {
         return services
             .AddScoped<IServicesService, ServicesService>()
-            .AddScoped<ISpecializationsService, SpecializationsService>();
+            .AddScoped<ISpecializationsService, SpecializationsService>()
+            .AddScoped<ICategoriesService, CategoriesService>();
     }
 }

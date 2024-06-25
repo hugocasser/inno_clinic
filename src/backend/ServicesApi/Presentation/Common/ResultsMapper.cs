@@ -4,7 +4,7 @@ namespace Presentation.Common;
 
 public static class ResultsMapper
 {
-    public static IResult MapFormOutputResult(OperationResult operationResult)
+    public static IResult MapFormOperationResult(OperationResult operationResult)
     {
         if (operationResult.IsSuccess)
         {

@@ -24,7 +24,8 @@ public class SpecializationsService(ISpecializationsRepository specializationsRe
             : ResultBuilder.Success(specialization.Id);
     }
 
-    public async Task<OperationResult> ChangeStatusAsync(Guid specializationId, bool status, CancellationToken cancellationToken)
+    public async Task<OperationResult> ChangeStatusAsync(Guid specializationId, bool status,
+        CancellationToken cancellationToken)
     {
         var specialization = await specializationsRepository.GetByIdAsync(specializationId);
 
@@ -89,7 +90,7 @@ public class SpecializationsService(ISpecializationsRepository specializationsRe
             : ResultBuilder.NotFound(RespounseMessages.SpecializationNotFound);
     }
 
-    public async Task<OperationResult> GetAllAsync(PageSettings pageSettings, CancellationToken cancellationToken = default)
+    public async Task<OperationResult> GetAllAsync(PageSettings pageSettings, CancellationToken cancellationToken)
     {
         var take = pageSettings.PageSize;
         var skip = (pageSettings.PageNumber - 1) * take;

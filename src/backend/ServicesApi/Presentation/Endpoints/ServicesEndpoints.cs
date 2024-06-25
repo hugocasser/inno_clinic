@@ -1,5 +1,6 @@
 using BLL.Abstractions.Services;
 using BLL.Dtos.Requests;
+using BLL.Dtos.Requests.CreateService;
 using BLL.Dtos.Requests.PageSettings;
 using BLL.Dtos.Requests.ServiceUpdate;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +10,7 @@ namespace Presentation.Endpoints;
 
 public static class ServicesEndpoints
 {
-    public static void MapServicesEndpoints(this IEndpointRouteBuilder app)
+    public static IEndpointRouteBuilder MapServicesEndpoints(this IEndpointRouteBuilder app)
     {
         app.MapGet("/api/services/{pageNumber:int}/{pageSize:int}", 
             async ([FromRoute]int pageNumber, [FromRoute]int pageSize, [FromServices]IServicesService servicesService,
@@ -17,7 +18,7 @@ public static class ServicesEndpoints
         {
             var result = await servicesService.GetAllAsync(new PageSettings(pageSize, pageNumber),cancellationToken);
             
-            return ResultsMapper.MapFormOutputResult(result);
+            return ResultsMapper.MapFormOperationResult(result);
         });
         
         app.MapGet("/api/services/{id:guid}", 
@@ -26,7 +27,7 @@ public static class ServicesEndpoints
         {
             var result = await servicesService.GetByIdAsync(id, cancellationToken);
             
-            return ResultsMapper.MapFormOutputResult(result);
+            return ResultsMapper.MapFormOperationResult(result);
         });
         
         app.MapPut("/api/services", 
@@ -35,7 +36,7 @@ public static class ServicesEndpoints
         {
             var result = await servicesService.UpdateAsync(request, cancellationToken);
             
-            return ResultsMapper.MapFormOutputResult(result);
+            return ResultsMapper.MapFormOperationResult(result);
         });
         
         app.MapPost("/api/services/", 
@@ -44,7 +45,7 @@ public static class ServicesEndpoints
         {
             var result = await servicesService.AddAsync(request, cancellationToken);
             
-            return ResultsMapper.MapFormOutputResult(result);
+            return ResultsMapper.MapFormOperationResult(result);
         });
         
         app.MapDelete("/api/services/{id:guid}", 
@@ -53,7 +54,7 @@ public static class ServicesEndpoints
         {
             var result = await servicesService.RemoveAsync(id, cancellationToken);
             
-            return ResultsMapper.MapFormOutputResult(result);
+            return ResultsMapper.MapFormOperationResult(result);
         });
         
         app.MapGet("/api/services/status/{id:guid}/{status:bool}", 
@@ -62,7 +63,9 @@ public static class ServicesEndpoints
         {
             var result = await servicesService.ChangeStatusAsync(id, status, cancellationToken);
             
-            return ResultsMapper.MapFormOutputResult(result);
+            return ResultsMapper.MapFormOperationResult(result);
         });
+        
+        return app;
     }
 }
