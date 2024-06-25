@@ -13,13 +13,11 @@ public class SpecializationsService(ISpecializationsRepository specializationsRe
 {
     public async Task<OperationResult> CreateAsync(CreateSpecializationDto request, CancellationToken cancellationToken)
     {
-        using var transaction = specializationsRepository.CurrentTransaction();
-        
         var specialization = request.MapToModel();
         
         var queryResult = await specializationsRepository.AddAsync(specialization);
 
-        specializationsRepository.SaveChanges();
+        specializationsRepository.Commit();
         
         return queryResult !=1 
             ? ResultBuilder.UnexpectedError() 
@@ -28,8 +26,6 @@ public class SpecializationsService(ISpecializationsRepository specializationsRe
 
     public async Task<OperationResult> ChangeStatusAsync(Guid specializationId, bool status, CancellationToken cancellationToken)
     {
-        using var transaction = specializationsRepository.CurrentTransaction();
-        
         var specialization = await specializationsRepository.GetByIdAsync(specializationId);
 
         if (specialization is null)
@@ -46,11 +42,12 @@ public class SpecializationsService(ISpecializationsRepository specializationsRe
 
         if (queryResult != 1)
         {
-            transaction.Rollback();
+            specializationsRepository.Rollback();
+            
             return ResultBuilder.UnexpectedError();    
         }
         
-        specializationsRepository.SaveChanges();
+        specializationsRepository.Commit();
 
         return ResultBuilder.Success();
     }
@@ -58,8 +55,6 @@ public class SpecializationsService(ISpecializationsRepository specializationsRe
     public async Task<OperationResult> EditSpecializationAsync(EditSpecializationDto request,
         CancellationToken cancellationToken)
     {
-        using var transaction = specializationsRepository.CurrentTransaction();
-        
         var isExists = await specializationsRepository.IsExistsAsync(request.Id);
         
         if (!isExists)
@@ -73,22 +68,21 @@ public class SpecializationsService(ISpecializationsRepository specializationsRe
         
         if (queryResult != 1)
         {
-            transaction.Rollback();
+            specializationsRepository.Rollback();
+            
             return ResultBuilder.UnexpectedError();
         }
         
-        specializationsRepository.SaveChanges();
+        specializationsRepository.Commit();
         
         return ResultBuilder.Success();
     }
 
     public async Task<OperationResult> GetByIdAsync(Guid specializationId, CancellationToken cancellationToken)
     {
-        using var transaction = specializationsRepository.CurrentTransaction();
-        
         var specialization = await specializationsRepository.GetByIdAsync(specializationId);
 
-        specializationsRepository.SaveChanges();
+        specializationsRepository.Commit();
         
         return specialization is not null 
             ? ResultBuilder.Success(SpecializationViewDto.MapFromModel(specialization))
@@ -97,15 +91,13 @@ public class SpecializationsService(ISpecializationsRepository specializationsRe
 
     public async Task<OperationResult> GetAllAsync(PageSettings pageSettings, CancellationToken cancellationToken = default)
     {
-        using var transaction = specializationsRepository.CurrentTransaction();
-        
         var take = pageSettings.PageSize;
         var skip = (pageSettings.PageNumber - 1) * take;
         
         var queryResult = await specializationsRepository
             .GetAllAsync(take, skip);
         
-        specializationsRepository.SaveChanges();
+        specializationsRepository.Commit();
         
         return ResultBuilder
             .Success(queryResult

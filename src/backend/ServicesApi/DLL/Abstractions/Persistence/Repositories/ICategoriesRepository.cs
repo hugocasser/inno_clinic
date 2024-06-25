@@ -5,5 +5,6 @@ namespace DLL.Abstractions.Persistence.Repositories;
 public interface ICategoriesRepository : IBaseRepository
 {
     public Task<bool> AddAsync(Category category, CancellationToken cancellationToken);
-    public Task<IReadOnlyCollection<Category>> GetAllAsync(int take = 10, int skip = 0, CancellationToken cancellationToken = default); 
+    public Task<IReadOnlyCollection<Category>> GetAllAsync();
+    public Task<bool> IsExistsAsync(Guid requestCategoryId);
 }

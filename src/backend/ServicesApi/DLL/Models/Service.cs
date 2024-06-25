@@ -8,6 +8,4 @@ public class Service : Entity
     public Guid SpecializationId { get; set; }
     public bool IsActive { get; set; } = false;
     public Guid CategoryId { get; set; }
-    
-    
 }

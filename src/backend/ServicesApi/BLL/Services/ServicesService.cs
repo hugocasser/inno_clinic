@@ -5,19 +5,17 @@ using BLL.Dtos.Requests.ServiceUpdate;
 using BLL.Dtos.Views;
 using BLL.Resources;
 using BLL.Result;
-using Dapper;
 using DLL.Abstractions.Persistence.Repositories;
-using DLL.Models;
-using DLL.Persistence.Repositories;
 
 namespace BLL.Services;
 
-public class ServicesService(ISpecializationsRepository specializationsRepository, IServicesRepository servicesRepository) : IServicesService
+public class ServicesService
+    (ISpecializationsRepository specializationsRepository,
+        IServicesRepository servicesRepository,
+        ICategoriesRepository categoriesRepository) : IServicesService
 {
     public async Task<OperationResult> AddAsync(CreateServiceDto request, CancellationToken cancellationToken)
     {
-        using var transaction = servicesRepository.CurrentTransaction();
-        
         var isSpecializationExist = await specializationsRepository.IsExistsAsync(request.SpecializationId);
         
         if (!isSpecializationExist)
@@ -25,89 +23,81 @@ public class ServicesService(ISpecializationsRepository specializationsRepositor
             return ResultBuilder.BadRequest(RespounseMessages.SpecializationNotFound);
         }
         
-        var isCategoryExist = await transaction.Connection!.IsExistsAsync<Category>(request.CategoryId);
+        var isCategoryExist = await categoriesRepository.IsExistsAsync(request.CategoryId);
         
         if (!isCategoryExist)
         {
             return ResultBuilder.BadRequest(RespounseMessages.CategoryNotFound);
         }
-        
-        var id = Guid.NewGuid();
-        
-        var addQuery = $"INSERT INTO Services (id, name, specialization_id, category_id, status, price)" +
-            $" VALUES ({id}, {request.Name}, {request.SpecializationId}, {request.CategoryId}, {request.IsActive}, {request.Price})";
-        
-        var result = await transaction.Connection!.ExecuteAsync(addQuery, transaction: transaction);
+
+        var model = request.MapToModel();
+        var result = await servicesRepository.AddAsync(model);
         
         if (result != 1)
         {
             return ResultBuilder.UnexpectedError();
         }
-        servicesRepository.SaveChanges();
+        servicesRepository.Commit();
 
-        return ResultBuilder.Success(id);
+        return ResultBuilder.Success(model.Id);
     }
 
     public async Task<OperationResult> RemoveAsync(Guid serviceId, CancellationToken cancellationToken)
     {
-        using var transaction = servicesRepository.CurrentTransaction();
-        var isExists = await servicesRepository.CurrentTransaction().Connection!.IsExistsAsync<Service>(serviceId, transaction: servicesRepository.CurrentTransaction());
+        var isExists = await servicesRepository.IsExistsAsync(serviceId);
         
         if (!isExists)
         {
             return ResultBuilder.NotFound(RespounseMessages.ServiceNotFound);
         }
         
-        await transaction.Connection!.DeleteAsync<Service>(serviceId, transaction);
+        var result = await servicesRepository.DeleteAsync(serviceId);
         
-        servicesRepository.SaveChanges();
+        if (result != 1)
+        {
+            servicesRepository.Rollback();
+            
+            return ResultBuilder.UnexpectedError();
+        }
+        
+        servicesRepository.Commit();
         
         return ResultBuilder.Success();
     }
 
     public async Task<OperationResult> GetAllAsync(PageSettings pageSettings, CancellationToken cancellationToken = default)
     {
-     
-        using var transaction = servicesRepository.CurrentTransaction();
         var take = pageSettings.PageSize;
         var skip = (pageSettings.PageNumber - 1) * pageSettings.PageSize;
         
-        var query = $"SELECT Id, Name, Status, Price FROM Services WHERE IsDeleted = false LIMIT {take} OFFSET {skip}";
-        var result = await servicesRepository.CurrentTransaction()
-            .Connection!.QueryAsync<Service>(query, transaction: transaction);
+        var result = await servicesRepository.GetAllAsync(take, skip);
         
         var mappedResult = result.ToList().Select(ServiceListItemViewDto.FromModel).ToList();
         
         var operationResult = ResultBuilder.Success(mappedResult);
         
-        servicesRepository.SaveChanges();
+        servicesRepository.Commit();
         
         return operationResult;
     }
 
     public async Task<OperationResult> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        using var transaction = servicesRepository.CurrentTransaction();
-        
-        var service = await servicesRepository.CurrentTransaction()
-            .Connection!.GetByIdAsync<Service>(id, transaction);
+        var service = await servicesRepository.GetByIdAsync(id);
 
         if (service is null)
         {
             return ResultBuilder.NotFound(RespounseMessages.ServiceNotFound);
         }
         
-        servicesRepository.SaveChanges();
+        servicesRepository.Commit();
 
         return ResultBuilder.Success(ServiceViewDto.FromModel(service));
     }
 
     public async Task<OperationResult> UpdateAsync(ServiceUpdateDto request, CancellationToken cancellationToken = default)
     {
-        using var transaction = servicesRepository.CurrentTransaction();
-        
-        var service = await servicesRepository.CurrentTransaction()
-            .Connection!.GetByIdAsync<Service>(request.Id, transaction);
+        var service = await servicesRepository.GetByIdAsync(request.Id);
         
         if (service is null)
         {
@@ -121,7 +111,7 @@ public class ServicesService(ISpecializationsRepository specializationsRepositor
             return ResultBuilder.BadRequest(RespounseMessages.SpecializationNotFound);
         }
         
-        var isCategoryExist = await transaction.Connection!.IsExistsAsync<Category>(request.CategoryId);
+        var isCategoryExist = await categoriesRepository.IsExistsAsync(request.CategoryId);
 
         if (!isCategoryExist)
         {
@@ -134,28 +124,23 @@ public class ServicesService(ISpecializationsRepository specializationsRepositor
         service.SpecializationId = request.SpecializationId;
         service.CategoryId = request.CategoryId;
         
-        var query = $"UPDATE Services SET name = {request.Name}, specialization_id = {request.SpecializationId}, " +
-            $"category_id = {request.CategoryId}, status = {request.IsActive}, price = {request.Price} WHERE id = {request.Id}";
-        
-        var result = await transaction.Connection!.ExecuteAsync(query, transaction: transaction);
+        var result = await servicesRepository.UpdateAsync(service);
 
         if (result != 1)
         {
-            transaction.Rollback();
+            servicesRepository.Rollback();
 
             return ResultBuilder.UnexpectedError();
         }
         
-        servicesRepository.SaveChanges(); 
+        servicesRepository.Commit(); 
         
         return ResultBuilder.Success();
     }
 
     public async Task<OperationResult> ChangeStatusAsync(Guid id, bool status, CancellationToken cancellationToken = default)
     {
-        var transaction = servicesRepository.CurrentTransaction();
-        
-        var service = await transaction.Connection!.GetByIdAsync<Service>(id, transaction);
+        var service = await servicesRepository.GetByIdAsync(id);
         
         if (service is null)
         {
@@ -166,10 +151,8 @@ public class ServicesService(ISpecializationsRepository specializationsRepositor
         {
             return ResultBuilder.BadRequest(RespounseMessages.ServiceStatusNotChanged);
         }
-        
-        var query = $"UPDATE Services SET status = {status} WHERE id = {id}";
 
-        return await transaction.Connection!.ExecuteAsync(query, transaction: transaction) == 1
+        return await servicesRepository.UpdateStatusAsync(id, status) == 1
             ? ResultBuilder.Success()
             : ResultBuilder.UnexpectedError();
     }

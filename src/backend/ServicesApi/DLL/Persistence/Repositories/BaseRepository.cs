@@ -22,9 +22,19 @@ public class BaseRepository : IBaseRepository
         return DbTransaction;
     }
 
-    public void SaveChanges()
+    public void Commit()
     {
         DbTransaction.Commit();
         DbTransaction.Connection!.Close();
+        
+        DbTransaction.Dispose();
+    }
+
+    public void Rollback()
+    {
+        DbTransaction.Rollback();
+        DbTransaction.Connection!.Close();
+        
+        DbTransaction.Dispose();
     }
 }

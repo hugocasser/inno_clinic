@@ -11,7 +11,7 @@ public class CategoriesRepository(IOptions<PostgresOptions> options) :
 {
     public async Task<bool> AddAsync(Category category, CancellationToken cancellationToken)
     {
-        var query = $"INSERT INTO Categories (Id, Name) VALUES ({category.Id}, {category.Name})";
+        const string query = $"INSERT INTO Categories (Id, Name) VALUES (@Id, @Name)";
 
         var result = await DbTransaction.Connection!
             .ExecuteAsync(query, new { Id = category.Id, Name = category.Name }, DbTransaction);
@@ -19,13 +19,24 @@ public class CategoriesRepository(IOptions<PostgresOptions> options) :
         return result == 0;
     }
 
-    public async Task<IReadOnlyCollection<Category>> GetAllAsync(int take = 10, int skip = 0,
-        CancellationToken cancellationToken = default)
+    public async Task<IReadOnlyCollection<Category>> GetAllAsync()
     {
-        var query = $"SELECT * FROM Categories WHERE IsDeleted = false LIMIT {take} OFFSET {skip}";
+        const string query = $"SELECT Id, Name FROM Categories WHERE IsDeleted = false";
 
         var result = await DbTransaction.Connection!.QueryAsync<Category>(query, transaction: DbTransaction);
 
         return result.ToList();
+    }
+
+    public async Task<bool> IsExistsAsync(Guid requestCategoryId)
+    {
+        const string query = $"SELECT Id FROM Categories WHERE Id = @Id AND IsDeleted = false";
+        
+        var result = await DbTransaction.Connection!.QueryFirstOrDefaultAsync<Category>(query, new
+        {
+            Id = requestCategoryId
+        }, DbTransaction);
+        
+        return result is not null;
     }
 }

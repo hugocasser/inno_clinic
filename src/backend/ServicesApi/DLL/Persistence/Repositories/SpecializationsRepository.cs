@@ -9,31 +9,39 @@ namespace DLL.Persistence.Repositories;
 public class SpecializationsRepository(IOptions<PostgresOptions> options) :
     BaseRepository(options), ISpecializationsRepository
 {
-    public async Task<int> AddAsync(Specialization specialization)
+    public Task<int> AddAsync(Specialization specialization)
     {
-        var query = $"INSERT INTO Specializations (Id, Name, IsActive) VALUES" +
-            $" ({specialization.Id}, {specialization.Name}, {specialization.IsActive})";
+        const string query = $"INSERT INTO Specializations (Id, Name, IsActive, IsDeleted) VALUES (@Id, @Name, @IsActive, false)";
         
-        var result = await DbTransaction.Connection!.ExecuteAsync(query, DbTransaction);
-        
-        return result;
+        return DbTransaction.Connection!.ExecuteAsync(query,new
+        {
+            Id = specialization.Id,
+            Name = specialization.Name,
+            IsActive = specialization.IsActive
+        }, DbTransaction);
     }
 
-    public async Task<IReadOnlyCollection<Specialization>> GetAllAsync(int take = 10, int skip = 0)
+    public Task<IEnumerable<Specialization>> GetAllAsync(int take = 10, int skip = 0)
     {
-        var query = $"SELECT * FROM Specializations WHERE IsDeleted = false LIMIT {take} OFFSET {skip}";
+        const string query = $"SELECT * FROM Specializations WHERE IsDeleted = false LIMIT @Take OFFSET @Take";
         
-        var result = await DbTransaction.Connection!
-            .QueryAsync<Specialization>(query, DbTransaction);
-        
-        return result.ToList();
+        return DbTransaction.Connection!
+            .QueryAsync<Specialization>(query,new
+            {
+                Take = take,
+                Skip = skip
+            }, DbTransaction);
     }
 
     public Task<int> UpdateStatusAsync(Guid id, bool status)
     {
-        var query = $"UPDATE Specializations SET IsActive = {status} WHERE Id = @Id AND IsDeleted = false";
-        
-        return DbTransaction.Connection!.ExecuteAsync(query, new { Id = id }, DbTransaction);
+        const string query = $"UPDATE Specializations SET IsActive = @Status WHERE Id = @Id AND IsDeleted = false";
+
+        return DbTransaction.Connection!.ExecuteAsync(query, new
+        {
+            Id = id,
+            IsActive = status
+        }, DbTransaction);
     }
 
     public Task<int> UpdateAsync(Specialization specialization, bool status)
