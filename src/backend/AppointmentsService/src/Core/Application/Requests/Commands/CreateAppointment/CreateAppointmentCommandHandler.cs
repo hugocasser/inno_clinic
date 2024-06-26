@@ -7,7 +7,8 @@ using MediatR;
 namespace Application.Requests.Commands.CreateAppointment;
 
 public class CreateAppointmentCommandHandler
-    (IAppointmentsRepository appointmentsRepository,
+    (
+        IAppointmentsRepository appointmentsRepository,
         IProfilesService profilesService,
         IServicesService servicesService) : IRequestHandler<CreateAppointmentCommand, OperationResult>
 {
@@ -45,6 +46,16 @@ public class CreateAppointmentCommandHandler
         var appointment = request.MapToAppointment();
         
         appointmentsRepository.StartTransaction();
+
+        var timeCheck = await appointmentsRepository
+            .IsTimeFreeAsync(appointment.Date, appointment.Time, cancellationToken);
+        
+        if (!timeCheck)
+        {
+            appointmentsRepository.Rollback();
+            
+            return ResultBuilder.BadRequest(RespounseMessages.TimeIsNotFree);
+        }
         
         var result = await appointmentsRepository.AddAsync(appointment, cancellationToken);
 

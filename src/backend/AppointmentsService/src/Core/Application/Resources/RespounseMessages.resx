@@ -48,4 +48,10 @@
     <data name="ServiceNotFound" xml:space="preserve">
         <value>Service not found</value>
     </data>
+    <data name="TimeIsNotFree" xml:space="preserve">
+        <value>Time is not free</value>
+    </data>
+    <data name="AppointmentNotFound" xml:space="preserve">
+        <value>Appointment not found</value>
+    </data>
 </root>

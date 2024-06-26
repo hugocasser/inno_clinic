@@ -7,4 +7,5 @@ public class Result
     public string Conclusion { get; set; } = string.Empty;
     public string Recommendation { get; set; } = string.Empty;
     public Guid AppointmentId { get; set; }
+    public bool IsDeleted { get; set; }
 }

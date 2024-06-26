@@ -104,5 +104,17 @@ namespace Application.Resources {
                 return ResourceManager.GetString("ServiceNotFound", resourceCulture);
             }
         }
+        
+        internal static string TimeIsNotFree {
+            get {
+                return ResourceManager.GetString("TimeIsNotFree", resourceCulture);
+            }
+        }
+        
+        internal static string AppointmentNotFound {
+            get {
+                return ResourceManager.GetString("AppointmentNotFound", resourceCulture);
+            }
+        }
     }
 }

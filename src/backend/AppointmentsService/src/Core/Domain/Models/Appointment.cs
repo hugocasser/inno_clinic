@@ -10,4 +10,5 @@ public class Appointment
     public DateOnly Date { get; set; }
     public TimeOnly Time { get; set; }
     public bool IsApproved { get; set; }
+    public bool IsDeleted { get; set; }
 }
