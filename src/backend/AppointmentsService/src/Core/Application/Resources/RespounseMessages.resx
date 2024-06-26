@@ -27,4 +27,25 @@
     <data name="NotFound" xml:space="preserve">
         <value>Not found</value>
     </data>
+    <data name="PatientNotFound" xml:space="preserve">
+        <value>Patient not found</value>
+    </data>
+    <data name="OfficeNotFound" xml:space="preserve">
+        <value>Office not found</value>
+    </data>
+    <data name="DoctorNotFound" xml:space="preserve">
+        <value>Doctor not found</value>
+    </data>
+    <data name="SpecializationNotFound" xml:space="preserve">
+        <value>Specialization not found</value>
+    </data>
+    <data name="DoctorDoNotHaveThisSpecialization" xml:space="preserve">
+        <value>Doctor don't have this specialization</value>
+    </data>
+    <data name="DoctorIsNotInOffice" xml:space="preserve">
+        <value>Doctor is not in office</value>
+    </data>
+    <data name="ServiceNotFound" xml:space="preserve">
+        <value>Service not found</value>
+    </data>
 </root>

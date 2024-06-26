@@ -62,5 +62,47 @@ namespace Application.Resources {
                 return ResourceManager.GetString("NotFound", resourceCulture);
             }
         }
+        
+        internal static string PatientNotFound {
+            get {
+                return ResourceManager.GetString("PatientNotFound", resourceCulture);
+            }
+        }
+        
+        internal static string OfficeNotFound {
+            get {
+                return ResourceManager.GetString("OfficeNotFound", resourceCulture);
+            }
+        }
+        
+        internal static string DoctorNotFound {
+            get {
+                return ResourceManager.GetString("DoctorNotFound", resourceCulture);
+            }
+        }
+        
+        internal static string SpecializationNotFound {
+            get {
+                return ResourceManager.GetString("SpecializationNotFound", resourceCulture);
+            }
+        }
+        
+        internal static string DoctorDoNotHaveThisSpecialization {
+            get {
+                return ResourceManager.GetString("DoctorDoNotHaveThisSpecialization", resourceCulture);
+            }
+        }
+        
+        internal static string DoctorIsNotInOffice {
+            get {
+                return ResourceManager.GetString("DoctorIsNotInOffice", resourceCulture);
+            }
+        }
+        
+        internal static string ServiceNotFound {
+            get {
+                return ResourceManager.GetString("ServiceNotFound", resourceCulture);
+            }
+        }
     }
 }
