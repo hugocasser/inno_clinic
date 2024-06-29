@@ -1,3 +1,4 @@
+using Application.Common;
 using Application.Resources;
 using FluentValidation;
 
@@ -7,16 +8,19 @@ public class CreateAppointmentCommandValidator : AbstractValidator<CreateAppoint
 {
     public CreateAppointmentCommandValidator()
     {
-        RuleFor(x => x.Start)
-            .NotEmpty()
-            .WithMessage(ValidationMessages.CannotBeEmpty);
+        RuleFor(command => command.Start)
+            .NotEmptyWithMessage();
         
-        RuleFor(x => x.End)
-            .NotEmpty()
-            .WithMessage(ValidationMessages.CannotBeEmpty);
+        RuleFor(command => command.ServiceId)
+            .NotEmptyWithMessage();
         
-        RuleFor(x => x.Start)
-            .LessThan(x => x.End)
-            .WithMessage(ValidationMessages.EndMustBeGreateThenStart);
+        RuleFor(command => command.DoctorId)
+            .NotEmptyWithMessage();
+        
+        RuleFor(command => command.OfficeId)
+            .NotEmptyWithMessage();
+        
+        RuleFor(command => command.PatientId)
+            .NotEmptyWithMessage();
     }
 }

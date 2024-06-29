@@ -24,4 +24,10 @@
     <data name="CannotBeEmpty" xml:space="preserve">
         <value>Cannot be empty</value>
     </data>
+    <data name="MinLengh50" xml:space="preserve">
+        <value>Mininimum lengh is 50 symbols</value>
+    </data>
+    <data name="MaxLenght2000" xml:space="preserve">
+        <value>Maximum lenght is 2000</value>
+    </data>
 </root>

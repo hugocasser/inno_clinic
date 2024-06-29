@@ -1,3 +1,4 @@
+using Application.Abstractions.Persistence;
 using Application.Abstractions.Persistence.Repositories;
 using Application.Resources;
 using Application.Result;
@@ -6,19 +7,20 @@ using MediatR;
 namespace Application.Requests.Commands.CancelAppointments;
 
 public class CancelAppointmentCommandHandler
-    (IAppointmentsRepository appointmentsRepository)
+    (IAppointmentsRepository appointmentsRepository,
+     ITransactionsProvider transactionsProvider)
     : IRequestHandler<CancelAppointmentCommand, OperationResult>
 {
     public async Task<OperationResult> Handle(CancelAppointmentCommand request, CancellationToken cancellationToken)
     {
-        appointmentsRepository.StartTransaction();
+        transactionsProvider.StartTransaction();
         
         var isExist = await appointmentsRepository
             .IsExistAsync(request.Id, cancellationToken);
         
         if (!isExist)
         {
-            appointmentsRepository.Rollback();
+            transactionsProvider.Rollback();
             
             return ResultBuilder.BadRequest(RespounseMessages.AppointmentNotFound);
         }
@@ -27,12 +29,12 @@ public class CancelAppointmentCommandHandler
         
         if (result != 1)
         {
-            appointmentsRepository.Rollback();
+            transactionsProvider.Rollback();
             
             return ResultBuilder.InternalServerError();
         }
         
-        appointmentsRepository.Commit();
+        transactionsProvider.Commit();
         
         return ResultBuilder.NoContent();
     }

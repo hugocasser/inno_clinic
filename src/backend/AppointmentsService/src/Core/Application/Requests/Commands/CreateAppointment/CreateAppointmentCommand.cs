@@ -9,8 +9,7 @@ public record CreateAppointmentCommand(
     Guid DoctorId,
     Guid OfficeId,
     Guid ServiceId,
-    DateTimeOffset Start,
-    DateTimeOffset End) : IRequest<OperationResult>
+    DateTimeOffset Start) : IRequest<OperationResult>
 {
     public Appointment MapToAppointment()
     {

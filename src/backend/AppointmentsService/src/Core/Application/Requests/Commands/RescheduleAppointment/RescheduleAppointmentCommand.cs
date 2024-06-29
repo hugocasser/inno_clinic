@@ -3,4 +3,4 @@ using MediatR;
 
 namespace Application.Requests.Commands.RescheduleAppointment;
 
-public record RescheduleAppointmentCommand() : IRequest<OperationResult>;
+public record RescheduleAppointmentCommand(Guid AppointmentId, DateTimeOffset NewDate) : IRequest<OperationResult>;

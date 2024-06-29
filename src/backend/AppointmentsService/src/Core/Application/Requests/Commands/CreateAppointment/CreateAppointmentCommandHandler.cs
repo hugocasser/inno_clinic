@@ -1,3 +1,4 @@
+using Application.Abstractions.Persistence;
 using Application.Abstractions.Persistence.Repositories;
 using Application.Abstractions.Services;
 using Application.Resources;
@@ -10,7 +11,8 @@ public class CreateAppointmentCommandHandler
     (
         IAppointmentsRepository appointmentsRepository,
         IProfilesService profilesService,
-        IServicesService servicesService) : IRequestHandler<CreateAppointmentCommand, OperationResult>
+        IServicesService servicesService,
+        ITransactionsProvider transactionsProvider) : IRequestHandler<CreateAppointmentCommand, OperationResult>
 {
     public async Task<OperationResult> Handle(CreateAppointmentCommand request, CancellationToken cancellationToken)
     {
@@ -21,9 +23,9 @@ public class CreateAppointmentCommandHandler
             return ResultBuilder.BadRequest(RespounseMessages.PatientNotFound);
         }
         
-        var isServiceExist = await servicesService.IsServiceExist(request.ServiceId, cancellationToken);
+        var serviceTimeResult = await servicesService.GetServiceTime(request.ServiceId, cancellationToken);
         
-        if (!isServiceExist)
+        if (!serviceTimeResult.IsSuccess)
         {
             return ResultBuilder.BadRequest(RespounseMessages.ServiceNotFound);
         }
@@ -45,14 +47,14 @@ public class CreateAppointmentCommandHandler
 
         var appointment = request.MapToAppointment();
         
-        appointmentsRepository.StartTransaction();
+        transactionsProvider.StartTransaction();
 
         var timeCheck = await appointmentsRepository
-            .IsTimeFreeAsync(appointment.Date, appointment.Time, cancellationToken);
+            .IsTimeFreeAsync(appointment.ServiceId, appointment.Date, appointment.Time, serviceTimeResult.GetData(), cancellationToken);
         
         if (!timeCheck)
         {
-            appointmentsRepository.Rollback();
+            transactionsProvider.Rollback();
             
             return ResultBuilder.BadRequest(RespounseMessages.TimeIsNotFree);
         }
@@ -61,12 +63,12 @@ public class CreateAppointmentCommandHandler
 
         if (result != 1)
         {
-            appointmentsRepository.Rollback();
+            transactionsProvider.Rollback();
             
             return ResultBuilder.InternalServerError();
         }
         
-        appointmentsRepository.Commit();
+        transactionsProvider.Commit();
         
         return ResultBuilder.NoContent();
     }

@@ -56,5 +56,17 @@ namespace Application.Resources {
                 return ResourceManager.GetString("CannotBeEmpty", resourceCulture);
             }
         }
+        
+        internal static string MinLengh50 {
+            get {
+                return ResourceManager.GetString("MinLengh50", resourceCulture);
+            }
+        }
+        
+        internal static string MaxLenght2000 {
+            get {
+                return ResourceManager.GetString("MaxLenght2000", resourceCulture);
+            }
+        }
     }
 }

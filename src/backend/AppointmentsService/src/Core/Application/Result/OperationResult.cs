@@ -11,4 +11,9 @@ public class OperationResult
         IsSuccess = isSuccess;
         Message = message;
     }
+    
+    public T? GetTypedData<T>() where T : class
+    {
+        return Message as T;
+    }
 }

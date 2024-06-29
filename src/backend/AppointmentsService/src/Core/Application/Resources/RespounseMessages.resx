@@ -54,4 +54,10 @@
     <data name="AppointmentNotFound" xml:space="preserve">
         <value>Appointment not found</value>
     </data>
+    <data name="ResultNotFound" xml:space="preserve">
+        <value>Result not found</value>
+    </data>
+    <data name="ResultAlreadyExist" xml:space="preserve">
+        <value>Result already exist</value>
+    </data>
 </root>

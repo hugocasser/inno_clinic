@@ -116,5 +116,17 @@ namespace Application.Resources {
                 return ResourceManager.GetString("AppointmentNotFound", resourceCulture);
             }
         }
+        
+        internal static string ResultNotFound {
+            get {
+                return ResourceManager.GetString("ResultNotFound", resourceCulture);
+            }
+        }
+        
+        internal static string ResultAlreadyExist {
+            get {
+                return ResourceManager.GetString("ResultAlreadyExist", resourceCulture);
+            }
+        }
     }
 }
