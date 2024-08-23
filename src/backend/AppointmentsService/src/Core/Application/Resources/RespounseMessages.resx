@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="NoContent" xml:space="preserve">
+        <value>No Content</value>
+    </data>
+    <data name="InternalServerError" xml:space="preserve">
+        <value>Internal server error</value>
+    </data>
+    <data name="NotFound" xml:space="preserve">
+        <value>Not found</value>
+    </data>
+    <data name="PatientNotFound" xml:space="preserve">
+        <value>Patient not found</value>
+    </data>
+    <data name="OfficeNotFound" xml:space="preserve">
+        <value>Office not found</value>
+    </data>
+    <data name="DoctorNotFound" xml:space="preserve">
+        <value>Doctor not found</value>
+    </data>
+    <data name="SpecializationNotFound" xml:space="preserve">
+        <value>Specialization not found</value>
+    </data>
+    <data name="DoctorDoNotHaveThisSpecialization" xml:space="preserve">
+        <value>Doctor don't have this specialization</value>
+    </data>
+    <data name="DoctorIsNotInOffice" xml:space="preserve">
+        <value>Doctor is not in office</value>
+    </data>
+    <data name="ServiceNotFound" xml:space="preserve">
+        <value>Service not found</value>
+    </data>
+    <data name="TimeIsNotFree" xml:space="preserve">
+        <value>Time is not free</value>
+    </data>
+    <data name="AppointmentNotFound" xml:space="preserve">
+        <value>Appointment not found</value>
+    </data>
+    <data name="ResultNotFound" xml:space="preserve">
+        <value>Result not found</value>
+    </data>
+    <data name="ResultAlreadyExist" xml:space="preserve">
+        <value>Result already exist</value>
+    </data>
+</root>
